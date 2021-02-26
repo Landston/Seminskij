@@ -1,5 +1,7 @@
 package com.UI;
 
+import com.UI.actions.exitAction;
+
 public class Navigator {
 
     private static Navigator instance = new Navigator();
@@ -14,20 +16,23 @@ public class Navigator {
         return instance;
     }
     public void printMenu(){
+        int count = 0;
 
-        for(MenuItem item : currentMenu.getMenuItems()){
+        for (MenuItem item : this.currentMenu.getMenuItems()){
+            System.out.println(count + " " + item.getName());
 
-            System.out.println(item);
+            count++;
         }
     }
 
     public void navigate(Integer index){
-        MenuItem menu = currentMenu.getMenuItems().get(index);
-        if(menu != null) {
-            menu.doAction();
-            currentMenu = menu.getNextMenu();
-        }
+        MenuItem menuItem = currentMenu.getMenuItems().get(index);
 
+        if(menuItem != null) {
+            if(menuItem.getAction() instanceof exitAction) {}
+                menuItem.doAction();
+            currentMenu = menuItem.getNextMenu();
+        }
 
     }
 

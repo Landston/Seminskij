@@ -8,9 +8,9 @@ public abstract interface IDAO<T> {
 
     List<T> getAll();
 
-    boolean update(UUID id, T item);
+    void update(UUID id, T item);
 
-    boolean delete(UUID id);
+    void delete(UUID id);
 
     boolean addEntity(T entity);
 

@@ -8,6 +8,11 @@ public class Menu {
     private List<MenuItem> menuItems = new ArrayList<>();
     private String name;
 
+    public Menu(String name) {
+        this.name = name;
+    }
+
+
     public List<MenuItem> getMenuItems() {
         return menuItems;
     }

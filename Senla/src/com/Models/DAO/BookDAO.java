@@ -3,47 +3,47 @@ package com.Models.DAO;
 import com.Models.Models.Book;
 import com.Models.api.DAO.IBookDAO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.logging.Logger;
 
 public class BookDAO implements IBookDAO {
 
+    private static BookDAO instatnce;
     private List<Book> books;
 
-    public BookDAO() {
+    private BookDAO() {
+
         this.books = new ArrayList<>();
     }
 
+    public static BookDAO getInstance(){
 
-    public boolean update(UUID id, Book item) {
-        for (Book bk : this.books) {
-            if (id.equals(bk.getUuid())) {
-                bk = item;
-            }
+        instatnce = Objects.requireNonNullElse(instatnce, new BookDAO());
+        return instatnce;
 
-        }
-        return false;
+    }
+
+    public void update(UUID id, Book item) {  // NoSuchElement Exception
+
+        Optional<Book> book = this.books.stream()
+                .filter(x -> x.getUuid().equals(id)).findFirst();
+        Book it = book.get();
+
+        this.books.remove(it);
+        this.books.add(item);
+
+
     }
 
     public List<Book> getAll() {
         return new ArrayList<>(this.books);
     }
 
-    public boolean delete(UUID uuid) {
-
-        for (Book bk : this.books) {
-            if (uuid.equals(bk.getUuid())) {
-                this.books.remove(bk);
-                return true;
-            }
-
-        }
-        return false;
+    public void delete(UUID uuid) {
+        this.books.remove(this.getEntity(uuid));
     }
 
     public boolean addEntity(Book entity) {
-
         if (entity != null) {
             this.books.add(entity);
 
@@ -53,13 +53,10 @@ public class BookDAO implements IBookDAO {
     }
 
     public Book getEntity(UUID id) {
+        Optional<Book> book = this.books.stream()
+                .filter(x -> x.getUuid().equals(id)).findFirst();
 
-        for (Book bk : this.books) {
-            if (id.equals(bk.getUuid())) return bk;
-
-        }
-        return null;
-
+        return book.orElseGet(Book::new);
     }
 
 }

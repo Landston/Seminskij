@@ -1,24 +1,37 @@
 package com.Models.Services;
 
+import com.Models.DAO.RequestDAO;
 import com.Models.Models.Book;
 import com.Models.Models.Request;
 import com.Models.api.DAO.IRequestDAO;
 import com.Models.api.Service.IRequestService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.*;
 
 
 public class RequestService implements IRequestService {
 
     private IRequestDAO requestDAO;
+    private static RequestService instance;
+    private Map<String, Comparator<Request>> sort;
 
-    public RequestService(IRequestDAO requestDAO) {
-        this.requestDAO = requestDAO;
+    public RequestService() {
+        this.requestDAO = RequestDAO.getInstance();
+    }
+
+    public static RequestService getInstance() {
+        instance = Objects.requireNonNullElse(instance, new RequestService());
+        ;
+
+        return instance;
+    }
+
+    public void init() {
+        this.sort = new HashMap<>();
+
+        this.sort.put("ByCount", Comparator.comparing(Request::getCount));
+        this.sort.put("ByName", (Comparator.comparing(o -> o.getRequestedBooks().getName())));
+
     }
 
     @Override
@@ -29,7 +42,7 @@ public class RequestService implements IRequestService {
                     .filter(x -> x.getRequestedBooks().equals(book))
                     .forEach(Request::increaseRequestCount);
 
-            if (this.getNumberOfRequestsByBook(book.getUuid()) == 0 ) {
+            if (this.getNumberOfRequestsByBook(book.getUuid()) == 0) {
                 Request request = new Request(book);
                 requestDAO.addEntity(request);
             }
@@ -38,10 +51,20 @@ public class RequestService implements IRequestService {
 
     }
 
-    public Long getNumberOfRequestsByBook(UUID uuid){
-       List<Request> list= new ArrayList<Request>(this.requestDAO.getAll());
+    public List<Request> getSortedRequests(String condition) {
+        List<Request> list = this.requestDAO.getAll();
 
-       return list.stream().filter(x -> x.getRequestedBooks().getUuid().equals(uuid)).count();
+        list.sort(this.sort.get(condition));
+
+        return  list;
+    }
+
+    public Long getNumberOfRequestsByBook(UUID uuid) {
+        List<Request> list = new ArrayList<Request>(this.requestDAO.getAll());
+
+        return list.stream()
+                .filter(x -> x.getRequestedBooks().getUuid().equals(uuid))
+                .count();
 
     }
 
@@ -53,6 +76,9 @@ public class RequestService implements IRequestService {
 
     }
 
+    public List<Request> getAllRequests() {
+        return this.requestDAO.getAll();
+    }
 
     public Request getByBook(Book book) { // return Requests for book or null
         List<Request> requests = new ArrayList<>(this.requestDAO.getAll());

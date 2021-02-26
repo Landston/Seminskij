@@ -20,13 +20,20 @@ public class MenuItem {
     }
 
     public void doAction() {
-        System.out.println(name);
+        System.out.println(name + "\n");
         action.execute();
+
 
     }
 
+    public String getName(){
+        return this.name;
+    }
     public Menu getNextMenu() {
         return nextMenu;
     }
 
+    public IAction getAction(){
+        return this.action;
+    }
 }

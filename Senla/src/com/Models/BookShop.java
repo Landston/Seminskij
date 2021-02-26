@@ -8,34 +8,55 @@ import com.Models.Services.BookService;
 import com.Models.Services.ClientService;
 import com.Models.Services.OrderService;
 import com.Models.Services.RequestService;
-import com.Models.Models.*;
+import com.logger.CustomLogger;
+
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class BookShop {
 
-   private static BookDAO BOOK_DAO = new BookDAO();
-   private static OrderDAO ORDER_DAO = new OrderDAO();
-   private static RequestDAO REQUEST_DAO = new RequestDAO();
-   private static ClientDAO CLIENT_DAO= new ClientDAO();
-   private static ClientService clientService = new ClientService(CLIENT_DAO);
-   private static BookService bookService = new BookService(BOOK_DAO);
-   private static OrderService orderService = new OrderService(ORDER_DAO);
-   private static RequestService requestService = new RequestService(REQUEST_DAO);
+   private static BookDAO BOOK_DAO =  BookDAO.getInstance();
+   private static OrderDAO ORDER_DAO = OrderDAO.getInstance();
+   private static RequestDAO REQUEST_DAO = RequestDAO.getInstance();
+   private static ClientDAO CLIENT_DAO=  ClientDAO.getInstance();
+   private static  ClientService clientService = ClientService.getInstance();
+   private static BookService bookService = BookService.getInstance();
+   private static OrderService orderService =  OrderService.getInstance();
+   private static RequestService requestService = RequestService.getInstance();
 
 
 
     public static void main(String[] args)  {
 
 
+        CustomLogger logger = new CustomLogger(BookShop.class.getName());
+
+        System.out.println(BookShop.class.getName());
+
+
+
+      //orderService.getOrderByID(UUID.randomUUID());
+        /*
+
         bookService.addBookToShop("X", "Horror", 2000, 300);
         bookService.addBookToShop("Z", "Horror", 2000, 200);
         bookService.addBookToShop("AAA", "Horror", 2015, 1000);
 
         System.out.println(bookService.getSortedBooks("ByDateOfAdmission") );
+
+        Book book = new Book("Genesis", "Traveling", 2018, 200);
+        Book book1 = new Book("Apocalipse", "Action", 1999, 500);
+
+
+        bookService.add(book1);
+
+        System.out.println(bookService.getAll());
+
+        bookService.updateBook(book1.getUuid(), book);
+
+        System.out.println(bookService.getAll());
+
 
      //   System.out.println(bookService.getAll());
         Client client = new Client("Robby");
@@ -49,7 +70,7 @@ public class BookShop {
       //  System.out.println(orderService.getClosedOrdersByTime( LocalDate.of(2018,12,5 ),  LocalDate.of(2030,6,15), new OrderByDateOfExecutionComparator()));       // System.out.println(orderService.getSortedOrders(new OrderByStatusComparator()));
 
         List<Request> list = new ArrayList<Request>();
-
+*/
       //  System.out.println(bookService.getAll());
       //  System.out.println(bookService.getSortedBooks(new BookDateOfWritingComparator()));
 

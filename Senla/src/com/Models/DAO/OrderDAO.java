@@ -1,8 +1,8 @@
 package com.Models.DAO;
 
 
-
-
+import com.Models.Models.Book;
+import com.Models.Models.Client;
 import com.Models.Models.Order;
 import com.Models.api.DAO.IOrderDAO;
 
@@ -12,13 +12,20 @@ public class OrderDAO implements IOrderDAO {
 
     private List<Order> orders;
     private Map<String, Comparator<Order>> sort;
+    private static OrderDAO instance;
 
-    public OrderDAO( ) {
+    private OrderDAO() {
         orders = new ArrayList<>();
         this.init();
     }
 
-    private void init(){
+    public static OrderDAO getInstance() {
+        instance = Objects.requireNonNullElse(instance, new OrderDAO());
+
+        return instance;
+    }
+
+    private void init() {
         this.sort = new HashMap<>();
 
         this.sort.put("ByCost", Comparator.comparing(Order::getTotalPrice));
@@ -32,63 +39,44 @@ public class OrderDAO implements IOrderDAO {
     }
 
     @Override
-    public boolean update(UUID id, Order item) {
+    public void update(UUID id, Order item) {
 
-        for(Order ord : this.orders){
+        Optional<Order> order = this.orders.stream()
+                .filter(x -> x.getUuId().equals(id)).findFirst();
 
-            if(id.equals(ord.getUiId())) {
-                ord = item;
+        Order it = order.get();
 
-                return true;
-            }
+        this.orders.remove(it);
+        this.orders.add(item);
 
-        }
-        return false;
     }
 
-    public void delete(Order order){
-
-        if(order != null)  this.orders.remove((order));
-
-
-        }
+    public void delete(Order order) {
+        this.orders.remove(order);
+    }
 
     @Override
-    public boolean delete(UUID id) {
-
-        for(Order ord : this.orders){
-
-            if(id.equals(ord.getUiId())) {
-                this.orders.remove(ord);
-
-            }
-
-        }
-        return false;
+    public void delete(UUID uuid) {
+        this.orders.remove(this.getEntity(uuid));
     }
 
     @Override
     public boolean addEntity(Order entity) {
-
-        if(entity != null){
-
+        if (entity != null) {
             this.orders.add(entity);
 
-        return  true;
+            return true;
         }
 
         return false;
     }
 
     @Override
-    public Order getEntity(UUID id) {
+    public Order getEntity(UUID id) throws NullPointerException {
 
-        for(Order ord : this.orders){
+        Optional<Order> order = this.orders.stream()
+                .filter(x -> x.getUuId().equals(id)).findFirst();
 
-            if(id.equals(ord.getUiId())) {
-               return ord;
-            }
-        }
-        return null;
+        return order.orElseGet(null);
     }
 }

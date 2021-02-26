@@ -13,6 +13,7 @@ public class MenuController {
     }
 
     public void run() {
+        Scanner line = new Scanner(System.in);
         builder = Builder.getInsance();
         builder.buildMenu();
         navigator = Navigator.getInstance();
@@ -22,10 +23,8 @@ public class MenuController {
 
         while(!index.equals(0)){
             System.out.println("Выберите пункт меню: ");
-            Scanner line = new Scanner(System.in);
             index = line.nextInt();
             navigator.navigate(index);
-            navigator.setCurrentMenu(builder.getRootMenu());
             navigator.printMenu();
 
 

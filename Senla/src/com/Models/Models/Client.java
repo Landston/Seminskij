@@ -12,8 +12,14 @@ public class Client implements Serializable {
     private String mail;
     private final UUID id;
 
+    @Override
+    public String toString() {
+        return "Client " +
+                "name='" + name + '\'' +
+                ", mail='" + mail + '\'';
+    }
 
-    public Client(String name) {
+    public Client(String name, String mail) {
         this.name = name;
         this.id = UUID.randomUUID();
     }

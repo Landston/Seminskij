@@ -1,23 +1,25 @@
 package com.Models.DAO;
 
+import com.Models.Models.Book;
 import com.Models.Models.Client;
 import com.Models.api.DAO.IClientDAO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.lang.ref.Cleaner;
+import java.util.*;
 
-public class ClientDAO  implements IClientDAO  {
+public class ClientDAO implements IClientDAO {
 
     private List<Client> clients;
+    private static ClientDAO instance;
 
-    public ClientDAO(List<Client> clients) {
-        this.clients = clients;
+    public static ClientDAO getInstance() {
+        instance = Objects.requireNonNullElse(instance, new ClientDAO());
+        return instance;
     }
 
-    public ClientDAO() {
-       clients = new ArrayList<>();
+
+    private ClientDAO() {
+        clients = new ArrayList<>();
     }
 
     @Override
@@ -26,27 +28,21 @@ public class ClientDAO  implements IClientDAO  {
     }
 
     @Override
-    public boolean update(UUID id, Client item) {
-        for(Client bk : this.clients){
-            if(id.equals(bk.getId())) {
-                bk = item;
+    public void update(UUID id, Client item) {
+        Optional<Client> client = this.clients.stream()
+                .filter(x -> x.getId().equals(id)).findFirst();
 
-                return true;
-            }
-        }
-        return false;
+        Client it = client.get();
+
+        this.clients.remove(it);
+        this.clients.add(item);
+
     }
 
     @Override
-    public boolean delete(UUID id) {
-        for(Client bk : this.clients){
-            if(id.equals(bk.getId())) {
-                this.clients.remove(bk);
+    public void delete(UUID id) {
+        this.clients.remove(this.getEntity(id));
 
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override
@@ -56,7 +52,7 @@ public class ClientDAO  implements IClientDAO  {
 
             return true;
         }
-        return  false;
+        return false;
     }
 
     @Override
@@ -64,7 +60,7 @@ public class ClientDAO  implements IClientDAO  {
 
         Optional<Client> client = this.clients.stream().filter(x -> x.getId().equals(id)).findFirst();
 
-        return client.isPresent() ? client.get(): new Client("");
+        return client.isPresent() ? client.get() : new Client("none", "");
 
     }
 }

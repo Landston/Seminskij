@@ -9,20 +9,26 @@ import com.Models.api.Service.IBookService;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class BookService implements IBookService {
 
-    private final IBookDAO bookDAO;
+    private IBookDAO bookDAO;
+    private static BookService instance;
     private Map<String, Comparator<Book>> sort;
 
-    public BookService(BookDAO dao) {
-        this.bookDAO = dao;
+    private BookService() {
+        this.bookDAO = BookDAO.getInstance();
         this.init();
 
     }
 
-    public Set<String> getSortParams(){
+    public static BookService getInstance() {
+        instance = Objects.requireNonNullElse(instance, new BookService());
+
+        return instance;
+    }
+
+    public Set<String> getSortParams() {
         return new HashSet<>(this.sort.keySet());
     }
 
@@ -44,6 +50,20 @@ public class BookService implements IBookService {
 
     }
 
+    public void updateBook(UUID id, Book book) {
+
+
+        this.bookDAO.update(id, book);
+
+
+    }
+
+    public void deleteBook(UUID uuid) {
+
+        this.bookDAO.delete(uuid);
+
+    }
+
     public List<Book> getAll() {
         return new ArrayList<>(this.bookDAO.getAll());
     }
@@ -60,8 +80,12 @@ public class BookService implements IBookService {
         return false;
     }
 
+    public Book getBookById(UUID uuid) {
+        return this.bookDAO.getEntity(uuid);
+    }
+
     @Override
-    public void addBookToShop(String name, String genre, int year, double cost) throws NullPointerException{
+    public void addBookToShop(String name, String genre, int year, double cost) throws NullPointerException {
         Book book = new Book();
 
         book.setName(name);
@@ -70,6 +94,19 @@ public class BookService implements IBookService {
         book.setCost(cost);
 
         this.bookDAO.addEntity(book);
+    }
+
+    public void add(Book book) {
+        this.bookDAO.addEntity(book);
+    }
+
+    public void addBookToWareHouse(UUID uuid) {
+        Book book = this.getBookById(uuid);
+
+        if (book.getStatus().equals(BookStatus.ABSENT)) {
+            book.setStatus(BookStatus.RESERV);
+        }
+
     }
 
     public List<Book> getSortedBooks(String condition) {

@@ -70,6 +70,10 @@ public class Book implements Serializable {
         return uuid;
     }
 
+    public void setUuid(UUID uuid){
+        this.uuid = uuid;
+    }
+
     public BookStatus getStatus() {
         return status;
     }
@@ -80,14 +84,14 @@ public class Book implements Serializable {
 
     @Override
     public String toString() {
-        return "Book{" +
+        return "Book:" +
                 "name='" + name + '\'' +
                 ", uuid=" + uuid +
                 ", status=" + status +
                 ", genre='" + genre + '\'' +
                 ", cost=" + cost +
                 ", year=" + year +
-                ", date = " + dateOfAdmission + '}';
+                ", date = " + dateOfAdmission + '\n';
     }
 
     public LocalDate getDateOfAdmission() {

@@ -4,6 +4,7 @@ import com.Models.Models.Book;
 import com.Models.Models.Client;
 import com.Models.Models.Order;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
@@ -19,7 +20,7 @@ public interface IOrderService {
 
     void orderDone(UUID id);
 
-    List<Order> getSortedOrders(Comparator<Order> condition);
+    List<Order> getSortedOrders(String condition) throws IOException;
 
     List<Order> getClosedOrdersByTime(LocalDate from, LocalDate to, String condition);
 

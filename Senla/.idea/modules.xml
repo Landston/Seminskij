@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Senla.iml" filepath="$PROJECT_DIR$/Senla.iml" />
       <module fileurl="file://$PROJECT_DIR$/UI/UI.iml" filepath="$PROJECT_DIR$/UI/UI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Logger/logger.iml" filepath="$PROJECT_DIR$/Logger/logger.iml" />
     </modules>
   </component>
 </project>

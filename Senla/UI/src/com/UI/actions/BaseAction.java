@@ -6,6 +6,6 @@ import com.Models.BookShopFacade;
 
 public abstract class BaseAction {
 
-    private BookShopFacade facade = BookShopFacade.getInstance();
+    public BookShopFacade facade = BookShopFacade.getInstance();
 
 }
