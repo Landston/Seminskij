@@ -5,10 +5,12 @@ import com.UI.actions.IAction;
 
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.logging.Level;
 
 public class ListClosedOrdersByTimeAction extends BaseAction implements IAction {
     @Override
     public void execute() {
+        try{
         System.out.println("Enter one statement:  " +
                 "\n - Sorted  by date  in period" +
                 "\n - Sorted by cost  in period" +
@@ -57,6 +59,8 @@ public class ListClosedOrdersByTimeAction extends BaseAction implements IAction 
                 break;
             }
         }
-
+        } catch (Exception e){
+            LOGGER.log(Level.WARNING, e.getLocalizedMessage(), e);
+        }
     }
 }

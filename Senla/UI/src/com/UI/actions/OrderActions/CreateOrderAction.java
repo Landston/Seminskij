@@ -6,11 +6,12 @@ import com.UI.actions.IAction;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class CreateOrderAction  extends BaseAction implements IAction {
     @Override
     public void execute() {
-
+    try{
         System.out.println("Enter book id ");
         Scanner scanner = new Scanner(System.in);
 
@@ -38,5 +39,9 @@ public class CreateOrderAction  extends BaseAction implements IAction {
         UUID clientID = UUID.fromString(scanner.nextLine());
 
         this.facade.addOrder(bookID, clientID);
+
+    } catch (Exception e){
+        LOGGER.log(Level.WARNING, e.getLocalizedMessage(), e);
+    }
     }
 }

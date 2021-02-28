@@ -2,14 +2,13 @@ package com.Models.api.Service;
 
 import com.Models.Models.Book;
 import com.Models.Models.Request;
+import com.Models.exceptions.ServiceException;
 
 public interface IRequestService {
 
-    void createRequest(Book book);
+    void createRequest(Book book) throws ServiceException;
 
-    void showAllRequests();
-
-    Request getByBook(Book book);
+    Request getByBook(Book book) throws ServiceException;
 
 
 

@@ -7,10 +7,12 @@ import com.UI.actions.IAction;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class OrderChangeStatusAction extends BaseAction implements IAction {
     @Override
     public void execute() {
+        try{
         System.out.println("Enter id of a Order that you want to change status");
 
         int count = 0;
@@ -30,6 +32,10 @@ public class OrderChangeStatusAction extends BaseAction implements IAction {
         String status = scanner.nextLine();
 
         this.facade.changeOrder(UUID.fromString(uuid), status);
+
+        } catch (Exception e){
+            LOGGER.log(Level.WARNING, e.getLocalizedMessage(), e);
+        }
 
     }
 }

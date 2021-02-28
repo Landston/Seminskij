@@ -6,10 +6,13 @@ import com.UI.actions.IAction;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class OrderUpdateAction extends BaseAction implements IAction {
     @Override
     public void execute() {
+        try{
+
 
         System.out.println("Choose action:  " +
                 "\n - add Book" +
@@ -52,7 +55,9 @@ public class OrderUpdateAction extends BaseAction implements IAction {
                 break;
             }
         }
-
+        } catch (Exception e){
+            LOGGER.log(Level.WARNING, e.getLocalizedMessage(), e);
+        }
 
     }
 

@@ -7,12 +7,14 @@ import java.net.SecureCacheResponse;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class CreateRequestAction extends BaseAction implements IAction {
 
 
     @Override
     public void execute() {
+        try{
         int count = 0;
 
         for (Object item : new ArrayList<>(this.facade.getAllBooks())){
@@ -25,8 +27,16 @@ public class CreateRequestAction extends BaseAction implements IAction {
 
         Scanner scanner = new Scanner(System.in);
         String uuid = scanner.nextLine();
+        try {
+            this.facade.createRequest(UUID.fromString(uuid));
 
-        this.facade.createRequest(UUID.fromString(uuid));
+        } catch (IllegalArgumentException e){
+            System.out.println("Wrong id entered");
+        }
+
+        } catch (Exception e){
+            LOGGER.log(Level.WARNING, e.getLocalizedMessage(), e);
+        }
 
     }
 }

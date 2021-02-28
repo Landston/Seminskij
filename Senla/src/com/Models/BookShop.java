@@ -8,10 +8,11 @@ import com.Models.Services.BookService;
 import com.Models.Services.ClientService;
 import com.Models.Services.OrderService;
 import com.Models.Services.RequestService;
-import com.logger.CustomLogger;
 
 
-import java.time.LocalDate;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.logging.*;
 
 
 public class BookShop {
@@ -30,9 +31,10 @@ public class BookShop {
     public static void main(String[] args)  {
 
 
-        CustomLogger logger = new CustomLogger(BookShop.class.getName());
 
-        System.out.println(BookShop.class.getName());
+
+
+
 
 
 

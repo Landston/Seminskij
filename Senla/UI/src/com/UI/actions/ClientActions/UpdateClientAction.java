@@ -5,10 +5,12 @@ import com.UI.actions.IAction;
 
 import java.util.Scanner;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class UpdateClientAction extends BaseAction implements IAction {
     @Override
     public void execute() {
+        try{
         System.out.println("Enter client that you want to change");
 
         int count  = 0;
@@ -34,6 +36,8 @@ public class UpdateClientAction extends BaseAction implements IAction {
         String mail = scanner.nextLine();
 
         this.facade.updateClient(UUID.fromString(id), this.facade.createClient(name, mail));
-
+        } catch (Exception e){
+            LOGGER.log(Level.WARNING, e.getLocalizedMessage(), e);
+        }
     }
 }

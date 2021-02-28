@@ -9,10 +9,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Order implements Serializable {
+public class Order extends AEntityID implements Serializable {
 
     private List<Book> booksToOrder;
-    private final UUID uuId;
     private Client client;
     private OrderStatus status;
     private double totalPrice;
@@ -20,8 +19,7 @@ public class Order implements Serializable {
 
 
     public Order(List<Book> books, Client client) {
-
-        this.uuId = UUID.randomUUID();
+        super();
         this.client = client;
         this.booksToOrder = books;
         this.status = OrderStatus.OPEN;
@@ -31,12 +29,10 @@ public class Order implements Serializable {
     }
 
     public Order(Book book, Client client) {
-
-        this.uuId = UUID.randomUUID();
+        super();
         this.client = client;
         this.booksToOrder = new ArrayList<>();
         this.booksToOrder.add(book);
-        ;
         this.status = OrderStatus.OPEN;
         this.dateOfExecution = LocalDate.of(0, 1, 1);
         this.totalPrice = OrderUtil.countBooksTotalCost(booksToOrder);
@@ -44,9 +40,8 @@ public class Order implements Serializable {
     }
 
     public Order(Client client) {
-
+        super();
         this.booksToOrder = new ArrayList<>();
-        this.uuId = UUID.randomUUID();
         this.client = client;
         this.dateOfExecution = LocalDate.of(0, 1, 1);
         this.status = OrderStatus.OPEN;
@@ -55,7 +50,7 @@ public class Order implements Serializable {
     }
 
     public Order() {
-        this.uuId = UUID.randomUUID();
+        super();
         this.dateOfExecution = LocalDate.of(0, 1, 1);
         this.status = OrderStatus.OPEN;
     }
@@ -64,7 +59,7 @@ public class Order implements Serializable {
     public String toString() {
         return "Order:" +
                 "booksToOrder=" + booksToOrder.toString() +
-                "\nuiId=" + uuId +
+                "\nuiId=" + getUuid() +
                 "\n" + client.toString() +
                 "\nstatus=" + status +
                 "\ntotalPrice=" + totalPrice +
@@ -118,9 +113,6 @@ public class Order implements Serializable {
         this.booksToOrder = booksToOrder;
     }
 
-    public UUID getUuId() {
-        return uuId;
-    }
 
     public OrderStatus getStatus() {
         return status;

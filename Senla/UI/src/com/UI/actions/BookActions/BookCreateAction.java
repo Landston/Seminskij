@@ -3,36 +3,42 @@ package com.UI.actions.BookActions;
 import com.UI.actions.BaseAction;
 import com.UI.actions.IAction;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.UUID;
+import java.util.logging.Level;
 
 public class BookCreateAction extends BaseAction implements IAction {
 
-
-
     @Override
     public void execute() {
-        Scanner scanner = new Scanner(System.in);
+        try {
+            Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Введите название книги: ");
+            System.out.println("Введите название книги: ");
 
-        String name = scanner.nextLine();
+            String name = scanner.nextLine();
 
-        System.out.println("Введите жанр книги: ");
+            System.out.println("Введите жанр книги: ");
 
-        String gonre = scanner.nextLine();
+            String gonre = scanner.nextLine();
 
-        System.out.println("Введите год:");
+            System.out.println("Введите год:");
 
-        int year = scanner.nextInt();
+            try {
+                int year = scanner.nextInt();
+                
+                System.out.println("Введите цену:");
 
-        System.out.println("Введите цену:");
+                double cost = scanner.nextDouble();
 
-        double cost = scanner.nextDouble();
+                facade.addBookToShop(name, gonre, year, cost);
 
-        facade.addBookToShop(name, gonre, year, cost);
-
-        System.out.println("adding action done");
-
-
+            } catch (InputMismatchException e) {
+                System.out.println("Yead and Cost must be numbers!");
+            }
+        } catch (Exception e){
+            LOGGER.log(Level.WARNING, e.getLocalizedMessage(), e);
+        }
     }
 }

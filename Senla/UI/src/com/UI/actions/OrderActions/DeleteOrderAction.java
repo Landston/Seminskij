@@ -6,24 +6,28 @@ import com.UI.actions.IAction;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class DeleteOrderAction extends BaseAction implements IAction {
     @Override
     public void execute() {
-       System.out.println("Enter id of a Order that you want to delete");
+        try {
+            System.out.println("Enter id of a Order that you want to delete");
 
-        int count = 0;
+            int count = 0;
 
-        for (Object item : new ArrayList<>(this.facade.getAllOrders())){
-            System.out.println(count + " " + item);
+            for (Object item : new ArrayList<>(this.facade.getAllOrders())) {
+                System.out.println(count + " " + item);
 
-            count++;
+                count++;
+            }
+
+            Scanner scanner = new Scanner(System.in);
+            String uuid = scanner.nextLine();
+
+            facade.deleteOrderById(UUID.fromString(uuid));
+        } catch (Exception e){
+            LOGGER.log(Level.WARNING, e.getLocalizedMessage(), e);
         }
-
-        Scanner scanner = new Scanner(System.in);
-        String uuid = scanner.nextLine();
-
-        facade.deleteOrderById(UUID.fromString(uuid));
-
     }
 }

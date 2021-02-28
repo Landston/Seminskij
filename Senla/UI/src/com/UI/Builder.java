@@ -58,11 +58,11 @@ public class Builder {
         bookMenu.addMenuItem(new MenuItem("Изменить книгу", new BookUpdateAction(), rootMenu));
         bookMenu.addMenuItem(new MenuItem("Поставить книгу на склад", new BookAddToWhareHouseAction(), rootMenu));
         bookMenu.addMenuItem(new MenuItem("Списать книгу со складов", new BookWritingOffAction(), rootMenu));
-        bookMenu.addMenuItem(new MenuItem("Список", ()->{   }, buildSortingBookMenu()));
+        bookMenu.addMenuItem(new MenuItem("Список", new BookSortingAction(), rootMenu));
 
         return bookMenu;
     }
-
+/*
     private Menu buildSortingBookMenu(){
         Menu bookSortingMenu = new Menu("Получение книг");
 
@@ -101,7 +101,7 @@ public class Builder {
         }, rootMenu));
 
         return bookSortingMenu;
-    }
+    }*/
 
     private Menu buildOrderMenu(){
         Menu orderMenu = new Menu("Меню работы с Заказами");
@@ -112,47 +112,24 @@ public class Builder {
         orderMenu.addMenuItem(new MenuItem("Удалить заказ", new DeleteOrderAction(), rootMenu));
         orderMenu.addMenuItem(new MenuItem("Изменить состояние заказа", new OrderChangeStatusAction(), rootMenu));
         orderMenu.addMenuItem(new MenuItem("Изменить заказ", new OrderUpdateAction(), rootMenu));
-        orderMenu.addMenuItem(new MenuItem("Список", ()->{}, buildSortingOrderMenu()));
+        orderMenu.addMenuItem(new MenuItem("Список", new SortOrderAction(), rootMenu));
 
         return orderMenu;
     }
 
-    private Menu buildSortingOrderMenu(){
-        Menu menu = new Menu("Список заказов");
 
-        menu.addMenuItem(new MenuItem("Выход", new exitAction(), rootMenu));
-        menu.addMenuItem(new MenuItem("Весь список заказов", ()->{
-            BookShopFacade facade = BookShopFacade.getInstance();
-            System.out.println(facade.getAllOrders());
-        }, rootMenu));
-        menu.addMenuItem(new MenuItem("Cписок заказов по цене", ()->{
-            BookShopFacade facade = BookShopFacade.getInstance();
-            System.out.println(facade.getSortedOrder("ByCost"));
-        }, rootMenu));
-        menu.addMenuItem(new MenuItem("Cписок заказов по дате завершения", ()->{
-            BookShopFacade facade = BookShopFacade.getInstance();
-            System.out.println(facade.getSortedOrder("ByDateOfExecution"));
-        }, rootMenu));
-        menu.addMenuItem(new MenuItem("Cписок заказов по статусу", ()->{
-            BookShopFacade facade = BookShopFacade.getInstance();
-            System.out.println(facade.getSortedOrder("ByStatus"));
-        }, rootMenu));
-        menu.addMenuItem(new MenuItem("Cписок выполненых за период заказов", new ListClosedOrdersByTimeAction(), rootMenu));
-
-        return menu ;
-    }
 
     private Menu buildRequestMenu(){
         Menu requestMenu = new Menu("Меняю работы с запросами");
 
         requestMenu.addMenuItem(new MenuItem("Выход", new exitAction(), rootMenu));
         requestMenu.addMenuItem(new MenuItem("Создать запрос на книгу",  new CreateRequestAction(), rootMenu));
-        requestMenu.addMenuItem(new MenuItem("Список запросов", ()->{}, buildSortingRequestMenu()));
+        requestMenu.addMenuItem(new MenuItem("Список запросов", ()->{},rootMenu));
 
         return requestMenu;
     }
 
-    private Menu buildSortingRequestMenu() {
+  /*  private Menu buildSortingRequestMenu() {
         Menu requestSortMenu = new Menu("Список запросов");
 
         requestSortMenu.addMenuItem(new MenuItem("Выход", new exitAction(), rootMenu));
@@ -170,5 +147,5 @@ public class Builder {
         }, rootMenu));
 
         return requestSortMenu;
-    }
+    }*/
 }

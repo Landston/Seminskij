@@ -1,5 +1,7 @@
 package com.Models.api.DAO;
 
+import com.Models.exceptions.DAOException;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -8,12 +10,12 @@ public abstract interface IDAO<T> {
 
     List<T> getAll();
 
-    void update(UUID id, T item);
+    void update(UUID id, T item) throws DAOException;
 
-    void delete(UUID id);
+    void delete(UUID id) throws DAOException;
 
-    boolean addEntity(T entity);
+    void addEntity(T entity) throws DAOException;
 
-    T getEntity(UUID id);
+    T getEntity(UUID id) throws DAOException;
 
 }

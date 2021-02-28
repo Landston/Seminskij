@@ -5,10 +5,9 @@ import java.time.LocalDate;
 import java.util.Random;
 import java.util.UUID;
 
-public class Book implements Serializable {
+public class Book extends AEntityID implements Serializable {
 
     private String name;
-    private UUID uuid;
     private BookStatus status;
     private String genre;
     private double cost;
@@ -16,9 +15,9 @@ public class Book implements Serializable {
     private LocalDate dateOfAdmission;
 
     public Book(){
+        super();
         Random random = new Random();
         this.dateOfAdmission =  LocalDate.now();
-        this.uuid = UUID.randomUUID();
         this.status = BookStatus.RESERV;
 
 
@@ -26,7 +25,7 @@ public class Book implements Serializable {
     }
 
     public Book(String name, String genre, int year, double cost) {
-        this.uuid = UUID.randomUUID();
+        super();
         this.dateOfAdmission = LocalDate.now();
         this.status = BookStatus.RESERV;
         this.name = name;
@@ -66,14 +65,6 @@ public class Book implements Serializable {
         this.year = year;
     }
 
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid){
-        this.uuid = uuid;
-    }
-
     public BookStatus getStatus() {
         return status;
     }
@@ -86,7 +77,7 @@ public class Book implements Serializable {
     public String toString() {
         return "Book:" +
                 "name='" + name + '\'' +
-                ", uuid=" + uuid +
+                ", uuid=" + this.getUuid() +
                 ", status=" + status +
                 ", genre='" + genre + '\'' +
                 ", cost=" + cost +

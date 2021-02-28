@@ -1,8 +1,25 @@
 package com.UI;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+
 public class UIStart {
 
-    MenuController menuController = MenuController.getInstance();
+    public static void main(String[] args) {
 
+        try {
+            LogManager.getLogManager().readConfiguration(new FileInputStream("D:\\GITLABA\\Senla\\src\\com\\Models\\resources\\logger.properties"));
+        } catch (IOException e) {
+            System.out.println("Logger properties not found");
+        }
+
+        MenuController menuController = MenuController.getInstance();
+
+        menuController.run();
+    }
 
 }

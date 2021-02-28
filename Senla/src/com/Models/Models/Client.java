@@ -6,11 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Client implements Serializable {
+public class Client extends AEntityID implements Serializable {
 
     private String name;
     private String mail;
-    private final UUID id;
 
     @Override
     public String toString() {
@@ -20,8 +19,8 @@ public class Client implements Serializable {
     }
 
     public Client(String name, String mail) {
+        super();
         this.name = name;
-        this.id = UUID.randomUUID();
     }
 
 
@@ -33,9 +32,6 @@ public class Client implements Serializable {
         this.name = name;
     }
 
-    public UUID getId() {
-        return id;
-    }
 
     public String getMail() {
         return mail;
