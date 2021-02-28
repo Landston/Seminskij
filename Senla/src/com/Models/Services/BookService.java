@@ -16,6 +16,7 @@ public class BookService implements IBookService {
     private static BookService instance;
     private Map<String, Comparator<Book>> sort;
 
+
     private BookService() {
         this.bookDAO = BookDAO.getInstance();
         this.init();

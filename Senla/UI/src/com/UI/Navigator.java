@@ -29,7 +29,6 @@ public class Navigator {
         MenuItem menuItem = currentMenu.getMenuItems().get(index);
 
         if(menuItem != null) {
-            if(menuItem.getAction() instanceof exitAction) {}
                 menuItem.doAction();
             currentMenu = menuItem.getNextMenu();
         }

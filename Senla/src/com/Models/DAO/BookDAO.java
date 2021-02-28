@@ -10,6 +10,7 @@ public class BookDAO implements IBookDAO {
 
     private static BookDAO instatnce;
     private List<Book> books;
+    private static final Logger LOGGER = Logger.getLogger(BookDAO.class.getName());
 
     private BookDAO() {
 

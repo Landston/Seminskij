@@ -7,12 +7,9 @@ import java.util.logging.Logger;
 
 public class CustomLogger {
 
-    private Logger log;
-    
+  static {
+      System.out.println("STATIS UNKNOWN");
 
-    public CustomLogger(String className){
-
-
-    }
+  }
 
 }
