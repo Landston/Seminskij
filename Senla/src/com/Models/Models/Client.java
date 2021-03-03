@@ -1,10 +1,13 @@
 package com.Models.Models;
 
+
+
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
 
 public class Client extends AEntityID implements Serializable {
 
@@ -21,6 +24,7 @@ public class Client extends AEntityID implements Serializable {
     public Client(String name, String mail) {
         super();
         this.name = name;
+        this.mail = mail;
     }
 
 

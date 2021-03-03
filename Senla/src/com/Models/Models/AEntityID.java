@@ -1,8 +1,11 @@
 package com.Models.Models;
 
+
+import java.io.Serializable;
 import java.util.UUID;
 
-public abstract class AEntityID {
+
+public abstract class AEntityID implements Serializable {
 
     private  UUID uuid;
 

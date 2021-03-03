@@ -1,5 +1,7 @@
 package com.UI;
 
+import com.Models.BookShopFacade;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,6 +13,9 @@ public class UIStart {
 
     public static void main(String[] args) {
 
+        BookShopFacade facade = BookShopFacade.getInstance();
+        
+
         try {
             LogManager.getLogManager().readConfiguration(new FileInputStream("D:\\GITLABA\\Senla\\src\\com\\Models\\resources\\logger.properties"));
         } catch (IOException e) {
@@ -21,5 +26,6 @@ public class UIStart {
 
         menuController.run();
     }
+
 
 }

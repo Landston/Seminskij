@@ -129,7 +129,7 @@ public class Builder {
         return requestMenu;
     }
 
-  /*  private Menu buildSortingRequestMenu() {
+   /* private Menu buildSortingRequestMenu() {
         Menu requestSortMenu = new Menu("Список запросов");
 
         requestSortMenu.addMenuItem(new MenuItem("Выход", new exitAction(), rootMenu));
@@ -141,10 +141,7 @@ public class Builder {
             BookShopFacade facade = BookShopFacade.getInstance();
             System.out.println(facade.getSortedOrder("ByCount"));
         }, rootMenu));
-        requestSortMenu.addMenuItem(new MenuItem("Список всех запросов по количеству", ()->{
-            BookShopFacade facade = BookShopFacade.getInstance();
-            System.out.println(facade.getSortedOrder("ByName"));
-        }, rootMenu));
+        requestSortMenu.addMenuItem(new MenuItem("Список всех запросов по количеству", (int o1, int o2)-> System.out.println("asdasd"), rootMenu));
 
         return requestSortMenu;
     }*/
