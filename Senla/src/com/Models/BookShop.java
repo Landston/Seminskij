@@ -49,14 +49,12 @@ public class BookShop {
         map.put("100", "3");
         map.put("21", "5");
 
-
         System.out.println( map.size());
         System.out.println(map);
 
         System.out.println(order.getClient());
 
         order = null;
-
 
         System.out.println(order);
 
