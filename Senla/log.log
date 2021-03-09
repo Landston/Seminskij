@@ -1,2 +1,81 @@
-февр. 28, 2021 5:53:43 PM com.Models.Services.BookService getSortedBooks
-INFO: Book sorting condition : ByCost
+мар. 09, 2021 10:36:30 PM com.Models.Services.BookService getSortedBooks
+INFO: Book sorting condition : Alphabet
+мар. 09, 2021 10:36:30 PM com.Models.Services.BookService getSortedBooks
+WARNING: Something went wrong in SortedBooks opetion
+java.lang.NullPointerException: Cannot read field "value" because "anotherString" is null
+	at java.base/java.lang.String.compareTo(String.java:1215)
+	at main/com.Models.Services.BookService.lambda$init$0(BookService.java:48)
+	at java.base/java.util.TimSort.countRunAndMakeAscending(TimSort.java:355)
+	at java.base/java.util.TimSort.sort(TimSort.java:220)
+	at java.base/java.util.Arrays.sort(Arrays.java:1306)
+	at java.base/java.util.ArrayList.sort(ArrayList.java:1721)
+	at main/com.Models.Services.BookService.getSortedBooks(BookService.java:170)
+	at main/com.Models.BookShopFacade.getSortedBooks(BookShopFacade.java:102)
+	at com.SenlaProject.UI/com.UI.actions.BookActions.BookSortingAction.execute(BookSortingAction.java:34)
+	at com.SenlaProject.UI/com.UI.MenuItem.doAction(MenuItem.java:24)
+	at com.SenlaProject.UI/com.UI.Navigator.navigate(Navigator.java:32)
+	at com.SenlaProject.UI/com.UI.MenuController.run(MenuController.java:27)
+	at com.SenlaProject.UI/com.UI.UIStart.main(UIStart.java:27)
+
+мар. 09, 2021 10:36:30 PM com.UI.actions.BookActions.BookSortingAction execute
+WARNING: Something went wrong in SortedBooks opetion
+com.Models.exceptions.ServiceException: Something went wrong in SortedBooks opetion
+	at main/com.Models.Services.BookService.getSortedBooks(BookService.java:179)
+	at main/com.Models.BookShopFacade.getSortedBooks(BookShopFacade.java:102)
+	at com.SenlaProject.UI/com.UI.actions.BookActions.BookSortingAction.execute(BookSortingAction.java:34)
+	at com.SenlaProject.UI/com.UI.MenuItem.doAction(MenuItem.java:24)
+	at com.SenlaProject.UI/com.UI.Navigator.navigate(Navigator.java:32)
+	at com.SenlaProject.UI/com.UI.MenuController.run(MenuController.java:27)
+	at com.SenlaProject.UI/com.UI.UIStart.main(UIStart.java:27)
+Caused by: java.lang.NullPointerException: Cannot read field "value" because "anotherString" is null
+	at java.base/java.lang.String.compareTo(String.java:1215)
+	at main/com.Models.Services.BookService.lambda$init$0(BookService.java:48)
+	at java.base/java.util.TimSort.countRunAndMakeAscending(TimSort.java:355)
+	at java.base/java.util.TimSort.sort(TimSort.java:220)
+	at java.base/java.util.Arrays.sort(Arrays.java:1306)
+	at java.base/java.util.ArrayList.sort(ArrayList.java:1721)
+	at main/com.Models.Services.BookService.getSortedBooks(BookService.java:170)
+	... 6 more
+
+мар. 09, 2021 10:37:22 PM com.Models.Services.BookService updateBook
+INFO: Book id to update : 487ed48b-ba4e-48aa-a05a-4c8b1afc643f  new book : Book:name='Stranger', uuid=c8878f10-f52b-4fa5-8edd-3ef0d9ca7cc4, status=RESERV, genre='Horror, Detective', cost=50.0, year=2018, date = 2021-03-09
+
+мар. 09, 2021 10:37:34 PM com.Models.Services.BookService getSortedBooks
+INFO: Book sorting condition : Alphabet
+мар. 09, 2021 10:37:34 PM com.Models.Services.BookService getSortedBooks
+WARNING: Something went wrong in SortedBooks opetion
+java.lang.NullPointerException: Cannot read field "value" because "anotherString" is null
+	at java.base/java.lang.String.compareTo(String.java:1215)
+	at main/com.Models.Services.BookService.lambda$init$0(BookService.java:48)
+	at java.base/java.util.TimSort.countRunAndMakeAscending(TimSort.java:355)
+	at java.base/java.util.TimSort.sort(TimSort.java:220)
+	at java.base/java.util.Arrays.sort(Arrays.java:1306)
+	at java.base/java.util.ArrayList.sort(ArrayList.java:1721)
+	at main/com.Models.Services.BookService.getSortedBooks(BookService.java:170)
+	at main/com.Models.BookShopFacade.getSortedBooks(BookShopFacade.java:102)
+	at com.SenlaProject.UI/com.UI.actions.BookActions.BookSortingAction.execute(BookSortingAction.java:34)
+	at com.SenlaProject.UI/com.UI.MenuItem.doAction(MenuItem.java:24)
+	at com.SenlaProject.UI/com.UI.Navigator.navigate(Navigator.java:32)
+	at com.SenlaProject.UI/com.UI.MenuController.run(MenuController.java:27)
+	at com.SenlaProject.UI/com.UI.UIStart.main(UIStart.java:27)
+
+мар. 09, 2021 10:37:34 PM com.UI.actions.BookActions.BookSortingAction execute
+WARNING: Something went wrong in SortedBooks opetion
+com.Models.exceptions.ServiceException: Something went wrong in SortedBooks opetion
+	at main/com.Models.Services.BookService.getSortedBooks(BookService.java:179)
+	at main/com.Models.BookShopFacade.getSortedBooks(BookShopFacade.java:102)
+	at com.SenlaProject.UI/com.UI.actions.BookActions.BookSortingAction.execute(BookSortingAction.java:34)
+	at com.SenlaProject.UI/com.UI.MenuItem.doAction(MenuItem.java:24)
+	at com.SenlaProject.UI/com.UI.Navigator.navigate(Navigator.java:32)
+	at com.SenlaProject.UI/com.UI.MenuController.run(MenuController.java:27)
+	at com.SenlaProject.UI/com.UI.UIStart.main(UIStart.java:27)
+Caused by: java.lang.NullPointerException: Cannot read field "value" because "anotherString" is null
+	at java.base/java.lang.String.compareTo(String.java:1215)
+	at main/com.Models.Services.BookService.lambda$init$0(BookService.java:48)
+	at java.base/java.util.TimSort.countRunAndMakeAscending(TimSort.java:355)
+	at java.base/java.util.TimSort.sort(TimSort.java:220)
+	at java.base/java.util.Arrays.sort(Arrays.java:1306)
+	at java.base/java.util.ArrayList.sort(ArrayList.java:1721)
+	at main/com.Models.Services.BookService.getSortedBooks(BookService.java:170)
+	... 6 more
+

@@ -2,6 +2,7 @@ package com.Models.DAO;
 
 import com.Models.Models.AEntityID;
 import com.Models.Models.Book;
+import com.Models.Serializable.Serializer;
 import com.Models.api.DAO.IDAO;
 import com.Models.exceptions.DAOException;
 
@@ -11,8 +12,9 @@ import java.util.logging.Logger;
 
 public class AbstractDAO<T extends AEntityID>  implements IDAO<T> {
 
-    private List<T> repository = new ArrayList<>();
+    protected List<T> repository = new ArrayList<>();
     private Logger LOGGER = Logger.getLogger(this.getClass().getName());
+
 
     @Override
     public List<T> getAll() {

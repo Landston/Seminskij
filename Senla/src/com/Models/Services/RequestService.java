@@ -18,15 +18,16 @@ public class RequestService implements IRequestService {
     private IRequestDAO requestDAO;
     private static RequestService instance;
     private Map<String, Comparator<Request>> sort;
+    private static BookService bookService = BookService.getInstance();;
     private static final Logger LOGGER = Logger.getLogger(RequestService.class.getName());
 
     public RequestService() {
         this.requestDAO = RequestDAO.getInstance();
+        this.init();
     }
 
     public static RequestService getInstance() {
         instance = Objects.requireNonNullElse(instance, new RequestService());
-        ;
 
         return instance;
     }
@@ -43,6 +44,7 @@ public class RequestService implements IRequestService {
     public void createRequest(Book book) throws ServiceException {  // Create Request by book, or increase count of requests for book, if existed
         try {
             LOGGER.log(Level.INFO, String.format("Create request book : %s ", book));
+
             this.requestDAO.getAll().stream()
                     .filter(x -> x.getRequestedBooks().equals(book))
                     .forEach(Request::increaseRequestCount);
@@ -57,9 +59,6 @@ public class RequestService implements IRequestService {
             throw new ServiceException("Create request operation failed", e);
         }
     }
-
-
-
 
     public List<Request> getSortedRequests(String condition) throws ServiceException {
         try {
@@ -81,26 +80,39 @@ public class RequestService implements IRequestService {
         return list.stream()
                 .filter(x -> x.getRequestedBooks().getUuid().equals(uuid))
                 .count();
-
     }
-
 
     public List<Request> getAllRequests() {
         return this.requestDAO.getAll();
     }
 
-    public Request getByBook(Book book) throws ServiceException {
-        try {// return Requests for book or null
+    public Request getRequestByBook(UUID uuid) throws ServiceException {
+        try {
             List<Request> requests = new ArrayList<>(this.requestDAO.getAll());
-            Optional<Request> request = requests.stream().filter(x -> x.getRequestedBooks().equals(book)).findFirst();
+            Optional<Request> request = requests.stream().filter(x -> x.getRequestedBooks().getUuid().equals(uuid)).findFirst();
 
-            return request.orElseThrow();
-        } catch (Exception e){
+            if (request.isEmpty()) {
+                Request newRequest = new Request(bookService.getBookById(uuid));
+                requestDAO.addEntity(newRequest);
+                return  newRequest;
+            } else return request.get();
+
+        } catch (DAOException e){
+            LOGGER.log(Level.WARNING, "Get request by Book id failed", e);
+            throw new ServiceException("Get request by book failed", e);
+        }
+        catch (Exception e) {
             LOGGER.log(Level.WARNING, "Get request by book failed");
             throw new ServiceException("Get request by book failed", e);
 
         }
+
     }
 
+    public void closeRequestById(UUID uuid) throws ServiceException {
+        Request request = this.getRequestByBook(uuid);
+
+        request.setRequestOpenClose(false);
+    }
 }
 

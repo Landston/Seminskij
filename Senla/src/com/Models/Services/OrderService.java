@@ -84,7 +84,7 @@ public class OrderService implements IOrderService {
 
             return orders;
         } catch (IllegalArgumentException e) {
-            LOGGER.log(Level.INFO, "Get closed order by Time failed");
+            LOGGER.log(Level.WARNING, "Get closed order by Time failed");
             throw new ServiceException("Get closed order by Time operation failed", e);
 
         }

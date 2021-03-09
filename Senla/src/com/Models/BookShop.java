@@ -7,20 +7,21 @@ import com.Models.DAO.RequestDAO;
 import com.Models.Models.Book;
 import com.Models.Models.Client;
 import com.Models.Models.Order;
+import com.Models.Models.Request;
+import com.Models.Serializable.PropertyHanlder;
+import com.Models.Serializable.Serializer;
 import com.Models.Services.BookService;
 import com.Models.Services.ClientService;
 import com.Models.Services.OrderService;
 import com.Models.Services.RequestService;
 import com.Models.api.DAO.IBookDAO;
+import com.Models.exceptions.DAOException;
 
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.logging.*;
 
 
@@ -37,26 +38,30 @@ public class BookShop {
 
 
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) throws DAOException {
 
-        Client client = new Client(null, null);
+        Optional<String> properties= PropertyHanlder.getProperties("path");
+        List<Book> books= new ArrayList<>();
+        books.add(new Book());
 
-        Order order = new Order(client);
+     //   System.out.println(BOOK_DAO.getAll());
 
-        Map<String, String> map = new HashMap<>();
+        List<Client> clients = new ArrayList<>();
+        clients.add(new Client("Vasya", "Vasya@gmail.com"));
 
-        map.put("32", "1");
-        map.put("100", "3");
-        map.put("21", "5");
+        List<Order> orders = new ArrayList<>();
+        orders.add(new Order(books, clients.get(0)));
 
-        System.out.println( map.size());
-        System.out.println(map);
+        List<Request> requests = new ArrayList<>();
+        requests.add(new Request());
 
-        System.out.println(order.getClient());
+       Serializer.serialize(requests,books,orders,clients);
 
-        order = null;
+//        System.out.println(BOOK_DAO.getAll());
+//        System.out.println(REQUEST_DAO.getAll());
+        System.out.println(ORDER_DAO.getAll());
 
-        System.out.println(order);
+     //   Serializer.serialize(books, clients, orders, requests);
 
        // Client client1 = new ObjectMapper().readValue(json, Client.class);
         //System.out.println(client1);

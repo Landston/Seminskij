@@ -16,7 +16,7 @@ public interface IBookService {
 
     List<Book> getSortedBooks(String condition) throws ServiceException;
 
-    List<Book> getSortedBooksThatAreNotSoldBySixMonths( String condition) throws ServiceException;
+    List<Book> getSortedStaledBooks(String condition) throws ServiceException;
 
 
 }

@@ -1,7 +1,17 @@
 package com.UI.actions;
 
-public class exitAction implements IAction{
+import java.util.logging.Level;
+
+public class exitAction extends BaseAction implements IAction{
     @Override
-    public void execute() { }
+    public void execute() {
+        try {
+            this.facade.serialization();
+
+        }catch (Exception e){
+            LOGGER.log(Level.WARNING, "Exit action failed");
+
+        }
+    }
 
 }

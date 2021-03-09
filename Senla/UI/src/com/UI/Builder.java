@@ -7,6 +7,7 @@ import com.UI.actions.ClientActions.DeleteClientAction;
 import com.UI.actions.ClientActions.UpdateClientAction;
 import com.UI.actions.OrderActions.*;
 import com.UI.actions.RequestActions.CreateRequestAction;
+import com.UI.actions.RequestActions.RequestSortAction;
 import com.UI.actions.exitAction;
 
 public class Builder {
@@ -26,7 +27,8 @@ public class Builder {
     public void buildMenu(){  // Создаём начальное меню
       this.rootMenu = new Menu("Начальное меню");
 
-      this.rootMenu.addMenuItem(new MenuItem("Выход", new exitAction(), new Menu("Thanks for coming")));
+      this.rootMenu.addMenuItem(new MenuItem("Выход из программы", new exitAction(), new Menu("Thanks for coming")));
+      this.rootMenu.addMenuItem(new MenuItem("Вернуться в начальное меню", ()->{}, rootMenu));
       this.rootMenu.addMenuItem(new MenuItem("Работа с книгами", ()-> {}  , buildBookMenu()));
       this.rootMenu.addMenuItem(new MenuItem("Работа с заказами", ()-> {}, buildOrderMenu()));
       this.rootMenu.addMenuItem(new MenuItem("Работа с запросами", ()-> {}, buildRequestMenu()));
@@ -41,10 +43,15 @@ public class Builder {
     public Menu buildClientMenu(){
         Menu clientMenu = new Menu("Клиентское меню");
 
-        clientMenu.addMenuItem(new MenuItem("Выход", new exitAction(), rootMenu));
+        clientMenu.addMenuItem(new MenuItem("Выход из программы", new exitAction(),  new Menu("End")));
+        clientMenu.addMenuItem(new MenuItem("Вернуться в начальное меню", ()->{}, rootMenu));
         clientMenu.addMenuItem(new MenuItem("Добавить клиента в систему", new CreateClientAction(), rootMenu));
         clientMenu.addMenuItem(new MenuItem("Изменить клиента ", new UpdateClientAction(), rootMenu));
         clientMenu.addMenuItem(new MenuItem("Удалить клиента ", new DeleteClientAction(), rootMenu));
+        clientMenu.addMenuItem(new MenuItem("Список клиентов ", () ->{
+            BookShopFacade facade = BookShopFacade.getInstance();
+            System.out.println(facade.getAllClients());
+        }, rootMenu));
 
         return  clientMenu;
     }
@@ -52,7 +59,8 @@ public class Builder {
     private Menu buildBookMenu(){
         Menu bookMenu = new Menu("Книжное меню");
 
-        bookMenu.addMenuItem(new MenuItem("Выход", new exitAction(), rootMenu));
+        bookMenu.addMenuItem(new MenuItem("Выход из программы", new exitAction(),  new Menu("End")));
+        bookMenu.addMenuItem(new MenuItem("Вернуться в начальное меню", ()->{}, rootMenu));
         bookMenu.addMenuItem(new MenuItem("Создать новую книгу", new BookCreateAction(), rootMenu));
         bookMenu.addMenuItem(new MenuItem("Удалить книгу", new BookDeleteAction(), rootMenu));
         bookMenu.addMenuItem(new MenuItem("Изменить книгу", new BookUpdateAction(), rootMenu));
@@ -106,7 +114,8 @@ public class Builder {
     private Menu buildOrderMenu(){
         Menu orderMenu = new Menu("Меню работы с Заказами");
 
-        orderMenu.addMenuItem(new MenuItem("Выход", new exitAction(), rootMenu));
+        orderMenu.addMenuItem(new MenuItem("Выход из программы", new exitAction(), new Menu("End")));
+        orderMenu.addMenuItem(new MenuItem("Вернуться в начальное меню", ()->{}, rootMenu));
         orderMenu.addMenuItem(new MenuItem("Создать новый заказ", new CreateOrderAction(), rootMenu));
         orderMenu.addMenuItem(new MenuItem("Посмотреть детали заказа", new OrderDetailsAction(), rootMenu));
         orderMenu.addMenuItem(new MenuItem("Удалить заказ", new DeleteOrderAction(), rootMenu));
@@ -122,9 +131,10 @@ public class Builder {
     private Menu buildRequestMenu(){
         Menu requestMenu = new Menu("Меняю работы с запросами");
 
-        requestMenu.addMenuItem(new MenuItem("Выход", new exitAction(), rootMenu));
+        requestMenu.addMenuItem(new MenuItem("Выход из программы", new exitAction(),  new Menu("End")));
+        requestMenu.addMenuItem(new MenuItem("Вернуться в начальное меню", ()->{}, rootMenu));
         requestMenu.addMenuItem(new MenuItem("Создать запрос на книгу",  new CreateRequestAction(), rootMenu));
-        requestMenu.addMenuItem(new MenuItem("Список запросов", ()->{},rootMenu));
+        requestMenu.addMenuItem(new MenuItem("Список запросов", new RequestSortAction(),rootMenu));
 
         return requestMenu;
     }

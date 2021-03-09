@@ -4,13 +4,16 @@ import com.Models.Models.Book;
 import com.Models.Models.Client;
 import com.Models.Models.Order;
 import com.Models.Models.Request;
+import com.Models.Serializable.Serializer;
 import com.Models.Services.BookService;
 import com.Models.Services.ClientService;
 import com.Models.Services.OrderService;
 import com.Models.Services.RequestService;
+import com.Models.exceptions.DAOException;
 import com.Models.exceptions.ServiceException;
 
 
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -106,9 +109,9 @@ public class BookShopFacade {
         return Collections.emptyList();
     }
 
-    public List<Book> getBookThatAreNotSoldBySixMonths(String condition) throws ServiceException {
+    public List<Book> getStaledBooks(String condition) throws ServiceException {
         try {
-            if (condition != null) return this.bookService.getSortedBooksThatAreNotSoldBySixMonths(condition);
+            if (condition != null) return this.bookService.getSortedStaledBooks(condition);
 
         } catch (NullPointerException e) {
             System.out.println("Значение Condition в сортировке книг равно null или некорректно");
@@ -293,5 +296,13 @@ public class BookShopFacade {
 
     public double totalFirmRevenue() {
         return this.orderService.getTotalRevenue();
+    }
+
+    public void serialization() throws DAOException {
+
+        Serializer.serialize(this.bookService.getAll(),
+                this.clientService.getAllClients(),
+                this.orderService.getAllOrdes(),
+                this.requestService.getAllRequests());
     }
 }

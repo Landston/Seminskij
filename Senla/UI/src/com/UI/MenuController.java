@@ -19,7 +19,7 @@ public class MenuController {
         navigator = Navigator.getInstance();
         navigator.setCurrentMenu(builder.getRootMenu());
         navigator.printMenu();
-        Integer index = -1;
+        Integer index = -2;
 
         while(!index.equals(0)){
             System.out.println("Выберите пункт меню: ");

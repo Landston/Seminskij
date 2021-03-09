@@ -1,9 +1,12 @@
 package com.Models.Services;
 
 import com.Models.DAO.BookDAO;
+import com.Models.DAO.RequestDAO;
 import com.Models.Models.Book;
 import com.Models.Models.BookStatus;
+import com.Models.Serializable.PropertyHanlder;
 import com.Models.api.DAO.IBookDAO;
+import com.Models.api.DAO.IRequestDAO;
 import com.Models.api.Service.IBookService;
 import com.Models.exceptions.DAOException;
 import com.Models.exceptions.ServiceException;
@@ -20,10 +23,11 @@ public class BookService implements IBookService {
     private static BookService instance;
     private Map<String, Comparator<Book>> sort;
     private static final Logger LOGGER = Logger.getLogger(BookService.class.getName());
-
+    private static RequestService requestService;
 
     private BookService() {
         this.bookDAO = BookDAO.getInstance();
+        requestService= RequestService.getInstance();
         this.init();
 
     }
@@ -89,13 +93,15 @@ public class BookService implements IBookService {
         try {
             Book book = this.bookDAO.getEntity(id);
 
-            if (book != null && book.getStatus().equals(BookStatus.RESERV)) {
+            if (book.getStatus().equals(BookStatus.RESERV)) {
                 book.setStatus(BookStatus.ABSENT);
-                return true;
+
+
+
             }
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "WritinOffBook failed", e);
-            throw new ServiceException("WritinOffBook operation failed", e);
+            LOGGER.log(Level.WARNING, "WritingOffBook failed", e);
+            throw new ServiceException("WritingOffBook operation failed", e);
         }
 
         return false;
@@ -114,6 +120,10 @@ public class BookService implements IBookService {
     @Override
     public void addBookToShop(String name, String genre, int year, double cost) throws ServiceException {
         Book book = new Book();
+
+        LOGGER.info( String.format("Add book to Shop  params. Name : %s, Genre : %s, Year : %s, Cost : %s", name, genre, year, cost));
+
+        if(cost < 0) throw new ServiceException("Cost is negative");
 
         book.setName(name);
         book.setGenre(genre);
@@ -147,6 +157,7 @@ public class BookService implements IBookService {
             }
         }
         catch (ServiceException e){
+            LOGGER.log(Level.WARNING, "Adding book to WareHouse failed", e);
             throw new ServiceException(e);
         }
     }
@@ -171,12 +182,14 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public List<Book> getSortedBooksThatAreNotSoldBySixMonths(String condition) throws ServiceException {
+    public List<Book> getSortedStaledBooks(String condition) throws ServiceException {
        try{
         List<Book> sorted = new ArrayList<>();
         LocalDate date = LocalDate.now();
+        Optional<String> properties = PropertyHanlder.getProperties("month");
+        int monthNumber = Integer.parseInt(properties.orElseThrow());
 
-        sorted = this.bookDAO.getAll().stream().filter(x -> x.getDateOfAdmission().isBefore(date.minusMonths(6))).collect(Collectors.toList());
+        sorted = this.bookDAO.getAll().stream().filter(x -> x.getDateOfAdmission().isBefore(date.minusMonths(monthNumber))).collect(Collectors.toList());
 
         sorted.sort(this.sort.get(condition));
 
@@ -187,7 +200,12 @@ public class BookService implements IBookService {
            LOGGER.log(Level.WARNING, "Condition for sorting Books is not acceptable", e);
            throw new ServiceException("Get sorted book operation failed", e);
 
-       } catch (Exception e){
+       } catch (NoSuchElementException e){
+           LOGGER.log(Level.WARNING, "Property month is inaccessible", e);
+           throw new ServiceException("Get sorted book operation failed", e);
+
+       }
+       catch (Exception e){
            LOGGER.log(Level.WARNING, "Something went wrong in SortedBooks opetion", e);
            throw  new ServiceException("Something went wrong in SortedBooks opetion", e);
 

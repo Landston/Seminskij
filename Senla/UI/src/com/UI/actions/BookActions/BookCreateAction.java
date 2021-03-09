@@ -30,6 +30,7 @@ public class BookCreateAction extends BaseAction implements IAction {
                 
                 System.out.println("Введите цену:");
 
+
                 double cost = scanner.nextDouble();
 
                 facade.addBookToShop(name, gonre, year, cost);
@@ -39,6 +40,7 @@ public class BookCreateAction extends BaseAction implements IAction {
             }
         } catch (Exception e){
             LOGGER.log(Level.WARNING, e.getLocalizedMessage(), e);
+
         }
     }
 }

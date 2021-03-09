@@ -2,6 +2,7 @@ package com.Models.DAO;
 
 import com.Models.Models.Order;
 import com.Models.Models.Request;
+import com.Models.Serializable.Serializer;
 import com.Models.api.DAO.IRequestDAO;
 
 import java.util.*;
@@ -13,6 +14,7 @@ public class RequestDAO extends AbstractDAO<Request> implements IRequestDAO {
 
     private RequestDAO(){
         requests = new ArrayList<>();
+        requests = Serializer.deserialize(Request.class);
     }
 
     public static RequestDAO getInstance(){

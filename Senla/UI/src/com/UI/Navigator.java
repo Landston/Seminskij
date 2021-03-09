@@ -26,12 +26,17 @@ public class Navigator {
     }
 
     public void navigate(Integer index){
-        MenuItem menuItem = currentMenu.getMenuItems().get(index);
-
-        if(menuItem != null) {
+        try {
+            MenuItem menuItem = currentMenu.getMenuItems().get(index);
+            if(menuItem != null) {
                 menuItem.doAction();
-            currentMenu = menuItem.getNextMenu();
+                currentMenu = menuItem.getNextMenu();
+            }
         }
+        catch (IndexOutOfBoundsException e){
+            System.out.println("Неверный индекс");
+        }
+
 
     }
 
