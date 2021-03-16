@@ -1,12 +1,12 @@
 package com.Models.Services;
 
+import com.DI.Annotations.ConfigProperty;
+import com.DI.Annotations.Repository;
+import com.DI.Annotations.Singleton;
 import com.Models.DAO.BookDAO;
-import com.Models.DAO.RequestDAO;
 import com.Models.Models.Book;
 import com.Models.Models.BookStatus;
-import com.Models.Serializable.PropertyHanlder;
 import com.Models.api.DAO.IBookDAO;
-import com.Models.api.DAO.IRequestDAO;
 import com.Models.api.Service.IBookService;
 import com.Models.exceptions.DAOException;
 import com.Models.exceptions.ServiceException;
@@ -17,6 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+@Repository
+@Singleton
 public class BookService implements IBookService {
 
     private IBookDAO bookDAO;
@@ -24,6 +26,9 @@ public class BookService implements IBookService {
     private Map<String, Comparator<Book>> sort;
     private static final Logger LOGGER = Logger.getLogger(BookService.class.getName());
     private static RequestService requestService;
+
+    @ConfigProperty(propertyName = "month")
+    private int month;
 
     private BookService() {
         this.bookDAO = BookDAO.getInstance();
@@ -186,8 +191,9 @@ public class BookService implements IBookService {
        try{
         List<Book> sorted = new ArrayList<>();
         LocalDate date = LocalDate.now();
-        Optional<String> properties = PropertyHanlder.getProperties("month");
-        int monthNumber = Integer.parseInt(properties.orElseThrow());
+    /*    Optional<String> properties = PropertyHandler.getProperties("month");*/
+
+           int monthNumber = 0;
 
         sorted = this.bookDAO.getAll().stream().filter(x -> x.getDateOfAdmission().isBefore(date.minusMonths(monthNumber))).collect(Collectors.toList());
 

@@ -1,5 +1,5 @@
 module com.SenlaProject.UI{
-    requires main;
+    requires com.Models;
     requires java.logging;
 
 

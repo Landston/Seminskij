@@ -1,5 +1,6 @@
 package com.Models.Services;
 
+import com.DI.Annotations.Singleton;
 import com.Models.DAO.ClientDAO;
 import com.Models.Models.Book;
 import com.Models.Models.Client;
@@ -11,6 +12,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Singleton
 public class ClientService implements IClientService {
 
     private ClientDAO clientDAO;

@@ -1,50 +1,52 @@
 package com.Models;
 
+import com.DI.ApplicationConfigs.Application;
+import com.DI.ApplicationConfigs.ApplicationContext;
 import com.Models.DAO.BookDAO;
 import com.Models.DAO.ClientDAO;
 import com.Models.DAO.OrderDAO;
 import com.Models.DAO.RequestDAO;
 import com.Models.Models.Book;
-import com.Models.Models.Client;
-import com.Models.Models.Order;
-import com.Models.Models.Request;
-import com.Models.Serializable.PropertyHanlder;
-import com.Models.Serializable.Serializer;
 import com.Models.Services.BookService;
 import com.Models.Services.ClientService;
 import com.Models.Services.OrderService;
-import com.Models.Services.RequestService;
-import com.Models.api.DAO.IBookDAO;
 import com.Models.exceptions.DAOException;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.*;
-import java.util.logging.*;
 
 
 public class BookShop {
 
-   private static BookDAO BOOK_DAO =  BookDAO.getInstance();
-   private static OrderDAO ORDER_DAO = OrderDAO.getInstance();
-   private static RequestDAO REQUEST_DAO = RequestDAO.getInstance();
-   private static ClientDAO CLIENT_DAO=  ClientDAO.getInstance();
-   private static  ClientService clientService = ClientService.getInstance();
-   private static BookService bookService = BookService.getInstance();
-   private static OrderService orderService =  OrderService.getInstance();
-   private static RequestService requestService = RequestService.getInstance();
-
+    private static BookDAO BOOK_DAO = BookDAO.getInstance();
+    private static OrderDAO ORDER_DAO = OrderDAO.getInstance();
+    private static RequestDAO REQUEST_DAO = RequestDAO.getInstance();
+    private static ClientDAO CLIENT_DAO = ClientDAO.getInstance();
+//    private static ClientService clientService = ClientService.getInstance();
+    private static BookService bookService = BookService.getInstance();
+    private static OrderService orderService = OrderService.getInstance();
+//    private static RequestService requestService = RequestService.getInstance();
 
 
     public static void main(String[] args) throws DAOException {
 
-        Optional<String> properties= PropertyHanlder.getProperties("path");
-        List<Book> books= new ArrayList<>();
+
+        ApplicationContext context = Application.run("com.DI",
+                new HashMap<>());
+
+        System.out.println(context.getObject(ClientService.class));
+        System.out.println(context.getObject(Book.class));
+        System.out.println(context.getObject(Book.class));
+        System.out.println(context.getObject(ClientService.class));
+
+
+
+
+     /*   Optional<String> properties = PropertyHanlder.getProperties("path");
+        List<Book> books = new ArrayList<>();
         books.add(new Book());
 
-     //   System.out.println(BOOK_DAO.getAll());
+        //   System.out.println(BOOK_DAO.getAll());
 
         List<Client> clients = new ArrayList<>();
         clients.add(new Client("Vasya", "Vasya@gmail.com"));
@@ -55,20 +57,19 @@ public class BookShop {
         List<Request> requests = new ArrayList<>();
         requests.add(new Request());
 
-       Serializer.serialize(requests,books,orders,clients);
+        Serializer.serialize(requests, books, orders, clients);
 
 //        System.out.println(BOOK_DAO.getAll());
 //        System.out.println(REQUEST_DAO.getAll());
         System.out.println(ORDER_DAO.getAll());
 
-     //   Serializer.serialize(books, clients, orders, requests);
+        //   Serializer.serialize(books, clients, orders, requests);
 
-       // Client client1 = new ObjectMapper().readValue(json, Client.class);
+        // Client client1 = new ObjectMapper().readValue(json, Client.class);
         //System.out.println(client1);
 
 
-
-      //orderService.getOrderByID(UUID.randomUUID());
+        //orderService.getOrderByID(UUID.randomUUID());
         /*
 
         bookService.addBookToShop("X", "Horror", 2000, 300);
@@ -103,8 +104,8 @@ public class BookShop {
 
         List<Request> list = new ArrayList<Request>();
 */
-      //  System.out.println(bookService.getAll());
-      //  System.out.println(bookService.getSortedBooks(new BookDateOfWritingComparator()));
+        //  System.out.println(bookService.getAll());
+        //  System.out.println(bookService.getSortedBooks(new BookDateOfWritingComparator()));
 
 
     }
