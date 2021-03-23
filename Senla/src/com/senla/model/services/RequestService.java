@@ -19,21 +19,17 @@ public class RequestService implements IRequestService {
 
     @Auttowared
     private IRequestDAO requestDAO;
-    private static RequestService instance;
+    @Auttowared
+    private BookService bookService;
+
     private Map<String, Comparator<Request>> sort;
-    private static BookService bookService = BookService.getInstance();;
     private static final Logger LOGGER = Logger.getLogger(RequestService.class.getName());
 
     public RequestService() {
-        this.requestDAO = RequestDAO.getInstance();
+
         this.init();
     }
 
-    public static RequestService getInstance() {
-        instance = Objects.requireNonNullElse(instance, new RequestService());
-
-        return instance;
-    }
 
     public void init() {
         this.sort = new HashMap<>();
@@ -97,14 +93,13 @@ public class RequestService implements IRequestService {
             if (request.isEmpty()) {
                 Request newRequest = new Request(bookService.getBookById(uuid));
                 requestDAO.addEntity(newRequest);
-                return  newRequest;
+                return newRequest;
             } else return request.get();
 
-        } catch (DAOException e){
+        } catch (DAOException e) {
             LOGGER.log(Level.WARNING, "Get request by Book id failed", e);
             throw new ServiceException("Get request by book failed", e);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Get request by book failed");
             throw new ServiceException("Get request by book failed", e);
 

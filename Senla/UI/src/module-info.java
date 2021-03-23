@@ -1,8 +1,8 @@
 module com.senal.ui{
-    requires com.model;
-    requires java.logging;
+    requires com.senla.model;
     requires reflections;
-    requires com.di;
-
+    requires com.senla.di;
+    requires java.logging;
+    opens com.senal.ui to com.senla.di;
 
 }

@@ -27,25 +27,18 @@ import java.util.*;
 public class BookShopFacade {
 
     @Auttowared
-    private static BookShopFacade instance;
+    private  IBookService bookService ;
     @Auttowared
-    private final IBookService bookService = BookService.getInstance();
+    private  IClientService clientService ;
     @Auttowared
-    private final IClientService clientService = ClientService.getInstance();
+    private  IOrderService orderService;
     @Auttowared
-    private final IOrderService orderService = OrderService.getInstance();
-    @Auttowared
-    private final IRequestService requestService = RequestService.getInstance();
+    private  IRequestService requestService ;
 
-    private BookShopFacade() {
+    public BookShopFacade() {
 
     }
 
-    public static BookShopFacade getInstance() {
-        instance = Objects.requireNonNullElse(instance, new BookShopFacade());
-
-        return instance;
-    }
 
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -4,6 +4,8 @@ import com.senal.ui.actions.book.*;
 import com.senal.ui.actions.order.*;
 import com.senal.ui.actions.request.RequestSortAction;
 
+import com.senla.di.annotations.Auttowared;
+import com.senla.di.annotations.Singleton;
 import com.senla.model.BookShopFacade;
 
 
@@ -13,19 +15,20 @@ import com.senal.ui.actions.client.UpdateClientAction;
 import com.senal.ui.actions.request.CreateRequestAction;
 import com.senal.ui.actions.exitAction;
 
+@Singleton
 public class Builder {
 
-    private static Builder insance = new Builder();
+
     private Menu rootMenu;
 
-    private Builder(){
+    @Auttowared
+    private BookShopFacade facade;
+
+    public Builder(){
 
     }
 
-    public static Builder getInsance(){
-        if(insance == null) insance = new Builder();
-        return insance;
-    }
+
 
     public void buildMenu(){  // Создаём начальное меню
       this.rootMenu = new Menu("Начальное меню");
@@ -52,7 +55,7 @@ public class Builder {
         clientMenu.addMenuItem(new MenuItem("Изменить клиента ", new UpdateClientAction(), rootMenu));
         clientMenu.addMenuItem(new MenuItem("Удалить клиента ", new DeleteClientAction(), rootMenu));
         clientMenu.addMenuItem(new MenuItem("Список клиентов ", () ->{
-            BookShopFacade facade = BookShopFacade.getInstance();
+
             System.out.println(facade.getAllClients());
         }, rootMenu));
 

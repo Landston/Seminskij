@@ -7,8 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="UI" exported="" />
     <orderEntry type="module" module-name="Senla" />
-    <orderEntry type="library" name="reflections-0.9.111" level="project" />
-    <orderEntry type="module" module-name="DI" />
   </component>
 </module>

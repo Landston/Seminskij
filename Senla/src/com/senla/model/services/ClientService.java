@@ -21,7 +21,7 @@ public class ClientService implements IClientService {
     private ClientDAO clientDAO;
 
     private Map<String, Comparator<Book>> sort;
-    private static ClientService instance;
+
     private static final Logger LOGGER = Logger.getLogger(ClientService.class.getName());
 
 
@@ -33,12 +33,6 @@ public class ClientService implements IClientService {
     private void init() {
         this.sort = new HashMap<>();
 
-    }
-
-    public static ClientService getInstance() {
-        instance = Objects.requireNonNullElse(instance, new ClientService());
-
-        return instance;
     }
 
     public Client create(String name, String mail) {

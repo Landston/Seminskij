@@ -22,8 +22,8 @@ public class BookService implements IBookService {
 
     @Auttowared
     private BookDAO bookDAO;
-    private static BookService instance;
     private Map<String, Comparator<Book>> sort;
+
     private static final Logger LOGGER = Logger.getLogger(BookService.class.getName());
     private static RequestService requestService;
 
@@ -35,11 +35,7 @@ public class BookService implements IBookService {
         this.init();
     }
 
-    public static BookService getInstance() {
-        instance = Objects.requireNonNullElse(instance, new BookService());
 
-        return instance;
-    }
 
     public Set<String> getSortParams() {
         return new HashSet<>(this.sort.keySet());

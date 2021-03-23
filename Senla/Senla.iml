@@ -7,7 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="DI" />
+    <orderEntry type="module" module-name="DI" exported="" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>

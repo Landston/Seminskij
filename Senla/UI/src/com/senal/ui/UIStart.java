@@ -24,17 +24,24 @@ public class UIStart {
 
     //   System.out.println(context.getObject(configItemsClass.class).getName().getMonth());
 
+        ApplicationContext context = Application.run("com.senla", new HashMap<>());
+
+        context.getObject(BookShopFacade.class);
+        context.getObject(Builder.class);
+
+        System.out.println();
         try {
             LogManager.getLogManager().readConfiguration(new FileInputStream("src/com/senla/model/resources/logger.properties"));
         } catch (IOException e) {
             System.out.println("Logger properties not found");
         }
 
-      /*  LOGGER.log(Level.INFO, "WORK PLEASE");
-        MenuController menuController = MenuController.getInstance();
 
-        menuController.run();
-*/
+       LOGGER.log(Level.INFO, "WORK PLEASE");
+
+
+        context.getObject(MenuController.class).run();
+
     }
 
 

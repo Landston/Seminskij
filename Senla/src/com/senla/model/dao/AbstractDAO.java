@@ -13,7 +13,6 @@ public class AbstractDAO<T extends AEntityID>  implements IDAO<T> {
     public List<T> repository = new ArrayList<>();
     private Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
-
     @Override
     public List<T> getAll() {
         return new ArrayList<>(this.repository);

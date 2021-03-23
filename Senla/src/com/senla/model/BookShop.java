@@ -13,6 +13,7 @@ import com.senla.model.models.Order;
 import com.senla.model.models.Request;
 import com.senla.model.serializable.Serializer;
 import com.senla.model.services.BookService;
+import com.senla.model.services.ClientService;
 
 import java.io.*;
 import java.lang.reflect.AnnotatedArrayType;
@@ -37,20 +38,20 @@ public class BookShop {
 
     public static void main(String[] args) throws DAOException, NoSuchFieldException, ServiceException {
 
-        LOGGER.log(Level.INFO, "DASLDASLD");
+       LOGGER.log(Level.INFO, "DASLDASLD");
 
         ApplicationContext context = Application.run("com.senla", new HashMap<>());
 
-        System.out.println(context.getObject(BookService.class).getSortedBooks("Alphabet"));
+        System.out.println(context.getObject(ClientService.class).getAll());
 
-        System.out.println("");
+
                                                 // SERIALIZATION TO CREATE FILE WITH LIST OF ENTITIES
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-     /*   List<Book> books = new ArrayList<>();
+   /*   List<Book> books = new ArrayList<>();
 
-        books.add(new Book());
-        books.add(new Book());
-        books.add(new Book());
+        books.add(new Book("Alfred Gette", "Detective", 2015, 15));
+        books.add(new Book("Outsider", "Horror", 2018, 20));
+        books.add(new Book("Jack Richer", "Detective", 2004, 15));
 
         List<Client> clients = new ArrayList<>();
 
@@ -71,9 +72,9 @@ public class BookShop {
 
         Serializer.serialize(books, clients, requests, orders);
 
+*/
 
 
-      */
      /*   Optional<String> properties = PropertyHanlder.getProperties("path");
         List<Book> books = new ArrayList<>();
         books.add(new Book());

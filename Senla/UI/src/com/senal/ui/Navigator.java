@@ -1,18 +1,16 @@
 package com.senal.ui;
 
+import com.senla.di.annotations.Singleton;
+
+@Singleton
 public class Navigator {
 
-    private static Navigator instance = new Navigator();
     private Menu currentMenu;
 
-    private Navigator(){
+    public Navigator(){
 
     }
 
-    public static Navigator getInstance(){
-        if(instance == null) new Navigator();
-        return instance;
-    }
     public void printMenu(){
         int count = 0;
 

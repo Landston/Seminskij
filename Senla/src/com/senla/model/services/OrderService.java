@@ -27,17 +27,10 @@ public class OrderService implements IOrderService {
     private IOrderDAO orderDAO;
     private static final Logger LOGGER = Logger.getLogger(OrderService.class.getName());
     private Map<String, Comparator<Order>> sort;
-    private static OrderService instance;
+
 
     public OrderService() {
-        this.orderDAO = OrderDAO.getInstance();
         this.init();
-    }
-
-    public static OrderService getInstance() {
-        instance = Objects.requireNonNullElse(instance, new OrderService());
-
-        return instance;
     }
 
     private void init() {

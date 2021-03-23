@@ -1,4 +1,4 @@
-module com.di{
+module com.senla.di{
 
     exports com.senla.di;
     exports com.senla.di.applicationConfigs;
