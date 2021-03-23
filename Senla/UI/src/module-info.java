@@ -1,6 +1,8 @@
-module com.SenlaProject.UI{
-    requires com.Models;
+module com.senal.ui{
+    requires com.model;
     requires java.logging;
+    requires reflections;
+    requires com.di;
 
 
 }
