@@ -1,0 +1,11 @@
+#IntelijIDEA
+/.idea
+
+#log
+*.log
+
+#out
+/out
+
+
+

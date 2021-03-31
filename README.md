@@ -1,1 +1,0 @@
-# Seminskij_Senla_Test
