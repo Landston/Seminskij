@@ -1,0 +1,99 @@
+//////////////////////////////////////////////////////PRODUCT/////////////////////////////////////////////////////////////////////////////////////
+INSERT INTO product 
+	VALUE ("NVIDIA", 1, "PC");
+
+INSERT INTO product
+	VALUE ("Inspur",2,"PC");
+    
+INSERT INTO product
+	VALUE ( "Lenovo", 3, "PC");
+    
+INSERT INTO product
+	VALUE 	("OliveTelecom", 4, "PC");
+
+INSERT INTO product 
+	VALUE ("Epson", 5, "Printer");
+
+INSERT INTO `task-10`.`product` (`maker`, `model`, `type`) VALUES ('HP', '6', 'Printer');
+INSERT INTO `task-10`.`product` (`maker`, `model`, `type`) VALUES ('Brother', '7', 'Printer');
+INSERT INTO `task-10`.`product` (`maker`, `model`, `type`) VALUES ('Canon', '8', 'Printer');
+INSERT INTO `task-10`.`product` (`maker`, `model`, `type`) VALUES ('Apple', '9', 'Laptop');
+
+INSERT INTO product 
+	VALUES ('Lenovo',11, "Laptop");
+INSERT INTO product 
+	VALUES   ('Dell',10, "Laptop");
+    
+INSERT INTO product
+	VALUES ("Acer", "Xerox", "Asus") , (12,13,14), ("Laptop", "Printer", "PC");
+
+INSERT INTO product VALUE ("Lenovo",14 , "PC");
+INSERT INTO product VALUE ("Lenovo", 15, "PC");
+INSERT INTO product VALUE ("Lenovo", 16, "PC");
+INSERT INTO product VALUE ("Dell", 17, "PC");
+
+
+//////////////////////////////////////////////////////PC/////////////////////////////////////////////////////////////////////////////////////
+INSERT INTO pc
+	VALUES (1, 1, 500, 16, 900, '12x', 460);
+    
+INSERT INTO pc
+	VALUES (2, 1, 450, 8, 1000, '24x', 600);
+    
+INSERT INTO pc
+	VALUES (3, 2, 1000, 8, 450, '4x', 900);
+   
+INSERT INTO pc
+	VALUES (4, 3, 600, 4, 1000, '8x', 1500);
+
+INSERT INTO  pc
+	VALUES (5, 3,600,32,1500,'24x', 2000);
+
+INSERT INTO pc 
+	VALUE ( 6, 1, 2000, 64, 3000, "24x", 2500);
+
+INSERT INTO pc 
+	VALUE ( 7, 14, 600, 32, 1500, "16x", 700);
+
+INSERT INTO pc 
+	VALUE ( 8, 17, 5000, 32, 4000, "36x", 3000);
+
+INSERT INTO pc  
+	VALUE(9, 15, 1000, 32, 4000, '32x', 3000);
+
+INSERT INTO pc
+	 VALUES (10, 15, 1000, 4, 5000,'8x',1000);
+
+//////////////////////////////////////////////////////PRINTER/////////////////////////////////////////////////////////////////////////////////////
+INSERT INTO printer 
+	VALUES (1,6,'y', '', 50);
+
+INSERT INTO printer 
+	VALUES (2,7,'n', 'Jet', 50);
+
+INSERT INTO printer 
+	VALUES (2,7,'n', 'Jet', 50);
+    
+INSERT INTO printer 
+	VALUES (3,8,'y', 'Matrix', 250);
+//////////////////////////////////////////////////////LAPTOP/////////////////////////////////////////////////////////////////////////////////////
+INSERT INTO laptop
+	VALUES (1, 9, 500, 8, 1000, 1200, 16);
+
+INSERT INTO laptop
+	VALUES (2, 10, 300, 16, 500, 300, 18);
+
+INSERT INTO laptop
+	VALUES (3, 11, 700, 4, 300, 600, 13);
+
+INSERT INTO `task-10`.`laptop` (`code`, `model`, `speed`, `ram`, `hd`, `price`, `screen`)
+ VALUES ('4', '11', '400', '32', '1500', '1500', '15');
+
+INSERT INTO laptop
+	VALUES (11, 2000, 32, 2000, 3000, 17)
+    
+INSERT INTO laptop
+	VALUES (6, 11, 2000, 32 , 2000, 3000, 17);
+
+INSERT INTO laptop
+	VALUES (7, 10, 1500, 16, 1600, 2000, 17);

@@ -1,0 +1,50 @@
+/////////////////////////////////////////////////////PRODUCT////////////////////////////////////////////////////////////////////////////////////
+CREATE TABLE `product` (
+  `maker` varchar(10) NOT NULL,
+  `model` varchar(50) NOT NULL,
+  `type` enum('PC',' Laptop','Printer') NOT NULL,
+  PRIMARY KEY (`model`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='	';
+
+/////////////////////////////////////////////////////LAPTOP//////////////////////////////////////////////////////////////////////////////////////
+CREATE TABLE `laptop` (
+  `code` int NOT NULL,
+  `model` varchar(50) NOT NULL,
+  `speed` smallint NOT NULL,
+  `ram` smallint NOT NULL,
+  `hd` double NOT NULL,
+  `price` double DEFAULT NULL,
+  `screen` tinyint NOT NULL,
+  PRIMARY KEY (`code`),
+  KEY `model_idx` (`model`),
+  CONSTRAINT `laptop_model_FK` FOREIGN KEY (`model`) REFERENCES `product` (`model`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+//////////////////////////////////////////////////////PC/////////////////////////////////////////////////////////////////////////////////////
+
+CREATE TABLE `pc` (
+  `code` int NOT NULL,
+  `model` varchar(50) NOT NULL,
+  `speed` smallint NOT NULL,
+  `ram` smallint NOT NULL,
+  `hd` double NOT NULL,
+  `cd` varchar(10) NOT NULL,
+  `price` double DEFAULT NULL,
+  PRIMARY KEY (`code`),
+  KEY `model_FK_idx` (`model`),
+  CONSTRAINT `pc_model_FK` FOREIGN KEY (`model`) REFERENCES `product` (`model`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+/////////////////////////////////////////////////////PRINTER//////////////////////////////////////////////////////////////////////////////////////
+
+CREATE TABLE `printer` (
+  `code` int NOT NULL,
+  `model` varchar(50) NOT NULL,
+  `color` char(1) NOT NULL,
+  `type` enum('Laser','Jet','Matrix') NOT NULL,
+  `price` double DEFAULT NULL,
+  PRIMARY KEY (`code`),
+  KEY `printer_model_FK_idx` (`model`),
+  CONSTRAINT `printer_model_FK` FOREIGN KEY (`model`) REFERENCES `product` (`model`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='			';
