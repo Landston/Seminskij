@@ -1,7 +1,7 @@
 package com.senla.model.serializable;
 
 
-import com.senla.di.annotation.Singleton;
+import com.senla.di.annotations.Singleton;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class PropertyHanlder {
 
     private static Logger LOGGER = Logger.getLogger(PropertyHanlder.class.getName());
-    private static final String PROPERTIES_FILE_PATH = "src/com/senla/model/resource/configProperty.properties";
+    private static final String PROPERTIES_FILE_PATH = "src/com/senla/model/resources/configProperty.properties";
     private static Properties properties;
 
     public static Optional<String> getProperties(String key)  {

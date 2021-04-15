@@ -11,10 +11,10 @@ ALTER TABLE public.book_status
 
 CREATE TABLE public.clients
 (
-    client_id uuid NOT NULL,
-    client_name text COLLATE pg_catalog."default" NOT NULL,
-    client_email text COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT client_pkey PRIMARY KEY (client_id)
+    id uuid NOT NULL,
+    client_name text COLLATE pg_catalog."default",
+    client_email text COLLATE pg_catalog."default",
+    CONSTRAINT client_pkey PRIMARY KEY (id)
 )
 
 TABLESPACE pg_default;
@@ -34,16 +34,16 @@ ALTER TABLE public.order_status
     OWNER to postgres;
 
 
-CREATE TABLE public.books
+CREATE TABLE public.book
 (
     genre text COLLATE pg_catalog."default",
-    name text COLLATE pg_catalog."default" NOT NULL,
+    name text COLLATE pg_catalog."default",
     year smallint,
-    cost money NOT NULL,
-    date_of_admission date NOT NULL,
-    book_status text COLLATE pg_catalog."default" NOT NULL,
-    book_id uuid NOT NULL,
-    CONSTRAINT book_pkey PRIMARY KEY (book_id),
+    cost money,
+    date_of_admission date,
+    book_status text COLLATE pg_catalog."default",
+    id uuid NOT NULL,
+    CONSTRAINT book_pkey PRIMARY KEY (id),
     CONSTRAINT book_status FOREIGN KEY (book_status)
         REFERENCES public.book_status (status) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -53,19 +53,20 @@ CREATE TABLE public.books
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.books
+ALTER TABLE public.book
     OWNER to postgres;
 
-CREATE TABLE public.orders
+
+CREATE TABLE public."order"
 (
-    order_id uuid NOT NULL,
-    total_price money NOT NULL,
-    date date NOT NULL,
-    order_status text COLLATE pg_catalog."default" NOT NULL,
-    client_id uuid NOT NULL,
-    CONSTRAINT order_pkey PRIMARY KEY (order_id),
-    CONSTRAINT client FOREIGN KEY (client_id)
-        REFERENCES public.clients (client_id) MATCH SIMPLE
+    id uuid NOT NULL,
+    total_price money,
+    date date,
+    order_status text COLLATE pg_catalog."default",
+    client uuid,
+    CONSTRAINT order_pkey PRIMARY KEY (id),
+    CONSTRAINT client FOREIGN KEY (client)
+        REFERENCES public.clients (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT order_status FOREIGN KEY (order_status)
@@ -76,27 +77,26 @@ CREATE TABLE public.orders
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.orders
+ALTER TABLE public."order"
     OWNER to postgres;
 
-COMMENT ON CONSTRAINT order_status ON public.orders
+COMMENT ON CONSTRAINT order_status ON public."order"
     IS '
 ';
 
 
-
 CREATE TABLE public.order_specification
 (
-    order_specification_id uuid NOT NULL,
+    id uuid NOT NULL,
     order_id uuid NOT NULL,
     book_id uuid NOT NULL,
-    CONSTRAINT order_specification_pkey PRIMARY KEY (order_specification_id),
+    CONSTRAINT order_specification_pkey PRIMARY KEY (id),
     CONSTRAINT book_id FOREIGN KEY (book_id)
-        REFERENCES public.books (book_id) MATCH SIMPLE
+        REFERENCES public.book (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT order_id FOREIGN KEY (order_id)
-        REFERENCES public.orders (order_id) MATCH SIMPLE
+        REFERENCES public."order" (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
@@ -104,22 +104,4 @@ CREATE TABLE public.order_specification
 TABLESPACE pg_default;
 
 ALTER TABLE public.order_specification
-    OWNER to postgres;
-
-CREATE TABLE public.requests
-(
-    request_id uuid NOT NULL,
-    book_id uuid NOT NULL,
-    count bigint NOT NULL,
-    open_close boolean NOT NULL,
-    CONSTRAINT requests_pkey PRIMARY KEY (request_id),
-    CONSTRAINT book_id FOREIGN KEY (book_id)
-        REFERENCES public.books (book_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE public.requests
     OWNER to postgres;

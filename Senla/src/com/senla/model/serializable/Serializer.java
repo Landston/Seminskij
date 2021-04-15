@@ -1,9 +1,9 @@
 package com.senla.model.serializable;
 
-import com.senla.di.annotation.ConfigProperty;
-import com.senla.model.model.AEntityID;
-import com.senla.model.exception.DAOException;
-import com.senla.model.exception.ServiceException;
+import com.senla.di.annotations.ConfigProperty;
+import com.senla.model.models.AEntityID;
+import com.senla.model.exceptions.DAOException;
+import com.senla.model.exceptions.ServiceException;
 
 import java.io.*;
 import java.util.Collections;

@@ -1,8 +1,8 @@
 package com.senla.model.api.service;
 
-import com.senla.model.model.Book;
-import com.senla.model.model.Request;
-import com.senla.model.exception.ServiceException;
+import com.senla.model.models.Book;
+import com.senla.model.models.Request;
+import com.senla.model.exceptions.ServiceException;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,9 +15,9 @@ public interface IRequestService {
 
     List<Request> getSortedRequests(String condition) throws ServiceException;
 
-    Long getNumberOfRequestsByBook(UUID uuid) throws ServiceException;
+    Long getNumberOfRequestsByBook(UUID uuid);
 
-    List<Request> getAllRequests() throws ServiceException;
+    List<Request> getAllRequests();
 
     void closeRequestById(UUID uuid) throws ServiceException;
 }

@@ -18,6 +18,5 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="reflections-0.9.112" level="project" />
-    <orderEntry type="library" name="postgresql-42.2.19" level="project" />
   </component>
 </module>

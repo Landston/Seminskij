@@ -1,16 +1,10 @@
 package com.senla.model.api.dao;
 
-import com.senla.model.exception.DAOException;
-import com.senla.model.model.Book;
-import com.senla.model.model.Order;
-
-import java.util.List;
-import java.util.UUID;
+import com.senla.model.models.Order;
 
 public interface IOrderDAO extends IDAO<Order> {
 
-    void delete(Order order) throws DAOException;
+    void delete(Order order);
 
-    List<Book> getBooksForOrder(UUID order_id);
 
 }

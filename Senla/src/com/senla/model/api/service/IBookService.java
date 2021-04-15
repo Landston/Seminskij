@@ -1,8 +1,7 @@
 package com.senla.model.api.service;
 
-import com.senla.model.exception.DAOException;
-import com.senla.model.model.Book;
-import com.senla.model.exception.ServiceException;
+import com.senla.model.models.Book;
+import com.senla.model.exceptions.ServiceException;
 
 import java.util.List;
 import java.util.Set;
@@ -25,7 +24,7 @@ public interface IBookService {
 
     void deleteBook(UUID uuid) throws ServiceException;
 
-    List<Book> getAll() throws ServiceException;
+    List<Book> getAll();
 
     Book getBookById(UUID uuid) throws ServiceException;
 

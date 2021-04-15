@@ -1,11 +1,11 @@
 #IntelijIDEA
-*.idea
+/.idea
 
 #log
 *.log
 
 #out
-.out/
+/out
 
-.out/production
+
 

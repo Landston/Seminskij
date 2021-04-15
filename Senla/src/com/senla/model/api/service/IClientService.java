@@ -1,7 +1,7 @@
 package com.senla.model.api.service;
 
-import com.senla.model.model.Client;
-import com.senla.model.exception.ServiceException;
+import com.senla.model.models.Client;
+import com.senla.model.exceptions.ServiceException;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,5 +18,5 @@ public interface IClientService  {
 
     void add(Client client) throws ServiceException;
 
-    List<Client> getAll() throws ServiceException;
+    List<Client> getAll();
 }
