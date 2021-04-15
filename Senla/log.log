@@ -1,4 +1,42 @@
-мар. 23, 2021 10:41:36 PM com.senal.ui.UIStart main
-INFO: WORK PLEASE
-мар. 23, 2021 10:41:49 PM com.senal.ui.actions.exitAction execute
-WARNING: Exit action failed
+апр. 15, 2021 4:17:34 PM com.senla.model.BookShop main
+INFO: BookShop main class, logger configured successfully
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ApplicationContext init
+INFO: [class com.senla.model.dao.ClientDAO, class com.senla.model.dao.RequestDAO, class com.senla.model.service.BookService, class com.senla.model.facade.BookShopFacade, class com.senla.model.service.OrderService, class com.senla.model.configuration.DataBaseHandler, class com.senla.model.serializable.PropertyHanlder, class com.senla.model.service.RequestService, class com.senla.model.service.ClientService, class com.senla.model.dao.BookDAO, class com.senla.model.dao.OrderDAO]
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.dao.ClientDAO
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.dao.RequestDAO
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.service.BookService
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.dao.BookDAO
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.service.RequestService
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.dao.RequestDAO
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.facade.BookShopFacade
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.service.BookService
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.service.ClientService
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.dao.ClientDAO
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.service.OrderService
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.dao.OrderDAO
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.service.OrderService
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.configuration.DataBaseHandler
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.serializable.PropertyHanlder
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.service.RequestService
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.service.ClientService
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.dao.BookDAO
+апр. 15, 2021 4:17:35 PM com.senla.di.appconfig.ObjectFactory createObject
+INFO: Object type to create and configure + class com.senla.model.dao.OrderDAO

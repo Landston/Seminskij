@@ -1,9 +1,9 @@
 package com.senla.model.api.service;
 
-import com.senla.model.models.Book;
-import com.senla.model.models.Client;
-import com.senla.model.models.Order;
-import com.senla.model.exceptions.ServiceException;
+import com.senla.model.model.Book;
+import com.senla.model.model.Client;
+import com.senla.model.model.Order;
+import com.senla.model.exception.ServiceException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -24,15 +24,15 @@ public interface IOrderService {
 
     List<Order> getClosedOrdersByTime(LocalDate from, LocalDate to, String condition) throws ServiceException;
 
-    List<Order> getAllOrdes();
+    List<Order> getAll() throws ServiceException;
 
     void addBookToOrder(UUID uuid, Book book) throws ServiceException;
 
-    Long amountOfClosedOrdersForThePeriod(LocalDate from, LocalDate to );
+    Long amountOfClosedOrdersForThePeriod(LocalDate from, LocalDate to ) throws ServiceException;
 
     Order getOrderByID(UUID uuid) throws ServiceException;
 
-    double getTotalRevenue();
+    double getTotalRevenue() throws ServiceException;
 
     void deleteOrder(UUID uuid) throws ServiceException;
 
