@@ -1,6 +1,6 @@
 package com.senla.model.api.dao;
 
-import com.senla.model.exceptions.DAOException;
+import com.senla.model.exception.DAOException;
 
 import java.util.List;
 import java.util.UUID;
@@ -8,14 +8,16 @@ import java.util.UUID;
 public abstract interface IDAO<T> {
 
 
-    List<T> getAll();
+    List<T> getAll() throws DAOException;
 
     void update(UUID id, T item) throws DAOException;
 
     void delete(UUID id) throws DAOException;
 
+    void delete(T id) throws DAOException;
+
     void addEntity(T entity) throws DAOException;
 
-    T getEntity(UUID id) throws DAOException;
+    T getEntityById(UUID id) throws DAOException;
 
 }

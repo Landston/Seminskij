@@ -7,7 +7,7 @@ INSERT INTO public.book_status(
 	status)
 	VALUES ('RESERVED'), ('ABSENT');
 //////////////////////////////////////////BOOKS//////////////////////////////////////////////////////////
-INSERT INTO book VALUES ( 'Detective', 'Alfred Gette', 2015, 150, '2021-03-23, 'RESERVED','b147312f-b0c4-423c-83fe-0ace89ed670e' );
+INSERT INTO book VALUES ( 'Detective', 'Alfred Gette', 2015, 150, '2021-03-23', 'RESERVED','b147312f-b0c4-423c-83fe-0ace89ed670e' );
 INSERT INTO book VALUES ( 'Detective', 'Jack Richer', 2004, 15, '2021-03-23', 'RESERVED','f47d5ec7-c7f6-49de-b5ca-56b96aef05d3');
 INSERT INTO book VALUES ( 'Horror', 'Outsider', 2018, 20, '2021-03-23', 'RESERVED','82d7b93f-c5c1-4e39-aa71-9372ce8b8bec');
 
@@ -19,21 +19,32 @@ INSERT INTO order_status VALUES('CLOSED'),
     ('CANCELED');
 
 //////////////////////////////////////////ORDER////////////////////////////////////////////////////////////////////////////////////////////
-INSERT INTO public."order"(
-	id, total_price, date, order_status, client)
+INSERT INTO public.orders(
+	order_id, total_price, date, order_status, client_id)
 	VALUES ('3c6a88c1-9670-41af-b097-80f472f0afaa', 20, '2021-03-23', 'OPEN', 'aa185f78-6d56-4ced-8f4b-d42a3ecee428');
 
-INSERT INTO public."order"(
-	id, total_price, date, order_status, client)
+INSERT INTO public.orders(
+	order_id, total_price, date, order_status, client_id)
 	VALUES ('9a860e05-b25c-4bb1-a6eb-c2521eac1f43', 0, '2021-03-23', 'OPEN', 'f9470f0a-8723-494d-a4c9-a761a580d134');
 
 
 //////////////////////////////////////////ORDER_SPECIFICATION////////////////////////////////////////////////////////////////////////////////////////////
 
 INSERT INTO public.order_specification(
-	id, order_id, book_id)
+	order_specification_id, order_id, book_id)
 	VALUES ('6cd8e6da-09e1-47f5-aee3-a65759e369e2', '9a860e05-b25c-4bb1-a6eb-c2521eac1f43', 'b147312f-b0c4-423c-83fe-0ace89ed670e');
 
 INSERT INTO public.order_specification(
-	id, order_id, book_id)
+	order_specification_id, order_id, book_id)
 	VALUES ('f633d36c-67ac-4ec9-ad99-da7051a61eda', 'e73e0d59-f10b-4483-add3-8dd50b00cb29', 'f47d5ec7-c7f6-49de-b5ca-56b96aef05d3');
+
+//////////////////////////////////////////REQUEST////////////////////////////////////////////////////////////////////////////////////////////
+INSERT INTO public.requests(
+	request_id, book_id, count, open_close)
+	VALUES 
+
+INSERT INTO public.requests(
+	request_id, book_id, count, open_close)
+	VALUES  ('42a0d678-e230-45e8-9462-2d91de55ddb6', '82d7b93f-c5c1-4e39-aa71-9372ce8b8bec', 1, false),
+		('862d9418-8879-467d-8556-b18c12a65017','b147312f-b0c4-423c-83fe-0ace89ed670e', 1, false),
+		('24e15661-6ab8-444e-b699-e65b09ef3134','f47d5ec7-c7f6-49de-b5ca-56b96aef05d3', 2, false);
