@@ -1,12 +1,16 @@
 package com.senla.di.appconfig;
 
+import com.senla.di.annotation.Configuration;
 import com.senla.di.annotation.Singleton;
 import com.senla.di.appconfig.api.Config;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.logging.log4j.*;
 
@@ -19,8 +23,8 @@ public class ApplicationContext {
     private static final Logger LOGGER = LogManager.getLogger(ApplicationContext.class.getName());
 
 
-    public static ApplicationContext getInstance(){
-        if(instance == null) {
+    public static ApplicationContext getInstance() {
+        if (instance == null) {
             instance = Application.run("com.senla", new HashMap<>());
         }
 
@@ -36,12 +40,14 @@ public class ApplicationContext {
     }
 
     public void init() {
-        Set<Class<?>> singletons = config.getScanner().getTypesAnnotatedWith(Singleton.class);
+        Set<Class<?>> configurations = config.getScanner().getTypesAnnotatedWith(Configuration.class);
+
+        configurations.stream()
+                .forEach(singleton -> {
+                    this.getObject(singleton);
+                });
 
 
-        singletons.stream()
-                .filter(singleton -> !cache.containsValue(singleton))
-                .forEach(singleton -> factory.createObject(singleton));
     }
 
     public <T> T getObject(Class<T> type) {

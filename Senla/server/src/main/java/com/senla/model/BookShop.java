@@ -5,6 +5,7 @@ import com.senla.di.appconfig.ApplicationContext;
 
 import com.senla.model.api.dao.IBookDAO;
 import com.senla.model.dao.*;
+import com.senla.model.dao.util.DataBaseHandler;
 import com.senla.model.exception.DAOException;
 import com.senla.model.exception.ServiceException;
 import com.senla.model.facade.BookShopFacade;
@@ -33,7 +34,9 @@ public class BookShop {
         System.out.println(UUID.randomUUID());
         ApplicationContext context1 = ApplicationContext.getInstance();
 
-        System.out.println(ApplicationContext.getInstance().getObject(IBookDAO.class).getAll());
+
+        System.out.println();
+        //System.out.println(ApplicationContext.getInstance().getObject(IBookDAO.class).getAll());
 
     }
 

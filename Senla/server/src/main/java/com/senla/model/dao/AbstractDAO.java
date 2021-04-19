@@ -1,5 +1,7 @@
 package com.senla.model.dao;
 
+import com.senla.di.appconfig.ApplicationContext;
+import com.senla.model.dao.util.DataBaseHandler;
 import com.senla.model.model.AEntityID;
 import com.senla.model.api.dao.IDAO;
 import com.senla.model.exception.DAOException;
@@ -48,6 +50,6 @@ public class AbstractDAO<T extends AEntityID>   implements IDAO<T> {
     }
 
     public Connection getConnection() {
-        return connection;
+        return ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection();
     }
 }

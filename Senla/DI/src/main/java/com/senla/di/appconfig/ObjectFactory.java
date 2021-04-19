@@ -1,5 +1,6 @@
 package com.senla.di.appconfig;
 
+import com.senla.di.annotation.Singleton;
 import com.senla.di.appconfig.api.ObjectConfigurator;
 import com.senla.di.exception.ConfigurationError;
 import lombok.SneakyThrows;
@@ -43,6 +44,7 @@ public class ObjectFactory {
             T t = type.getDeclaredConstructor().newInstance();
 
             configurate(t, context);
+
 
             return t;
         } catch (InstantiationException e) {

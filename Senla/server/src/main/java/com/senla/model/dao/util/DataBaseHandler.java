@@ -12,13 +12,12 @@ import java.util.logging.Logger;
 
 @Singleton
 public class DataBaseHandler {
-    @ConfigProperty(configName = "D:\\Senla\\proj\\senla\\server\\src\\main\\java\\com\\senla\\model\\resource\\jdbcConfig.properties", propertyName = "USER")
-    private  String USER;
-    @ConfigProperty(configName = "D:\\Senla\\proj\\senla\\server\\src\\main\\java\\com\\senla\\model\\resource\\jdbcConfig.properties", propertyName = "PASS")
-    private  String PASSWORD;
-    @ConfigProperty(configName = "D:\\Senla\\proj\\senla\\server\\src\\main\\java\\com\\senla\\model\\resource\\jdbcConfig.properties", propertyName = "URL")
-    private  String URL;
-
+    @ConfigProperty(configName = "D:\\GITLABA\\senla\\DI\\src\\main\\resources\\jdbcConfig.properties", propertyName = "USER")
+    private String USER;
+    @ConfigProperty(configName = "D:\\GITLABA\\senla\\DI\\src\\main\\resources\\jdbcConfig.properties", propertyName = "PASS")
+    private String PASSWORD;
+    @ConfigProperty(configName = "D:\\GITLABA\\senla\\DI\\src\\main\\resources\\jdbcConfig.properties", propertyName = "URL")
+    private String URL;
 
 
     private static final Logger LOGGER = Logger.getLogger(DataBaseHandler.class.getName());
@@ -30,7 +29,7 @@ public class DataBaseHandler {
     public DataBaseHandler() {
     }
 
-    private void setConnection(){
+    private void setConnection() {
         try {
             Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
 
@@ -45,7 +44,7 @@ public class DataBaseHandler {
     }
 
     public Connection getConnection() {
-        if(connectionSetted == false){
+        if (connectionSetted == false) {
             setConnection();
         }
         return connection;

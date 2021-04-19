@@ -1,5 +1,6 @@
 package com.senla.model.api.service;
 
+import com.senla.di.annotation.Singleton;
 import com.senla.model.model.Client;
 import com.senla.model.exception.ServiceException;
 

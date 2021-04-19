@@ -1,5 +1,6 @@
 package com.senla.model.api.service;
 
+import com.senla.di.annotation.Singleton;
 import com.senla.model.model.Book;
 import com.senla.model.model.Client;
 import com.senla.model.model.Order;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+
 
 public interface IOrderService {
 

@@ -7,6 +7,7 @@ import com.senla.model.exception.ServiceException;
 import java.util.List;
 import java.util.UUID;
 
+
 public interface IRequestService {
 
     void createRequest(Book book) throws ServiceException;

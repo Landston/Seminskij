@@ -32,6 +32,7 @@ public class Application {
             ObjectFactory factory = new ObjectFactory(context);
 
             context.setFactory(factory);
+
             context.init();
 
             return context;

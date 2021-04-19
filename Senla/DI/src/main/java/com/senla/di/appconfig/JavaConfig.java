@@ -29,8 +29,16 @@ public class JavaConfig implements Config {
         });
     }
 
+    public boolean hasInterFace(Object t){
+       return this.if2ImplClass.containsValue(t);
+    }
+
     @Override
     public Reflections getScanner() {
         return scanner;
+    }
+
+    public Map<Class,Class> getIf2ImplClass(){
+        return if2ImplClass;
     }
 }
