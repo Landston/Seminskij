@@ -19,10 +19,9 @@ import java.util.*;
 @Singleton
 public class RequestDAO extends AbstractDAO<Request> implements IRequestDAO {
 
-    public RequestDAO() {
-
+    public RequestDAO(){
+        super();
     }
-
     @Override
     public List<Request> getAll() throws DAOException {
         String sql = "SELECT * FROM " + Constants.REQUESTS_TABLE + " as rq "
@@ -161,6 +160,16 @@ public class RequestDAO extends AbstractDAO<Request> implements IRequestDAO {
             throw new DAOException("GET_ALL_REQUEST_EXCEPTION", e);
         }
         throw new DAOException("No Such Request");
+    }
+
+    @Override
+    protected Request getEntity(ResultSet rs) throws SQLException {
+        return null;
+    }
+
+    @Override
+    protected String getAllEntitiesQuerySQL() {
+        return null;
     }
 
     private Request getRequestFromResultSet(ResultSet resultSet) throws SQLException {

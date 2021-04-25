@@ -1,6 +1,8 @@
 package com.senla.model.dao;
 
+import com.senla.di.annotation.Auttowared;
 import com.senla.di.annotation.Singleton;
+import com.senla.model.dao.util.DataBaseHandler;
 import com.senla.model.exception.DAOException;
 import com.senla.model.model.Book;
 import com.senla.model.api.dao.IBookDAO;
@@ -20,16 +22,16 @@ import java.util.logging.Logger;
 public class BookDAO extends AbstractDAO<Book> implements IBookDAO {
 
     private static final Logger LOGGER = Logger.getLogger(BookDAO.class.getName());
-    private final String GET_ALL_QUERY = "SELECT * FROM " + Constants.BOOKS_TABLE + " ;";
-    private final String UPDATE_QUERY = "UPDATE " + Constants.BOOKS_TABLE +
+    private static final String GET_ALL_QUERY = "SELECT * FROM " + Constants.BOOKS_TABLE + " ;";
+    private static final String UPDATE_QUERY = "UPDATE " + Constants.BOOKS_TABLE +
             " SET " + Constants.BOOKS_GENRE + " =? , "
             + Constants.BOOKS_NAME + " =? , "
             + Constants.BOOKS_YEAR + " =? , "
             + Constants.BOOKS_COST + " =? , "
             + Constants.BOOKS_DATE_OF_ADMISSION + " = ? , "
             + Constants.BOOKS_BOOK_STATUS + " =? , "
-            + Constants.BOOKS_BOOK_ID + " =? , "
-            + " WHERE " + Constants.BOOKS_BOOK_ID + " =? , " + " ;";
+            + Constants.BOOKS_BOOK_ID + " =? "
+            + " WHERE " + Constants.BOOKS_BOOK_ID + " = ? ;";
     private final String DELETE_QUERY = "DELETE FROM " + Constants.BOOKS_TABLE
             + " WHERE " + Constants.BOOKS_BOOK_ID + " = ? ;";
     private final String INSERT_QUERY = "INSERT INTO " + Constants.BOOKS_TABLE +
@@ -37,12 +39,16 @@ public class BookDAO extends AbstractDAO<Book> implements IBookDAO {
     private final String GET_BY_ID_QUERY = "SELECT * FROM " + Constants.BOOKS_TABLE +
             " WHERE " + Constants.BOOKS_BOOK_ID + " = ? ;";
 
+    @Auttowared
+    public BookDAO(DataBaseHandler dataBaseHandler) {
+        super();
+    }
 
-    public BookDAO() {
+    public BookDAO(){
 
     }
 
-    @Override
+   /* @Override
     public List<Book> getAll() throws DAOException {
 
         List<Book> books = new ArrayList<>();
@@ -72,7 +78,7 @@ public class BookDAO extends AbstractDAO<Book> implements IBookDAO {
         }
         throw new DAOException("BookDAO opeartion failed");
 
-    }
+    }*/
 
     @Override
     public void update(UUID id, Book item) throws DAOException {
@@ -176,6 +182,31 @@ public class BookDAO extends AbstractDAO<Book> implements IBookDAO {
         throw new DAOException("GET_BOOK_BY_ID_EXCEPTION");
 
     }
+    public Book getEntity(ResultSet rs) throws SQLException {
+
+        UUID book_id = rs.getObject(Constants.BOOKS_BOOK_ID, UUID.class);
+        String genre = rs.getString(Constants.BOOKS_GENRE);
+        String name = rs.getString(Constants.BOOKS_NAME);
+        int year = rs.getInt(Constants.BOOKS_YEAR);
+        Double cost = rs.getDouble(Constants.BOOKS_COST);
+        Date date = rs.getDate(Constants.BOOKS_DATE_OF_ADMISSION);
+        String status = rs.getString(Constants.BOOKS_BOOK_STATUS);
+        Book book = new Book(book_id, name, genre, year, cost, BookStatus.valueOf(status));
+
+        book.setDateOfAdmission(date.toLocalDate());
+        book.setUuid(book_id);
+
+        return book;
+    }
+    @Override
+    protected String getAllEntitiesQuerySQL() {
+        return GET_ALL_QUERY;
+    }
+
+
+/*    protected String getAllEntitiesQuerySQL() {
+        return null;
+    }*/
 }
 
 

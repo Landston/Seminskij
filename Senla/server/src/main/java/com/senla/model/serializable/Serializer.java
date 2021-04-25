@@ -23,6 +23,7 @@ public class Serializer<T extends Serializable> {
         } catch (ServiceException e) {
             LOGGER.log(Level.WARNING, "Serialization property path failed", e);
         }
+        Long lg;
     }
 
     public Serializer() throws ServiceException {

@@ -15,7 +15,7 @@ public class UIStart {
 
     public static void main(String[] args) {
 
-        ApplicationContext context = Application.run("com.senla", new HashMap<>());
+       ApplicationContext context = ApplicationContext.getInstance();
 
 
         System.out.println();

@@ -1,6 +1,7 @@
 package com.senla.model.dao;
 
 
+import com.senla.di.annotation.Auttowared;
 import com.senla.di.annotation.Singleton;
 import com.senla.di.appconfig.ApplicationContext;
 import com.senla.model.dao.util.DataBaseHandler;
@@ -20,7 +21,8 @@ import java.util.logging.Level;
 @Singleton
 public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
 
-    public OrderDAO() {
+    public OrderDAO(){
+        super();
     }
 
     @Override
@@ -218,6 +220,16 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
             throw new DAOException("GET_ENTITY_BY_ID_ERROR", e);
         }
         return order;
+    }
+
+    @Override
+    protected Order getEntity(ResultSet rs) throws SQLException {
+        return null;
+    }
+
+    @Override
+    protected String getAllEntitiesQuerySQL() {
+        return null;
     }
 
 

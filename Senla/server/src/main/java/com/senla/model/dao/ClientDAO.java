@@ -1,5 +1,6 @@
 package com.senla.model.dao;
 
+import com.senla.di.annotation.Auttowared;
 import com.senla.di.annotation.Singleton;
 import com.senla.di.appconfig.ApplicationContext;
 import com.senla.model.dao.util.DataBaseHandler;
@@ -19,10 +20,6 @@ import java.util.logging.Level;
 @Singleton
 public class ClientDAO extends AbstractDAO<Client> implements IClientDAO {
 
-
-    public ClientDAO() {
-
-    }
 
     @Override
     public List<Client> getAll() throws DAOException {
@@ -142,6 +139,21 @@ public class ClientDAO extends AbstractDAO<Client> implements IClientDAO {
         } catch (SQLException e) {
             throw new DAOException("Client delete failed", e);
         }
+    }
+
+    @Override
+    protected Client getEntity(ResultSet rs) throws SQLException {
+        return null;
+    }
+
+    @Override
+    protected String getAllEntitiesQuerySQL() {
+        return null;
+    }
+
+    @Auttowared
+    public ClientDAO(){
+        super();
     }
 
 

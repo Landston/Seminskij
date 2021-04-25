@@ -12,12 +12,10 @@ import java.util.logging.Logger;
 
 @Singleton
 public class DataBaseHandler {
-    @ConfigProperty(configName = "D:\\GITLABA\\senla\\DI\\src\\main\\resources\\jdbcConfig.properties", propertyName = "USER")
-    private String USER;
-    @ConfigProperty(configName = "D:\\GITLABA\\senla\\DI\\src\\main\\resources\\jdbcConfig.properties", propertyName = "PASS")
-    private String PASSWORD;
-    @ConfigProperty(configName = "D:\\GITLABA\\senla\\DI\\src\\main\\resources\\jdbcConfig.properties", propertyName = "URL")
-    private String URL;
+
+    private String USER = "postgres";
+    private String PASSWORD = "root";
+    private String URL = "jdbc:postgresql://localhost:5432/bookshop";
 
 
     private static final Logger LOGGER = Logger.getLogger(DataBaseHandler.class.getName());

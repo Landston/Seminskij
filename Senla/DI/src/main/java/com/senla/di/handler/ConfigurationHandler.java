@@ -20,6 +20,7 @@ public class ConfigurationHandler implements ObjectConfigurator {
 
         try{
             for(Field filed : t.getClass().getFields()){
+
                 if(filed.isAnnotationPresent(Configuration.class)){
                     filed.setAccessible(true);
 

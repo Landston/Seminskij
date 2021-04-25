@@ -32,13 +32,15 @@ public class BookShop {
         System.out.println("ASDSADSAD");
         LOGGER.info("Project start");
         System.out.println(UUID.randomUUID());
-        ApplicationContext context1 = ApplicationContext.getInstance();
-
+        IBookDAO context1 = ApplicationContext.getInstance().getObject(IBookDAO.class);
+        System.out.println(context1.getAll());
 
         System.out.println();
         //System.out.println(ApplicationContext.getInstance().getObject(IBookDAO.class).getAll());
 
     }
+
+
 
 
     private static void serialize() throws DAOException {

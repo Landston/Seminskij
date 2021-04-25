@@ -16,6 +16,8 @@ import com.senla.model.facade.BookShopFacade;
 @Configuration
 public class ServerConfig {
     @Auttowared
+    private IOrderDAO orderDAO;
+    @Auttowared
     private IBookDAO bookDAO;
     @Auttowared
     private IBookService bookService;
@@ -27,8 +29,6 @@ public class ServerConfig {
     private IRequestDAO requestDAO;
     @Auttowared
     private IRequestService requestService;
-    @Auttowared
-    private IOrderDAO orderDAO;
     @Auttowared
     private IOrderService orderService;
     @Auttowared
