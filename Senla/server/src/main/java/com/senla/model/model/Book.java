@@ -7,7 +7,7 @@ import java.util.Random;
 import java.util.UUID;
 
 
-public class Book extends AEntityID implements Serializable {
+public class Book extends AbstractEntity implements Serializable {
 
     private String name;
     private BookStatus status;

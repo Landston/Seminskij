@@ -2,4 +2,5 @@ rootProject.name = 'senla'
 include 'DI'
 include 'server'
 include 'UI'
+include 'ZEnd'
 

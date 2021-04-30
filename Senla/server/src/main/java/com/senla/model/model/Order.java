@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Order extends AEntityID implements Serializable {
+public class Order extends AbstractEntity implements Serializable {
 
     private List<Book> booksToOrder;
     private Client client;

@@ -18,7 +18,7 @@ public class UIStart {
        ApplicationContext context = ApplicationContext.getInstance();
 
 
-        System.out.println();
+
 
 
         context.getObject(MenuController.class).run();

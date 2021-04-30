@@ -2,7 +2,6 @@ package com.senla.model.service;
 
 import com.senla.di.annotation.Auttowared;
 import com.senla.di.annotation.Singleton;
-import com.senla.model.api.service.IBookService;
 import com.senla.model.model.Book;
 import com.senla.model.model.Request;
 import com.senla.model.api.dao.IRequestDAO;
@@ -10,9 +9,13 @@ import com.senla.model.api.service.IRequestService;
 import com.senla.model.exception.DAOException;
 import com.senla.model.exception.ServiceException;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 @Singleton
 public class RequestService implements IRequestService {
@@ -23,7 +26,7 @@ public class RequestService implements IRequestService {
 
     private Map<String, Comparator<Request>> sort;
 
-    private static final Logger LOGGER = Logger.getLogger(RequestService.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(OrderService.class.getName());
 
     public RequestService() {
 
@@ -55,7 +58,7 @@ public class RequestService implements IRequestService {
 
 
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, ("Create request failed"));
+            LOGGER.log(Level.WARN, ("Create request failed"));
             throw new ServiceException("Create request operation failed", e);
         }
     }
@@ -70,10 +73,10 @@ public class RequestService implements IRequestService {
 
             return list;
         } catch (IllegalArgumentException e) {
-            LOGGER.log(Level.WARNING, "Request sorting condition is not available", e);
+            LOGGER.log(Level.WARN, "Request sorting condition is not available", e);
             throw new ServiceException("Request sorting operation failed", e);
         } catch (DAOException e){
-            LOGGER.log(Level.WARNING, "Request sorting condition is not available", e);
+            LOGGER.log(Level.WARN, "Request sorting condition is not available", e);
             throw new ServiceException("Request sorting operation failed", e);
         }
     }
@@ -86,7 +89,7 @@ public class RequestService implements IRequestService {
                     .filter(x -> x.getRequestedBook().getUuid().equals(uuid))
                     .count();
         } catch (DAOException e){
-            LOGGER.log(Level.WARNING, "Get number of Requested books is not available", e);
+            LOGGER.log(Level.WARN, "Get number of Requested books is not available", e);
             throw new ServiceException("Get number of Requested  failed", e);
         }
     }
@@ -95,7 +98,7 @@ public class RequestService implements IRequestService {
         try {
             return this.requestDAO.getAll();
         }catch (DAOException e){
-            LOGGER.log(Level.WARNING, "Get all Request is not available", e);
+            LOGGER.log(Level.WARN, "Get all Request is not available", e);
             throw new ServiceException("Get all Request failed", e);
         }
     }
@@ -107,7 +110,7 @@ public class RequestService implements IRequestService {
 
             return request.get();
         } catch (DAOException e){
-            LOGGER.log(Level.WARNING, "Get  Request by Book is not available", e);
+            LOGGER.log(Level.WARN, "Get  Request by Book is not available", e);
             throw new ServiceException("Get Request by Book failed", e);
         }
     }
@@ -131,10 +134,10 @@ public class RequestService implements IRequestService {
             } else return request.get();
 
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Get request by Book id failed", e);
+            LOGGER.log(Level.WARN, "Get request by Book id failed", e);
             throw new ServiceException("Get request by book failed", e);
         } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Get request by book failed");
+            LOGGER.log(Level.WARN, "Get request by book failed");
             throw new ServiceException("Get request by book failed", e);
 
         }

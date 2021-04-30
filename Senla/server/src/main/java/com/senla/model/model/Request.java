@@ -3,7 +3,7 @@ package com.senla.model.model;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class Request extends AEntityID  implements Serializable {
+public class Request extends AbstractEntity implements Serializable {
 
     private  Book requestedBooks;
     private int count = 1;

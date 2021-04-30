@@ -10,6 +10,19 @@ repositories {
 
 }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+allprojects {
+    apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+        implementation( "org.projectlombok:lombok:1.16.16")
+
+        implementation( group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.1')
+        implementation( group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1')
+
+    }
 }

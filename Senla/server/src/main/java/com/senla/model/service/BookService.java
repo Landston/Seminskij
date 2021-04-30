@@ -3,6 +3,7 @@ package com.senla.model.service;
 import com.senla.di.annotation.Auttowared;
 import com.senla.di.annotation.ConfigProperty;
 import com.senla.di.annotation.Singleton;
+import com.senla.di.handler.AuttowiredHandler;
 import com.senla.model.api.dao.IBookDAO;
 import com.senla.model.api.service.IRequestService;
 import com.senla.model.model.Book;
@@ -12,11 +13,12 @@ import com.senla.model.api.service.IBookService;
 import com.senla.model.exception.DAOException;
 import com.senla.model.exception.ServiceException;
 import com.senla.model.model.Request;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -29,7 +31,7 @@ public class BookService implements IBookService {
 
     private Map<String, Comparator<Book>> sort;
 
-    private static final Logger LOGGER = Logger.getLogger(BookService.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(BookService.class.getName());
 
 
     @ConfigProperty(propertyName = "month")
@@ -70,7 +72,7 @@ public class BookService implements IBookService {
 
             this.bookDAO.update(id, book);
         } catch (DAOException daoException) {
-            LOGGER.log(Level.WARNING, "UpdateBook failed", daoException);
+            LOGGER.log(Level.WARN, "UpdateBook failed", daoException);
             throw new ServiceException("Book update operation failed", daoException);
         }
     }
@@ -81,7 +83,7 @@ public class BookService implements IBookService {
             this.bookDAO.delete(uuid);
 
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "DeleteBook failed", e);
+            LOGGER.log(Level.WARN, "DeleteBook failed", e);
             throw new ServiceException("Deleting book operation failed", e);
         }
     }
@@ -90,7 +92,7 @@ public class BookService implements IBookService {
         try {
             return new ArrayList<>(this.bookDAO.getAll());
         } catch (DAOException e){
-            LOGGER.log(Level.WARNING, e.getMessage(), e);
+            LOGGER.log(Level.WARN, e.getMessage(), e);
             throw new ServiceException("Get all operation failed", e);
         }
     }
@@ -106,7 +108,7 @@ public class BookService implements IBookService {
                 book.setStatus(BookStatus.ABSENT);
             }
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "WritingOffBook failed", e);
+            LOGGER.log(Level.WARN, "WritingOffBook failed", e);
             throw new ServiceException("WritingOffBook operation failed", e);
         }
 
@@ -118,7 +120,7 @@ public class BookService implements IBookService {
             return this.bookDAO.getEntityById(uuid);
 
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Get book by id failed", e);
+            LOGGER.log(Level.WARN, "Get book by id failed", e);
             throw new ServiceException("Get book by id operation failed", e);
         }
     }
@@ -139,7 +141,7 @@ public class BookService implements IBookService {
         try {
             this.bookDAO.addEntity(book);
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Adding book failed", e);
+            LOGGER.log(Level.WARN, "Adding book failed", e);
             throw new ServiceException("Adding book  operation failed", e);
         }
     }
@@ -148,7 +150,7 @@ public class BookService implements IBookService {
         try {
             this.bookDAO.addEntity(book);
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Adding book failed", e);
+            LOGGER.log(Level.WARN, "Adding book failed", e);
             throw new ServiceException("Adding book operation failed", e);
         }
     }
@@ -168,7 +170,7 @@ public class BookService implements IBookService {
                     request.setCount(0);
                 }
         } catch (ServiceException e) {
-            LOGGER.log(Level.WARNING, "Adding book to WareHouse failed", e);
+            LOGGER.log(Level.WARN, "Adding book to WareHouse failed", e);
             throw new ServiceException(e);
         }
     }
@@ -183,10 +185,10 @@ public class BookService implements IBookService {
             return list;
 
         } catch (IllegalArgumentException e) {
-            LOGGER.log(Level.WARNING, "Condition for sorting Books is not acceptable", e);
+            LOGGER.log(Level.WARN, "Condition for sorting Books is not acceptable", e);
             throw new ServiceException("Get sorted book operation failed", e);
         } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Something went wrong in SortedBooks opetion", e);
+            LOGGER.log(Level.WARN, "Something went wrong in SortedBooks opetion", e);
             throw new ServiceException("Something went wrong in SortedBooks opetion", e);
         }
 
@@ -209,15 +211,15 @@ public class BookService implements IBookService {
 
             return sorted;
         } catch (IllegalArgumentException e) {
-            LOGGER.log(Level.WARNING, "Condition for sorting Books is not acceptable", e);
+            LOGGER.log(Level.WARN, "Condition for sorting Books is not acceptable", e);
             throw new ServiceException("Get sorted book operation failed", e);
 
         } catch (NoSuchElementException e) {
-            LOGGER.log(Level.WARNING, "Property month is inaccessible", e);
+            LOGGER.log(Level.WARN, "Property month is inaccessible", e);
             throw new ServiceException("Get sorted book operation failed", e);
 
         } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Something went wrong in SortedBooks opetion", e);
+            LOGGER.log(Level.WARN, "Something went wrong in SortedBooks opetion", e);
             throw new ServiceException("Something went wrong in SortedBooks opetion", e);
 
         }

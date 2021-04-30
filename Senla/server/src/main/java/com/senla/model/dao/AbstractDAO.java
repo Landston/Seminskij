@@ -1,15 +1,12 @@
 package com.senla.model.dao;
 
 import com.senla.di.annotation.Auttowared;
-import com.senla.di.appconfig.Application;
 import com.senla.di.appconfig.ApplicationContext;
 import com.senla.model.dao.util.DataBaseHandler;
-import com.senla.model.model.AEntityID;
+import com.senla.model.model.AbstractEntity;
 import com.senla.model.api.dao.IDAO;
 import com.senla.model.exception.DAOException;
-import com.senla.model.model.Book;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,11 +15,12 @@ import java.util.*;
 import java.util.logging.Logger;
 
 
-    public abstract class AbstractDAO<T extends AEntityID> implements IDAO<T> {
+    public abstract class AbstractDAO<T extends AbstractEntity> implements IDAO<T> {
 
-    public Logger LOGGER = Logger.getLogger(this.getClass().getName());
+    public   Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
-    private DataBaseHandler dataBaseHandler = new DataBaseHandler();
+    @Auttowared
+    public DataBaseHandler dataBaseHandler;
 
     public AbstractDAO() {
         double ad;

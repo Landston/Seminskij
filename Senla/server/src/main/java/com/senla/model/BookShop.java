@@ -11,38 +11,41 @@ import com.senla.model.exception.ServiceException;
 import com.senla.model.facade.BookShopFacade;
 import com.senla.model.model.*;
 import com.senla.model.serializable.Serializer;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+import java.lang.reflect.Field;
+import java.net.URL;
 import java.sql.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BookShop {
 
     private static String CONFIG_PATH = "java/com/senla/model/resource/configuration.properties";
-    private static final Logger LOGGER = LogManager.getLogger(Application.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(BookShop.class.getName());
     private static String URL = "jdbc:postgresql://localhost:5432/bookshop";
     private static String USER = "postgres";
     private static String PASS = "root";
     private static ApplicationContext context;
 
-    public static void main(String[] args) throws DAOException, NoSuchFieldException, ServiceException, SQLException {
+    public static void main(String[] args) throws DAOException, NoSuchFieldException, ServiceException, SQLException, ClassNotFoundException {
 
-
-        System.out.println("ASDSADSAD");
         LOGGER.info("Project start");
-        System.out.println(UUID.randomUUID());
-        IBookDAO context1 = ApplicationContext.getInstance().getObject(IBookDAO.class);
-        System.out.println(context1.getAll());
 
-        System.out.println();
-        //System.out.println(ApplicationContext.getInstance().getObject(IBookDAO.class).getAll());
+
+
+
 
     }
+}
 
 
 
 
+/*
     private static void serialize() throws DAOException {
         List<Book> books = new ArrayList<>();
 
@@ -76,6 +79,6 @@ public class BookShop {
         List<Order> orders = new ArrayList<>(context.getObject(OrderDAO.class).getAll());
 
         Serializer.serialize(books, clients, requests, orders);
-    }
+    }*/
 
-}
+

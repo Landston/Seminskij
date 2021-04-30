@@ -3,24 +3,48 @@ package com.senla.di.handler;
 import com.senla.di.annotation.Auttowared;
 import com.senla.di.appconfig.ApplicationContext;
 import com.senla.di.appconfig.api.ObjectConfigurator;
+import com.senla.di.exception.ConfigurationError;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AuttowiredHandler implements ObjectConfigurator {
 
+    private static final Logger LOGGER = LogManager.getLogger(AuttowiredHandler.class.getName());
+
     @Override
     public void configure(Object t, ApplicationContext context) {
-        try{
+        try {
             Class<?> impl = t.getClass();
-            for (Field declaredField : impl.getDeclaredFields()) {
-                if(declaredField.isAnnotationPresent(Auttowared.class)){
+
+            if (impl.getSuperclass() != null) {
+                configFieldsOfClass(impl.getSuperclass().getDeclaredFields(), context, t);
+            }
+
+            configFieldsOfClass(impl.getDeclaredFields(), context, t);
+
+        } catch (Exception e) {
+            LOGGER.log(Level.WARN, String.format("AutowiredHandler return exception in object %s", t.getClass()), e);
+            throw new ConfigurationError();
+        }
+    }
+
+    private void configFieldsOfClass(Field[] fields, ApplicationContext context, Object t) {
+        try {
+            for (Field declaredField : fields) {
+                if (declaredField.isAnnotationPresent(Auttowared.class)) {
                     Auttowared auttowared = declaredField.getAnnotation(Auttowared.class);
 
-                    if(auttowared != null){
+                    if (auttowared != null) {
                         declaredField.setAccessible(true);
 
-                        if(declaredField.getType().getGenericSuperclass() != null)
-                        {
+                        if (declaredField.getType().getSuperclass() != null) {
 
                         }
 
@@ -30,11 +54,11 @@ public class AuttowiredHandler implements ObjectConfigurator {
                     }
                 }
             }
-
-
-
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.WARN, String.format("AutowiredHandler return exception in object %s", t.getClass()), e);
+            throw new ConfigurationError();
         }
+
     }
 }
+

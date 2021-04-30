@@ -15,6 +15,7 @@ import com.senla.model.facade.BookShopFacade;
 
 @Configuration
 public class ServerConfig {
+
     @Auttowared
     private IOrderDAO orderDAO;
     @Auttowared

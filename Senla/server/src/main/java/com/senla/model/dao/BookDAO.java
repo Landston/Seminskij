@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 @Singleton
 public class BookDAO extends AbstractDAO<Book> implements IBookDAO {
 
-    private static final Logger LOGGER = Logger.getLogger(BookDAO.class.getName());
+
     private static final String GET_ALL_QUERY = "SELECT * FROM " + Constants.BOOKS_TABLE + " ;";
     private static final String UPDATE_QUERY = "UPDATE " + Constants.BOOKS_TABLE +
             " SET " + Constants.BOOKS_GENRE + " =? , "
@@ -202,6 +202,7 @@ public class BookDAO extends AbstractDAO<Book> implements IBookDAO {
     protected String getAllEntitiesQuerySQL() {
         return GET_ALL_QUERY;
     }
+
 
 
 /*    protected String getAllEntitiesQuerySQL() {

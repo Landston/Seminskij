@@ -12,7 +12,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.logging.log4j.*;
+
 
 public class ApplicationContext {
 
@@ -46,8 +49,6 @@ public class ApplicationContext {
                 .forEach(singleton -> {
                     this.getObject(singleton);
                 });
-
-
     }
 
     public <T> T getObject(Class<T> type) {

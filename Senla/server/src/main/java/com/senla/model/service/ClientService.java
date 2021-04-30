@@ -9,10 +9,12 @@ import com.senla.model.model.Client;
 import com.senla.model.api.service.IClientService;
 import com.senla.model.exception.DAOException;
 import com.senla.model.exception.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Level;
 
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 @Singleton
 public class ClientService implements IClientService {
@@ -21,8 +23,7 @@ public class ClientService implements IClientService {
     private IClientDAO clientDAO;
 
     private Map<String, Comparator<Book>> sort;
-
-    private static final Logger LOGGER = Logger.getLogger(ClientService.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(ClientService.class.getName());
 
 
     public ClientService() {
@@ -43,12 +44,12 @@ public class ClientService implements IClientService {
 
     public void update(UUID id, Client client) throws ServiceException {
         try {
-            LOGGER.log(Level.INFO, String.format("Client id to update : %s  new book : %s", id, client));
+            LOGGER.log(org.apache.logging.log4j.Level.INFO, String.format("Client id to update : %s  new book : %s", id, client));
 
             this.clientDAO.update(id, client);
 
         } catch (DAOException daoException) {
-            LOGGER.log(Level.WARNING, "Update failed", daoException);
+            LOGGER.log(Level.INFO, "Update failed", daoException);
             throw new ServiceException("Update operation failed", daoException);
         }
     }
@@ -59,7 +60,7 @@ public class ClientService implements IClientService {
             this.clientDAO.delete(uuid);
 
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Delete failed", e);
+            LOGGER.log(Level.WARN, "Delete failed", e);
             throw new ServiceException("Deleting operation failed", e);
         }
     }
@@ -68,7 +69,7 @@ public class ClientService implements IClientService {
         try {
             this.clientDAO.addEntity(client);
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Adding client failed", e);
+            LOGGER.log(Level.WARN, "Adding client failed", e);
             throw new ServiceException("Adding client operation failed", e);
 
         }
@@ -79,7 +80,7 @@ public class ClientService implements IClientService {
         try {
             return this.clientDAO.getAll();
         } catch (DAOException e){
-            LOGGER.log(Level.WARNING, e.getMessage(), e);
+            LOGGER.log(Level.WARN, e.getMessage(), e);
             throw new ServiceException(e.getMessage(), e);
         }
     }
@@ -90,7 +91,7 @@ public class ClientService implements IClientService {
             return this.clientDAO.getEntityById(uuid);
 
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Get client by id failed", e);
+            LOGGER.log(Level.WARN, "Get client by id failed", e);
             throw new ServiceException("Get client by id operation failed", e);
         }
     }

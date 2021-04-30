@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public class Application {
 
-    private static String CONFIG_PATH = "D:\\Senla\\proj\\senla\\server\\src\\main\\java\\com\\senla\\model\\resource\\configuration.properties";
+    private static String CONFIG_PATH = "D:\\GITLABA\\senla\\server\\src\\main\\resources\\configuration.properties";
     private static final Logger LOGGER = Logger.getLogger(Application.class.getName());
 
     public static ApplicationContext run(String path, Map<Class, Class> if2impl) {
@@ -26,7 +26,6 @@ public class Application {
                 map.put(Class.forName(key.get(i).toString()), Class.forName(values.get(i).toString()));
             }
 
-
             JavaConfig config = new JavaConfig(path, map);
             ApplicationContext context = new ApplicationContext(config);
             ObjectFactory factory = new ObjectFactory(context);
@@ -39,14 +38,13 @@ public class Application {
 
         } catch (FileNotFoundException e) {
             LOGGER.log(Level.WARNING, "Config file is not found", e);
-            e.printStackTrace();
+
             throw new FATALERROR("FATALITY", e);
         } catch (IOException e) {
             LOGGER.log(Level.WARNING, "Config file is not found", e);
-            e.printStackTrace();
+
             throw new FATALERROR("FATALITY", e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
             throw new FATALERROR("FATALITY", e);
         }
 

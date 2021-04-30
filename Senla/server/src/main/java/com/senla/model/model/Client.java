@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 
-public class Client extends AEntityID implements Serializable {
+public class Client extends AbstractEntity implements Serializable {
 
     private String name;
     private String mail;

@@ -10,11 +10,12 @@ import com.senla.model.api.dao.IOrderDAO;
 import com.senla.model.api.service.IOrderService;
 import com.senla.model.exception.DAOException;
 import com.senla.model.exception.ServiceException;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -24,7 +25,7 @@ public class OrderService implements IOrderService {
     private IOrderDAO orderDAO;
     @Auttowared
     private IRequestService requestService;
-    private static final Logger LOGGER = Logger.getLogger(OrderService.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(OrderService.class.getName());
     private Map<String, Comparator<Order>> sort;
 
 
@@ -50,11 +51,11 @@ public class OrderService implements IOrderService {
 
             return list;
         } catch (IllegalArgumentException e) {
-            LOGGER.log(Level.WARNING, "Order sorting condition is not available", e);
+            LOGGER.log(Level.WARN, "Order sorting condition is not available", e);
             throw new ServiceException("Order sorting operation failed", e);
         }
         catch (DAOException e){
-            LOGGER.log(Level.WARNING, "Order sorting condition is not available", e);
+            LOGGER.log(Level.WARN, "Order sorting condition is not available", e);
             throw new ServiceException("Order sorting operation failed", e);
         }
     }
@@ -65,7 +66,7 @@ public class OrderService implements IOrderService {
             return this.orderDAO.getEntityById(uuid);
 
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Get order by id failed", e);
+            LOGGER.log(Level.WARN, "Get order by id failed", e);
             throw new ServiceException("Get order by id operation failed", e);
         }
 
@@ -85,10 +86,10 @@ public class OrderService implements IOrderService {
 
             return orders;
         } catch (IllegalArgumentException e) {
-            LOGGER.log(Level.WARNING, "Get closed order by Time failed");
+            LOGGER.log(Level.WARN, "Get closed order by Time failed");
             throw new ServiceException("Get closed order by Time operation failed", e);
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Get order by id failed", e);
+            LOGGER.log(Level.WARN, "Get order by id failed", e);
             throw new ServiceException("Get order by id operation failed", e);
         }
     }
@@ -102,7 +103,7 @@ public class OrderService implements IOrderService {
             }
             return revenue;
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Order Service opeation failed", e);
+            LOGGER.log(Level.WARN, "Order Service opeation failed", e);
             throw new ServiceException("Order Service opeation failed", e);
         }
     }
@@ -111,7 +112,7 @@ public class OrderService implements IOrderService {
         try {
             return new ArrayList<>(this.orderDAO.getAll());
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Order Service opeation failed", e);
+            LOGGER.log(Level.WARN, "Order Service opeation failed", e);
             throw new ServiceException("Order Service opeation failed", e);
         }
     }
@@ -133,7 +134,7 @@ public class OrderService implements IOrderService {
 
             this.orderDAO.delete(this.orderDAO.getEntityById(uuid));
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Order deleting faild");
+            LOGGER.log(Level.WARN, "Order deleting faild");
             throw new ServiceException("Order deleting opeartion faild", e);
         }
     }
@@ -147,7 +148,7 @@ public class OrderService implements IOrderService {
             order.setStatus(OrderStatus.CLOSED);
             order.setDateOfExecution(LocalDate.now());
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Order close faild");
+            LOGGER.log(Level.WARN, "Order close faild");
             throw new ServiceException("Order close opeartion faild", e);
         }
     }
@@ -170,7 +171,7 @@ public class OrderService implements IOrderService {
 
             return order;
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Order Create faild");
+            LOGGER.log(Level.WARN, "Order Create faild");
             throw new ServiceException("Order Create opeartion faild", e);
         }
     }
@@ -183,7 +184,7 @@ public class OrderService implements IOrderService {
 
             order.addBook(book);
         } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "AddBook to Order failed", e);
+            LOGGER.log(Level.WARN, "AddBook to Order failed", e);
             throw new ServiceException("AddBook to Order failed", e);
         }
     }
@@ -196,7 +197,7 @@ public class OrderService implements IOrderService {
 
             order.removeBook(book);
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Delete book from Order opeartion failed");
+            LOGGER.log(Level.WARN, "Delete book from Order opeartion failed");
             throw new ServiceException("\"Delete book from Order opeartion failed\"", e);
         }
     }
@@ -210,7 +211,7 @@ public class OrderService implements IOrderService {
                     .filter(y -> y.getDateOfExecution().equals(from) || y.getDateOfExecution().equals(to))
                     .count();
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Order Service opeation failed", e);
+            LOGGER.log(Level.WARN, "Order Service opeation failed", e);
             throw new ServiceException("Order Service opeation failed", e);
         }
     }
@@ -233,7 +234,7 @@ public class OrderService implements IOrderService {
         try {
             this.orderDAO.addEntity(order);
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Adding order failed", e);
+            LOGGER.log(Level.WARN, "Adding order failed", e);
 
             throw new ServiceException("Adding order operation failed", e);
         }
@@ -246,7 +247,7 @@ public class OrderService implements IOrderService {
 
             this.orderDAO.getEntityById(uuid).setStatus(OrderStatus.CANCELED);
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Order cancel faild");
+            LOGGER.log(Level.WARN, "Order cancel faild");
             throw new ServiceException("Order close opeartion faild", e);
         }
     }
@@ -269,7 +270,7 @@ public class OrderService implements IOrderService {
             this.orderDAO.getEntityById(uuid).setDateOfExecution(LocalDate.now());
 
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Order Done faild");
+            LOGGER.log(Level.WARN, "Order Done faild");
             throw new ServiceException("Order Done opeartion faild", e);
         }
     }
@@ -281,7 +282,7 @@ public class OrderService implements IOrderService {
             this.orderDAO.getEntityById(uuid).setStatus(OrderStatus.OPEN);
 
         } catch (DAOException e) {
-            LOGGER.log(Level.WARNING, "Order Open faild");
+            LOGGER.log(Level.WARN, "Order Open faild");
             throw new ServiceException("Order Open opeartion faild", e);
         }
     }

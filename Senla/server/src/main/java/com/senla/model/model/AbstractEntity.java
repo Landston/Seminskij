@@ -5,11 +5,11 @@ import java.io.Serializable;
 import java.util.UUID;
 
 
-public abstract class AEntityID implements Serializable {
+public abstract class AbstractEntity implements Serializable {
 
     private  UUID uuid;
 
-    public AEntityID(){
+    public AbstractEntity(){
         this.uuid = UUID.randomUUID();
     }
 
