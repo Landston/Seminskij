@@ -7,6 +7,7 @@ import com.senla.model.exception.DAOException;
 import com.senla.model.model.Book;
 import com.senla.model.api.dao.IBookDAO;
 import com.senla.model.model.BookStatus;
+import org.apache.logging.log4j.Level;
 
 
 import java.sql.Connection;
@@ -15,7 +16,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Singleton
@@ -96,7 +96,7 @@ public class BookDAO extends AbstractDAO<Book> implements IBookDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, e.getSQLState(), e);
+            LOGGER.log(Level.WARN, e.getSQLState(), e);
             throw new DAOException("UPDATE_BOOK_EXCEPTION", e);
         }
     }

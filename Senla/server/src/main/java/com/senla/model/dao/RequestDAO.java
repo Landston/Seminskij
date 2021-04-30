@@ -56,7 +56,7 @@ public class RequestDAO extends AbstractDAO<Request> implements IRequestDAO {
                 " SET " + Constants.REQUESTS_REQUEST_ID + " = ?,"
                 + Constants.REQUESTS_BOOK_ID + " = ?,"
                 + Constants.REQUESTS_COUNT + " = ?,"
-                + Constants.REQUESTS_OPEN_CLOSE + " = ?,"
+                + Constants.REQUESTS_OPEN_CLOSE + " = ?"
                 + " WHERE " + Constants.REQUESTS_REQUEST_ID + " = ? ;";
 
         try {

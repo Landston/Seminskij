@@ -3,6 +3,7 @@ import com.senla.di.appconfig.ApplicationContext;
 import com.senla.di.exception.ConfigurationError;
 import com.senla.model.dao.BookDAO;
 import com.senla.model.model.Book;
+import com.senla.ui.MenuController;
 import lombok.Setter;
 import org.apache.logging.log4j.Level;
 
@@ -20,7 +21,9 @@ public class Test {
 
     public static void main(String[] args) throws NoSuchFieldException {
 
+        ApplicationContext context = ApplicationContext.getInstance();
 
+        context.getObject(MenuController.class).run();
     }
 
 }

@@ -6,18 +6,19 @@ import com.senla.model.dao.util.DataBaseHandler;
 import com.senla.model.model.AbstractEntity;
 import com.senla.model.api.dao.IDAO;
 import com.senla.model.exception.DAOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.logging.Logger;
 
 
     public abstract class AbstractDAO<T extends AbstractEntity> implements IDAO<T> {
 
-    public   Logger LOGGER = Logger.getLogger(this.getClass().getName());
+    public Logger LOGGER = LogManager.getLogger(this.getClass().getName());
 
     @Auttowared
     public DataBaseHandler dataBaseHandler;
@@ -88,5 +89,6 @@ import java.util.logging.Logger;
     }
 
     protected abstract T getEntity(ResultSet rs) throws SQLException;
+
     protected abstract String getAllEntitiesQuerySQL();
 }

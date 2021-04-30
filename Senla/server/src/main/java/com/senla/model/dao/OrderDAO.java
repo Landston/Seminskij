@@ -8,6 +8,7 @@ import com.senla.model.dao.util.DataBaseHandler;
 import com.senla.model.exception.DAOException;
 import com.senla.model.model.*;
 import com.senla.model.api.dao.IOrderDAO;
+import org.apache.logging.log4j.Level;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -16,7 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.logging.Level;
 
 @Singleton
 public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
@@ -47,7 +47,7 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
             preparedStatement.close();
 
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, e.getSQLState(), e);
+            LOGGER.log(org.apache.logging.log4j.Level.WARN, e.getSQLState(), e);
             throw new DAOException("GET_ALL_ORDERDAO_EXCEPTION", e);
         }
         return orders;
@@ -97,7 +97,7 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
 
             pr.close();
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, String.format("UPDATE_ERROR", id));
+            LOGGER.log(org.apache.logging.log4j.Level.WARN, String.format("UPDATE_ERROR", id));
             throw new DAOException(String.format("UPDATE_ERROR", id));
         }
     }
@@ -117,7 +117,7 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
             pr.close();
 
         } catch (Exception e) {
-            LOGGER.log(Level.WARNING, String.format("DELETE_ORDER_ERROR", id));
+            LOGGER.log(org.apache.logging.log4j.Level.WARN, String.format("DELETE_ORDER_ERROR", id));
             throw new DAOException("DELETE_ERROR");
 
         }
@@ -160,7 +160,7 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
 
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, e.getSQLState(), e);
+            LOGGER.log(org.apache.logging.log4j.Level.WARN, e.getSQLState(), e);
         }
         return books;
     }
@@ -185,7 +185,7 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
             pr.close();
 
         } catch (SQLException e) {
-            LOGGER.log(Level.WARNING, String.format("ADD_ENTITY_ERROR", entity));
+            LOGGER.log(Level.WARN, String.format("ADD_ENTITY_ERROR", entity));
             throw new DAOException("ADD_ENTITY_ERROR");
         }
     }
@@ -216,7 +216,7 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
             }
 
         } catch (Exception e) {
-            LOGGER.log(Level.WARNING, String.format("GET_ENTITY_BY_ID_ERROR", id));
+            LOGGER.log(org.apache.logging.log4j.Level.WARN, String.format("GET_ENTITY_BY_ID_ERROR", id));
             throw new DAOException("GET_ENTITY_BY_ID_ERROR", e);
         }
         return order;

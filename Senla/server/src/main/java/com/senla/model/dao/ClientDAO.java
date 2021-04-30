@@ -7,7 +7,7 @@ import com.senla.model.dao.util.DataBaseHandler;
 import com.senla.model.exception.DAOException;
 import com.senla.model.model.Client;
 import com.senla.model.api.dao.IClientDAO;
-
+import org.apache.logging.log4j.Level;
 
 
 import java.sql.Connection;
@@ -15,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.logging.Level;
 
 @Singleton
 public class ClientDAO extends AbstractDAO<Client> implements IClientDAO {
@@ -48,7 +47,7 @@ public class ClientDAO extends AbstractDAO<Client> implements IClientDAO {
 
             return clients;
         } catch (SQLException throwables) {
-            LOGGER.log(Level.WARNING, throwables.getSQLState(), throwables);
+            LOGGER.log(Level.WARN, throwables.getSQLState(), throwables);
             throw new DAOException(String.format("Could not get All Clients from DB : %s", throwables.getCause()), throwables);
         } finally {
 
