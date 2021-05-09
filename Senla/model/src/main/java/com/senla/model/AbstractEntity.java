@@ -1,0 +1,23 @@
+package com.senla.model;
+
+
+import java.io.Serializable;
+import java.util.UUID;
+
+
+public abstract class AbstractEntity implements Serializable {
+
+    private  UUID uuid;
+
+    public AbstractEntity(){
+        this.uuid = UUID.randomUUID();
+    }
+
+    public UUID getUuid(){
+        return this.uuid;
+    }
+
+    public void setUuid(UUID id){
+        this.uuid = id;
+    }
+}

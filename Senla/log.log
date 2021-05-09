@@ -1,35 +1,58 @@
-[INFO ] 2021-04-25 21:29:04.983 [main] BookShop - Project start
-[INFO ] 2021-04-25 21:29:08.304 [main] BookShop - Project start
-[INFO ] 2021-04-25 21:31:12.738 [main] BookShop - Project start
-[WARN ] 2021-04-25 21:31:12.742 [main] BookShop - CRACK
-com.senla.model.exception.DAOException: CRACK
-	at com.senla.model.dao.BookDAO.test(BookDAO.java:207) ~[main/:?]
-	at com.senla.model.BookShop.main(BookShop.java:35) [main/:?]
-[INFO ] 2021-04-25 22:03:32.012 [main] BookShop - Project start
-[INFO ] 2021-04-25 22:04:47.678 [main] BookShop - Project start
-[INFO ] 2021-04-27 18:52:34.600 [main] BookShop - Project start
-[INFO ] 2021-04-27 20:37:02.462 [main] BookShop - Project start
-[INFO ] 2021-04-27 20:40:28.926 [main] BookShop - Project start
-[INFO ] 2021-04-27 20:41:27.314 [main] BookShop - Project start
-[INFO ] 2021-04-27 20:41:57.657 [main] BookShop - Project start
-[INFO ] 2021-04-27 20:42:09.624 [main] BookShop - Project start
-[INFO ] 2021-04-27 20:42:28.319 [main] BookShop - Project start
-[INFO ] 2021-04-27 20:45:14.997 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:01:53.657 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:02:09.914 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:22:50.144 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:23:02.565 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:23:14.627 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:26:02.353 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:26:33.058 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:27:27.992 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:28:03.666 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:29:26.814 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:29:43.343 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:30:06.228 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:30:14.830 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:30:33.534 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:32:39.194 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:34:40.025 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:35:16.719 [main] BookShop - Project start
-[INFO ] 2021-04-27 21:36:03.869 [main] BookShop - Project start
+[WARN ] 2021-04-30 21:03:54.982 [main] Application - Class not found:  
+java.lang.ClassNotFoundException: IRequestDAO
+	at jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:606) ~[?:?]
+	at jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:168) ~[?:?]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:522) ~[?:?]
+	at java.lang.Class.forName0(Native Method) ~[?:?]
+	at java.lang.Class.forName(Class.java:377) ~[?:?]
+	at com.senla.di.appconfig.Application.run(Application.java:28) [DI-1.0-SNAPSHOT.jar:?]
+	at com.senla.di.appconfig.ApplicationContext.getInstance(ApplicationContext.java:31) [DI-1.0-SNAPSHOT.jar:?]
+	at Test.main(Test.java:9) [main/:?]
+[WARN ] 2021-04-30 21:05:00.242 [main] Application - Class not found:  
+java.lang.ClassNotFoundException: IRequestDAO
+	at jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:606) ~[?:?]
+	at jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:168) ~[?:?]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:522) ~[?:?]
+	at java.lang.Class.forName0(Native Method) ~[?:?]
+	at java.lang.Class.forName(Class.java:377) ~[?:?]
+	at com.senla.di.appconfig.Application.run(Application.java:28) [DI-1.0-SNAPSHOT.jar:?]
+	at com.senla.di.appconfig.ApplicationContext.getInstance(ApplicationContext.java:31) [DI-1.0-SNAPSHOT.jar:?]
+	at Test.main(Test.java:9) [main/:?]
+[WARN ] 2021-04-30 21:05:06.283 [main] Application - Class not found:  
+java.lang.ClassNotFoundException: IRequestDAO
+	at jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:606) ~[?:?]
+	at jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:168) ~[?:?]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:522) ~[?:?]
+	at java.lang.Class.forName0(Native Method) ~[?:?]
+	at java.lang.Class.forName(Class.java:377) ~[?:?]
+	at com.senla.di.appconfig.Application.run(Application.java:28) [DI-1.0-SNAPSHOT.jar:?]
+	at com.senla.di.appconfig.ApplicationContext.getInstance(ApplicationContext.java:31) [DI-1.0-SNAPSHOT.jar:?]
+	at Test.main(Test.java:9) [main/:?]
+[WARN ] 2021-04-30 21:09:38.112 [main] Application - Config file is not found
+java.io.FileNotFoundException: D:\GITLABA\senla\api\src\main\resources\configuration.properties (Не удается найти указанный файл)
+	at java.io.FileInputStream.open0(Native Method) ~[?:?]
+	at java.io.FileInputStream.open(FileInputStream.java:211) ~[?:?]
+	at java.io.FileInputStream.<init>(FileInputStream.java:153) ~[?:?]
+	at com.senla.di.appconfig.Application.run(Application.java:18) [DI-1.0-SNAPSHOT.jar:?]
+	at com.senla.di.appconfig.ApplicationContext.getInstance(ApplicationContext.java:31) [DI-1.0-SNAPSHOT.jar:?]
+	at Test.main(Test.java:9) [main/:?]
+[WARN ] 2021-04-30 21:12:12.437 [main] Application - Class not found:  
+java.lang.ClassNotFoundException: IRequestDAO
+	at jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:606) ~[?:?]
+	at jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:168) ~[?:?]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:522) ~[?:?]
+	at java.lang.Class.forName0(Native Method) ~[?:?]
+	at java.lang.Class.forName(Class.java:377) ~[?:?]
+	at com.senla.di.appconfig.Application.run(Application.java:28) [DI-1.0-SNAPSHOT.jar:?]
+	at com.senla.di.appconfig.ApplicationContext.getInstance(ApplicationContext.java:31) [DI-1.0-SNAPSHOT.jar:?]
+	at Test.main(Test.java:9) [main/:?]
+[WARN ] 2021-04-30 21:13:05.872 [main] Application - Class not found:  
+java.lang.ClassNotFoundException: IRequestDAO
+	at jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:606) ~[?:?]
+	at jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:168) ~[?:?]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:522) ~[?:?]
+	at java.lang.Class.forName0(Native Method) ~[?:?]
+	at java.lang.Class.forName(Class.java:377) ~[?:?]
+	at com.senla.di.appconfig.Application.run(Application.java:28) [DI-1.0-SNAPSHOT.jar:?]
+	at com.senla.di.appconfig.ApplicationContext.getInstance(ApplicationContext.java:31) [DI-1.0-SNAPSHOT.jar:?]
+	at Test.main(Test.java:9) [main/:?]

@@ -1,6 +1,5 @@
 package com.senla.ui;
 
-import com.senla.model.exception.ServiceException;
 import com.senla.ui.actions.request.RequestSortAction;
 
 import com.senla.di.annotation.Auttowared;
@@ -12,7 +11,7 @@ import com.senla.ui.actions.client.DeleteClientAction;
 import com.senla.ui.actions.client.UpdateClientAction;
 import com.senla.ui.actions.request.CreateRequestAction;
 import com.senla.ui.actions.exitAction;
-import com.senla.model.facade.BookShopFacade;
+import com.senla.facade.BookShopFacade;
 import com.senla.ui.actions.book.*;
 import com.senla.ui.actions.order.*;
 import org.apache.logging.log4j.LogManager;

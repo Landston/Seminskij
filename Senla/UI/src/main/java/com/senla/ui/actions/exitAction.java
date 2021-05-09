@@ -1,6 +1,6 @@
 package com.senla.ui.actions;
 
-import com.senla.model.facade.BookShopFacade;
+import com.senla.facade.BookShopFacade;
 
 import java.util.logging.Level;
 

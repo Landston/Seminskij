@@ -2,13 +2,15 @@ package com.senla.di.appconfig;
 
 import java.io.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Application {
 
-    private static String CONFIG_PATH = "D:\\GITLABA\\senla\\server\\src\\main\\resources\\configuration.properties";
-    private static final Logger LOGGER = Logger.getLogger(Application.class.getName());
+    private static String CONFIG_PATH = "D:\\GITLABA\\senla\\ZEnd\\src\\main\\resources\\configuration.properties";
+    private static final Logger LOGGER = LogManager.getLogger(Application.class.getName());
 
     public static ApplicationContext run(String path, Map<Class, Class> if2impl) {
 
@@ -37,14 +39,15 @@ public class Application {
             return context;
 
         } catch (FileNotFoundException e) {
-            LOGGER.log(Level.WARNING, "Config file is not found", e);
+            LOGGER.log(Level.WARN, "Config file is not found", e);
 
             throw new FATALERROR("FATALITY", e);
         } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Config file is not found", e);
+            LOGGER.log(Level.WARN, "Config file is not found", e);
 
             throw new FATALERROR("FATALITY", e);
         } catch (ClassNotFoundException e) {
+            LOGGER.log(Level.WARN, String.format("Class not found:  "), e);
             throw new FATALERROR("FATALITY", e);
         }
 

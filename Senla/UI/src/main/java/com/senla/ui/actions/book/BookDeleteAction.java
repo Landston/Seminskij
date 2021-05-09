@@ -1,7 +1,7 @@
 package com.senla.ui.actions.book;
 
 
-import com.senla.model.facade.BookShopFacade;
+import com.senla.facade.BookShopFacade;
 import com.senla.ui.actions.BaseAction;
 import com.senla.ui.actions.IAction;
 
