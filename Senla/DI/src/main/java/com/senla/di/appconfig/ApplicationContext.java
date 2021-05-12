@@ -4,16 +4,11 @@ import com.senla.di.annotation.Configuration;
 import com.senla.di.annotation.Singleton;
 import com.senla.di.appconfig.api.Config;
 
-import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.logging.log4j.*;
 
 

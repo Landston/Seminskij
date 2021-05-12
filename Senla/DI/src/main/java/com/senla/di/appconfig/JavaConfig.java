@@ -1,7 +1,6 @@
 package com.senla.di.appconfig;
 
 import com.senla.di.appconfig.api.Config;
-import lombok.Getter;
 import org.reflections.Reflections;
 
 import java.util.Map;

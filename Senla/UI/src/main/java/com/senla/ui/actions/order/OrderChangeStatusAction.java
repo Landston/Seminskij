@@ -4,11 +4,11 @@ package com.senla.ui.actions.order;
 import com.senla.facade.BookShopFacade;
 import com.senla.ui.actions.BaseAction;
 import com.senla.ui.actions.IAction;
+import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
-import java.util.logging.Level;
 
 public class OrderChangeStatusAction extends BaseAction implements IAction {
     public OrderChangeStatusAction(BookShopFacade facade) {
@@ -39,7 +39,7 @@ public class OrderChangeStatusAction extends BaseAction implements IAction {
         this.facade.changeOrder(UUID.fromString(uuid), status);
 
         } catch (Exception e){
-            LOGGER.log(Level.WARNING, e.getLocalizedMessage(), e);
+            LOGGER.log(Level.WARN, e.getLocalizedMessage(), e);
             System.out.println(e.getMessage());
         }
 

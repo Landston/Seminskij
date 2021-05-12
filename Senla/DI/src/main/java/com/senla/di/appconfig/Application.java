@@ -3,6 +3,7 @@ package com.senla.di.appconfig;
 import java.io.*;
 import java.util.*;
 
+import com.senla.di.exception.FATALERROR;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -3,10 +3,10 @@ package com.senla.ui.actions.client;
 import com.senla.facade.BookShopFacade;
 import com.senla.ui.actions.BaseAction;
 import com.senla.ui.actions.IAction;
+import org.apache.logging.log4j.Level;
 
 import java.util.Scanner;
 import java.util.UUID;
-import java.util.logging.Level;
 
 public class UpdateClientAction extends BaseAction implements IAction {
     public UpdateClientAction(BookShopFacade facade) {
@@ -42,7 +42,7 @@ public class UpdateClientAction extends BaseAction implements IAction {
 
         this.facade.updateClient(UUID.fromString(id), this.facade.createClient(name, mail));
         } catch (Exception e){
-            LOGGER.log(Level.WARNING, e.getLocalizedMessage(), e);
+            LOGGER.log(Level.WARN, e.getLocalizedMessage(), e);
         }
     }
 }

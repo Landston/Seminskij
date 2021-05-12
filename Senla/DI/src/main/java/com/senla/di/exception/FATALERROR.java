@@ -1,4 +1,4 @@
-package com.senla.di.appconfig;
+package com.senla.di.exception;
 
 
 public class FATALERROR extends RuntimeException{

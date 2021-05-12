@@ -1,8 +1,7 @@
 package com.senla.ui.actions;
 
 import com.senla.facade.BookShopFacade;
-
-import java.util.logging.Level;
+import org.apache.logging.log4j.Level;
 
 public class exitAction extends BaseAction implements IAction{
     public exitAction(BookShopFacade facade) {
@@ -15,7 +14,7 @@ public class exitAction extends BaseAction implements IAction{
 
 
         }catch (Exception e){
-            LOGGER.log(Level.WARNING, "Exit action failed");
+            LOGGER.log(Level.WARN, "Exit action failed");
 
         }
     }

@@ -3,8 +3,7 @@ package com.senla.ui.actions.order;
 import com.senla.facade.BookShopFacade;
 import com.senla.ui.actions.BaseAction;
 import com.senla.ui.actions.IAction;
-
-import java.util.logging.Level;
+import org.apache.logging.log4j.Level;
 
 public class TotalCostCountingAction extends BaseAction implements IAction {
 
@@ -18,7 +17,7 @@ public class TotalCostCountingAction extends BaseAction implements IAction {
         try{
             System.out.println("Total revenue: " + facade.totalFirmRevenue());
         } catch (Exception e){
-            LOGGER.log(Level.WARNING, e.getLocalizedMessage(), e);
+            LOGGER.log(Level.WARN, e.getLocalizedMessage(), e);
         }
         }
     }

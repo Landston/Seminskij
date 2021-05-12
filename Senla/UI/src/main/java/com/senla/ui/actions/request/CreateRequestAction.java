@@ -3,11 +3,11 @@ package com.senla.ui.actions.request;
 import com.senla.facade.BookShopFacade;
 import com.senla.ui.actions.BaseAction;
 import com.senla.ui.actions.IAction;
+import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
-import java.util.logging.Level;
 
 public class CreateRequestAction extends BaseAction implements IAction {
 
@@ -39,7 +39,7 @@ public class CreateRequestAction extends BaseAction implements IAction {
         }
 
         } catch (Exception e){
-            LOGGER.log(Level.WARNING, e.getLocalizedMessage(), e);
+            LOGGER.log(Level.WARN, e.getLocalizedMessage(), e);
         }
 
     }

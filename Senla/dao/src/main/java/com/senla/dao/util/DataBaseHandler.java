@@ -2,12 +2,14 @@ package com.senla.dao.util;
 
 
 import com.senla.di.annotation.Singleton;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+
 
 @Singleton
 public class DataBaseHandler {
@@ -17,7 +19,7 @@ public class DataBaseHandler {
     private String URL = "jdbc:postgresql://localhost:5432/bookshop";
 
 
-    private static final Logger LOGGER = Logger.getLogger(DataBaseHandler.class.getName());
+    private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(DataBaseHandler.class);
 
     private Connection connection;
 
@@ -35,7 +37,7 @@ public class DataBaseHandler {
 
             }
         } catch (SQLException throwables) {
-            LOGGER.log(Level.WARNING, throwables.getStackTrace().toString(), throwables);
+            LOGGER.log(Level.WARN, throwables.getStackTrace().toString(), throwables);
             System.out.println("");
         }
     }
