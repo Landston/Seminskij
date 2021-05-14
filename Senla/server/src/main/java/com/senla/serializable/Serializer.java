@@ -2,7 +2,6 @@ package com.senla.serializable;
 
 import com.senla.api.exception.service.DAOException;
 import com.senla.api.exception.service.ServiceException;
-import com.senla.di.annotation.ConfigProperty;
 import com.senla.model.AbstractEntity;
 
 
@@ -14,7 +13,7 @@ import java.util.logging.Logger;
 
 public class Serializer<T extends Serializable> {
 
-    @ConfigProperty(propertyName = "path")
+
     private static String path;
     private static final Logger LOGGER = Logger.getLogger(Serializer.class.getName());
 

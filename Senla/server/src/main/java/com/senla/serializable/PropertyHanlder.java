@@ -1,7 +1,6 @@
 package com.senla.serializable;
 
 
-import com.senla.di.annotation.Singleton;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +12,7 @@ import java.util.Optional;
 import java.util.Properties;
 
 
-@Singleton
+
 public class PropertyHanlder {
 
     private static Logger LOGGER = LogManager.getLogger(PropertyHanlder.class.getName());

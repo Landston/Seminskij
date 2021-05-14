@@ -6,10 +6,9 @@ import com.senla.api.exception.service.DAOException;
 import com.senla.api.exception.service.ServiceException;
 import com.senla.api.service.IRequestService;
 
-import com.senla.di.annotation.Auttowared;
-import com.senla.di.annotation.Singleton;
 import com.senla.model.Book;
 import com.senla.model.Request;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,19 +16,14 @@ import org.apache.logging.log4j.Logger;
 import java.util.*;
 
 
-@Singleton
+
 public class RequestService implements IRequestService {
 
-    @Auttowared
     private IRequestDAO requestDAO;
-
-
     private Map<String, Comparator<Request>> sort;
-
     private static final Logger LOGGER = LogManager.getLogger(OrderService.class.getName());
 
     public RequestService() {
-
         this.init();
     }
 

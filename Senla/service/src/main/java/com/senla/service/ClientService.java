@@ -5,10 +5,10 @@ import com.senla.api.dao.IClientDAO;
 import com.senla.api.exception.service.DAOException;
 import com.senla.api.exception.service.ServiceException;
 import com.senla.api.service.IClientService;
-import com.senla.di.annotation.Auttowared;
-import com.senla.di.annotation.Singleton;
+
 import com.senla.model.Book;
 import com.senla.model.Client;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,12 +16,10 @@ import org.apache.logging.log4j.Logger;
 import java.util.*;
 
 
-@Singleton
+
 public class ClientService implements IClientService {
 
-    @Auttowared
     private IClientDAO clientDAO;
-
     private Map<String, Comparator<Book>> sort;
     private static final Logger LOGGER = LogManager.getLogger(ClientService.class.getName());
 

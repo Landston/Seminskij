@@ -2,10 +2,11 @@ package com.senla;
 
 import com.senla.api.exception.service.DAOException;
 import com.senla.api.exception.service.ServiceException;
-import com.senla.di.appconfig.ApplicationContext;
+
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationContext;
 
 import java.sql.*;
 
@@ -16,15 +17,8 @@ public class BookShop {
     private static String URL = "jdbc:postgresql://localhost:5432/bookshop";
     private static String USER = "postgres";
     private static String PASS = "root";
-    private static ApplicationContext context;
 
     public static void main(String[] args) throws DAOException, NoSuchFieldException, ServiceException, SQLException, ClassNotFoundException {
-
-        LOGGER.info("Project start");
-
-
-
-
 
     }
 }

@@ -1,9 +1,6 @@
 package com.senla.dao;
 
 import com.senla.api.exception.service.DAOException;
-import com.senla.di.annotation.Auttowared;
-import com.senla.di.annotation.Singleton;
-import com.senla.di.appconfig.ApplicationContext;
 import com.senla.dao.util.DataBaseHandler;
 import com.senla.model.AbstractEntity;
 import com.senla.api.dao.IDAO;
@@ -22,13 +19,10 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements IDAO<T> {
 
 public Logger LOGGER = LogManager.getLogger(this.getClass().getName());
 
-@Auttowared
+
 public DataBaseHandler dataBaseHandler;
 
 public AbstractDAO() {
-    double ad;
-            Double fasf;
-
 }
 
 @Override
@@ -87,7 +81,7 @@ public T getEntityById(UUID id) throws DAOException {
 }
 
 public Connection getConnection() {
-    return ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection();
+    return dataBaseHandler.getConnection();
 }
 
 protected abstract T getEntity(ResultSet rs) throws SQLException;

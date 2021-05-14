@@ -5,13 +5,13 @@ import com.senla.api.exception.service.DAOException;
 import com.senla.api.exception.service.ServiceException;
 import com.senla.api.service.IOrderService;
 import com.senla.api.service.IRequestService;
-import com.senla.di.annotation.Auttowared;
-import com.senla.di.annotation.Singleton;
+
 import com.senla.model.Book;
 import com.senla.model.Order;
 import com.senla.model.BookStatus;
 import com.senla.model.Client;
 import com.senla.model.OrderStatus;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,12 +22,11 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Singleton
+
 public class OrderService implements IOrderService {
 
-    @Auttowared
+
     private IOrderDAO orderDAO;
-    @Auttowared
     private IRequestService requestService;
     private static final Logger LOGGER = LogManager.getLogger(OrderService.class.getName());
     private Map<String, Comparator<Order>> sort;

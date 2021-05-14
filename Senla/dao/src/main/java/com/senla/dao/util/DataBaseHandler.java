@@ -43,7 +43,7 @@ public class DataBaseHandler {
     }
 
     public Connection getConnection() {
-        if (connectionSetted == false) {
+        if (!connectionSetted) {
             setConnection();
         }
         return connection;

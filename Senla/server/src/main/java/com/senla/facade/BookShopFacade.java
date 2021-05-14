@@ -5,32 +5,23 @@ import com.senla.api.service.IBookService;
 import com.senla.api.service.IClientService;
 import com.senla.api.service.IOrderService;
 import com.senla.api.service.IRequestService;
-import com.senla.di.annotation.Auttowared;
-import com.senla.di.annotation.Singleton;
+
 import com.senla.model.Book;
 import com.senla.model.Client;
 import com.senla.model.Request;
 import com.senla.model.Order;
 
-
-
-
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
-@Singleton
 public class BookShopFacade {
 
-    @Auttowared
-    private IBookService bookService ;
-    @Auttowared
-    private IClientService clientService ;
-    @Auttowared
+
+    private IBookService bookService;
+    private IClientService clientService;
     private IOrderService orderService;
-    @Auttowared
-    private IRequestService requestService ;
+    private IRequestService requestService;
 
     public BookShopFacade() {
 
@@ -44,10 +35,10 @@ public class BookShopFacade {
     public List<Book> getAllBooks() throws ServiceException {
         try {
             return bookService.getAll().isEmpty() ? Collections.emptyList() : bookService.getAll();
-        } catch (ServiceException e){
+        } catch (ServiceException e) {
             throw new ServiceException(e);
         }
-        }
+    }
 
     public void deleteBook(UUID uuid) throws ServiceException {
         try {
@@ -148,8 +139,8 @@ public class BookShopFacade {
 
     }
 
-    public Client createClient(String name, String mail)  {
-            return this.clientService.create(name, mail);
+    public Client createClient(String name, String mail) {
+        return this.clientService.create(name, mail);
     }
 
     public void addClient(String name, String mail) throws ServiceException {
@@ -271,7 +262,7 @@ public class BookShopFacade {
                 this.orderService.cancelOrder(id);
                 break;
             }
-            case "DONE" :{
+            case "DONE": {
                 this.orderService.orderDone(id);
                 break;
             }
