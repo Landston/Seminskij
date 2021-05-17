@@ -1,7 +1,5 @@
 package com.senla.dao.util;
 
-
-import com.senla.di.annotation.Singleton;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 
@@ -11,7 +9,7 @@ import java.sql.SQLException;
 
 
 
-@Singleton
+
 public class DataBaseHandler {
 
     private String USER = "postgres";

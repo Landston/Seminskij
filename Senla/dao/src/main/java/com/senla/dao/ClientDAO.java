@@ -2,13 +2,12 @@ package com.senla.dao;
 
 import com.senla.api.dao.IClientDAO;
 import com.senla.api.exception.service.DAOException;
-import com.senla.di.annotation.Auttowared;
-import com.senla.di.annotation.Singleton;
-import com.senla.di.appconfig.ApplicationContext;
 import com.senla.dao.util.DataBaseHandler;
 
 import com.senla.model.Client;
 import org.apache.logging.log4j.Level;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Repository;
 
 
 import java.sql.Connection;
@@ -17,7 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-@Singleton
+@Repository
 public class ClientDAO extends AbstractDAO<Client> implements IClientDAO {
 
 

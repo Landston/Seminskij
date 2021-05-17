@@ -3,6 +3,7 @@ package com.senla.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -15,6 +16,7 @@ public class Book extends AbstractEntity implements Serializable {
     private double cost;
     private int year;
     private LocalDate dateOfAdmission;
+
 
     public Book(){
         super();
