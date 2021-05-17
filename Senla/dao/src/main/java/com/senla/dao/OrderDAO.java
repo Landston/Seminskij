@@ -13,11 +13,8 @@ import org.apache.logging.log4j.Level;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
+import java.sql.*;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -32,10 +29,11 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
     public List<Order> getAll() throws DAOException {
         String sql = "SELECT * FROM " + Constants.ORDERS_TABLE + " as ord "
                 + " INNER JOIN " + Constants.CLIENTS_TABLE + " as cl ON " + "ord." + Constants.ORDERS_ORDER_CLIENT_ID + " = " + "cl." + Constants.CLIENTS_CLIENT_ID + " ;";
-        Connection connection = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection();
+
         List<Order> orders = new ArrayList<>();
 
         try {
+            Connection connection = DriverManager.getConnection("");
             connection.setAutoCommit(false);
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -86,8 +84,9 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
                 + Constants.ORDERS_ORDER_CLIENT_ID + "= ? "
                 + "WHERE " + Constants.ORDERS_ID + "= ? ;";
 
-        Connection connection = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection();
         try {
+            Connection connection = DriverManager.getConnection("");
+
             PreparedStatement pr = connection.prepareStatement(sql);
 
             pr.setObject(1, id);
@@ -109,8 +108,10 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
     public void delete(UUID id) throws DAOException {
         String sql = "DELETE FROM " + Constants.ORDERS_TABLE +
                 " WHERE " + Constants.ORDERS_ID + " = ? ;";
-        Connection connection = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection();
+
         try {
+            Connection connection = DriverManager.getConnection("");
+
             PreparedStatement pr = connection.prepareStatement(sql);
 
             pr.setObject(1, id);
@@ -136,10 +137,12 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
                 + "INNER JOIN " + Constants.BOOKS_TABLE + " as bk ON bk." + Constants.BOOKS_BOOK_ID + " = ors." + Constants.ORDER_SPECIFICATION_BOOK_ID
                 + " WHERE ors." + Constants.ORDER_SPECIFICATION_ORDER_ID + " = " + " ? ;";
         List<Book> books = new ArrayList<>();
-        Connection connection = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection();
+
 
 
         try {
+            Connection connection = DriverManager.getConnection("");
+
             PreparedStatement pr = connection.prepareStatement(sql);
 
             connection.setAutoCommit(false);
@@ -174,7 +177,8 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
             String sql = "INSERT INTO " + Constants.ORDERS_TABLE +
                     " VALUES (?, ?, ?, ?, ?);";
 
-            Connection connection = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection();
+            Connection connection = DriverManager.getConnection("");
+
             PreparedStatement pr = connection.prepareStatement(sql);
 
             pr.setObject(1, entity.getUuid());
@@ -202,7 +206,8 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
         Order order = new Order();
 
         try {
-            Connection connection = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection();
+            Connection connection = DriverManager.getConnection("");
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setObject(1,id);
@@ -232,6 +237,11 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
 
     @Override
     protected String getAllEntitiesQuerySQL() {
+        return null;
+    }
+
+    @Override
+    protected Class<Order> getClazz() {
         return null;
     }
 

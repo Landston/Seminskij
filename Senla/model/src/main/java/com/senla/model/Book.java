@@ -1,16 +1,22 @@
 package com.senla.model;
 
 
+import jdk.jfr.Enabled;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-
+@Entity
 public class Book extends AbstractEntity implements Serializable {
 
     private String name;
+    @Enumerated(value = EnumType.STRING)
     private BookStatus status;
     private String genre;
     private double cost;
@@ -19,7 +25,7 @@ public class Book extends AbstractEntity implements Serializable {
 
 
     public Book(){
-        super();
+
         Random random = new Random();
         this.dateOfAdmission =  LocalDate.now();
         this.status = BookStatus.RESERVED;
@@ -29,7 +35,7 @@ public class Book extends AbstractEntity implements Serializable {
     }
 
     public Book(String name, String genre, int year, double cost) {
-        super();
+
         this.dateOfAdmission = LocalDate.now();
         this.status = BookStatus.RESERVED;
         this.name = name;
@@ -39,7 +45,7 @@ public class Book extends AbstractEntity implements Serializable {
 
     }
     public Book(String name, String genre, int year, double cost, BookStatus status) {
-        super();
+
         this.dateOfAdmission = LocalDate.now();
         this.status = status;
         this.name = name;
@@ -49,7 +55,7 @@ public class Book extends AbstractEntity implements Serializable {
 
     }
     public Book(UUID id, String name, String genre, int year, double cost, BookStatus status) {
-        setUuid(id);
+
         this.dateOfAdmission = LocalDate.now();
         this.status = status;
         this.name = name;

@@ -15,18 +15,20 @@ import com.senla.model.OrderStatus;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+@Service
 public class OrderService implements IOrderService {
 
-
+    @Autowired
     private IOrderDAO orderDAO;
+    @Autowired
     private IRequestService requestService;
     private static final Logger LOGGER = LogManager.getLogger(OrderService.class.getName());
     private Map<String, Comparator<Order>> sort;

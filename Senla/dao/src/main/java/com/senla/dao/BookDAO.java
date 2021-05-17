@@ -9,6 +9,10 @@ import org.apache.logging.log4j.Level;
 import org.springframework.stereotype.Repository;
 
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -36,13 +40,45 @@ public class BookDAO extends AbstractDAO<Book> implements IBookDAO {
     private final String GET_BY_ID_QUERY = "SELECT * FROM " + Constants.BOOKS_TABLE +
             " WHERE " + Constants.BOOKS_BOOK_ID + " = ? ;";
 
-    @Auttowared
     public BookDAO(DataBaseHandler dataBaseHandler) {
         super();
     }
 
     public BookDAO(){
 
+    }
+
+    @Override
+    public Book getEntity(ResultSet rs) throws SQLException {
+
+        UUID book_id = rs.getObject(Constants.BOOKS_BOOK_ID, UUID.class);
+        String genre = rs.getString(Constants.BOOKS_GENRE);
+        String name = rs.getString(Constants.BOOKS_NAME);
+        int year = rs.getInt(Constants.BOOKS_YEAR);
+        Double cost = rs.getDouble(Constants.BOOKS_COST);
+        Date date = rs.getDate(Constants.BOOKS_DATE_OF_ADMISSION);
+        String status = rs.getString(Constants.BOOKS_BOOK_STATUS);
+        Book book = new Book(book_id, name, genre, year, cost, BookStatus.valueOf(status));
+
+        book.setDateOfAdmission(date.toLocalDate());
+        book.setUuid(book_id);
+
+        return book;
+    }
+
+    @Override
+    protected String getAllEntitiesQuerySQL() {
+        return null;
+    }
+
+    @Override
+    protected Class<Book> getClazz() {
+        return Book.class;
+    }
+
+    @Override
+    public List<Book> getAll() throws DAOException {
+        return null;
     }
 
    /* @Override
@@ -77,7 +113,7 @@ public class BookDAO extends AbstractDAO<Book> implements IBookDAO {
 
     }*/
 
-    @Override
+  /*  @Override
     public void update(UUID id, Book item) throws DAOException {
         Connection connection = getConnection();
 
@@ -122,30 +158,10 @@ public class BookDAO extends AbstractDAO<Book> implements IBookDAO {
         }
     }
 
-    @Override
-    public void addEntity(Book entity) throws DAOException {
-        Connection connection = getConnection();
 
-        try {
-            LOGGER.info(INSERT_QUERY);
-            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY);
+   */
 
-            preparedStatement.setString(1, entity.getGenre());
-            preparedStatement.setString(2, entity.getName());
-            preparedStatement.setInt(3, entity.getYear());
-            preparedStatement.setDouble(4, entity.getCost());
-            preparedStatement.setDate(5, Date.valueOf(entity.getDateOfAdmission()));
-            preparedStatement.setString(6, entity.getStatus().toString());
-            preparedStatement.setObject(7, entity.getUuid());
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DAOException("ADD_BOOK_EXCEPTION");
-        }
-    }
-
-
+/*
     private void prepareStatementForAddEntity(Book entity, PreparedStatement preparedStatement) throws SQLException {
 
     }

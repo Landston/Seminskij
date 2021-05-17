@@ -14,17 +14,21 @@ import com.senla.model.Request;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+@Service
 public class BookService implements IBookService {
 
-
+    @Autowired
     private IBookDAO bookDAO;
 
+    @Autowired
     private IRequestService requestService;
 
     private Map<String, Comparator<Book>> sort;
@@ -32,7 +36,6 @@ public class BookService implements IBookService {
     private static final Logger LOGGER = LogManager.getLogger(BookService.class.getName());
 
 
-   ////////////////////////////////////////// ПРОСЕТИТЬ MONTH
     private int month;
 
 
@@ -144,9 +147,11 @@ public class BookService implements IBookService {
         }
     }
 
+    @Transactional
     public void add(Book book) throws ServiceException {
         try {
             this.bookDAO.addEntity(book);
+
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Adding book failed", e);
             throw new ServiceException("Adding book operation failed", e);

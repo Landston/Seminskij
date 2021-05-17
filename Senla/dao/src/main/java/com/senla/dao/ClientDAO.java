@@ -10,10 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Repository;
 
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 @Repository
@@ -24,7 +21,7 @@ public class ClientDAO extends AbstractDAO<Client> implements IClientDAO {
     public List<Client> getAll() throws DAOException {
         try {
             String sql = "SELECT *  FROM " + Constants.CLIENTS_TABLE;
-            Connection connection = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection();
+            Connection connection = DriverManager.getConnection("");
 
             connection.setAutoCommit(false);
 
@@ -60,7 +57,7 @@ public class ClientDAO extends AbstractDAO<Client> implements IClientDAO {
                     " SET " + Constants.CLIENTS_CLIENT_NAME + " = '" + item.getName() + "' ," +
                     Constants.CLIENTS_CLIENT_EMAIL + "= '" + item.getMail() +
                     "' WHERE " + Constants.CLIENTS_CLIENT_ID + " = '" + id + "' ;";
-            PreparedStatement statement = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection().prepareStatement(sql);
+            PreparedStatement statement = DriverManager.getConnection("").prepareStatement(sql);
 
             statement.executeUpdate();
             statement.close();
@@ -73,7 +70,7 @@ public class ClientDAO extends AbstractDAO<Client> implements IClientDAO {
         try {
             String sql = "DELETE " + Constants.CLIENTS_TABLE +
                     " WHERE " + Constants.CLIENTS_CLIENT_ID + " = '" + id + "' ;";
-            PreparedStatement statement = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection().prepareStatement(sql);
+            PreparedStatement statement = DriverManager.getConnection("").prepareStatement(sql);
 
             LOGGER.info(sql);
             statement.executeUpdate();
@@ -89,7 +86,7 @@ public class ClientDAO extends AbstractDAO<Client> implements IClientDAO {
         try {
             String sql = "DELETE " + Constants.CLIENTS_TABLE +
                     " WHERE " + Constants.CLIENTS_CLIENT_ID + " = '" + id.getUuid() + "' ;";
-            PreparedStatement statement = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection().prepareStatement(sql);
+            PreparedStatement statement = DriverManager.getConnection("").prepareStatement(sql);
 
             LOGGER.info(sql);
             statement.executeUpdate();
@@ -105,7 +102,7 @@ public class ClientDAO extends AbstractDAO<Client> implements IClientDAO {
             String sql = "INSERT INTO  " + Constants.CLIENTS_TABLE +
                     " VALUES ('" + entity.getUuid() + "', '" + entity.getName() + "', '" +
                     entity.getMail() + "');";
-            PreparedStatement statement = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection().prepareStatement(sql);
+            PreparedStatement statement = DriverManager.getConnection("").prepareStatement(sql);
             LOGGER.info(sql);
 
             statement.executeUpdate();
@@ -119,7 +116,7 @@ public class ClientDAO extends AbstractDAO<Client> implements IClientDAO {
         try {
             String sql = "SELECT * FROM " + Constants.CLIENTS_TABLE +
                     " WHERE " + Constants.CLIENTS_CLIENT_ID + " = '" + id + "' ;";
-            PreparedStatement statement = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection().prepareStatement(sql);
+            PreparedStatement statement = DriverManager.getConnection("").prepareStatement(sql);
             LOGGER.info(sql);
             ResultSet rs = statement.executeQuery();
 
@@ -150,7 +147,12 @@ public class ClientDAO extends AbstractDAO<Client> implements IClientDAO {
         return null;
     }
 
-    @Auttowared
+    @Override
+    protected Class<Client> getClazz() {
+        return null;
+    }
+
+
     public ClientDAO(){
         super();
     }

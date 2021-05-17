@@ -12,11 +12,8 @@ import com.senla.model.BookStatus;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
+import java.sql.*;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 
 @Repository
@@ -32,7 +29,8 @@ public class RequestDAO extends AbstractDAO<Request> implements IRequestDAO {
         List<Request> requests = new ArrayList<>();
 
         try {
-            Connection connection = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection();
+            Connection connection = DriverManager.getConnection("");
+
 
             connection.setAutoCommit(false);
 
@@ -63,7 +61,8 @@ public class RequestDAO extends AbstractDAO<Request> implements IRequestDAO {
                 + " WHERE " + Constants.REQUESTS_REQUEST_ID + " = ? ;";
 
         try {
-            Connection connection = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection();
+            Connection connection = DriverManager.getConnection("");
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setObject(1, id);
@@ -85,7 +84,8 @@ public class RequestDAO extends AbstractDAO<Request> implements IRequestDAO {
                 + " WHERE rq." + Constants.REQUESTS_REQUEST_ID + " = ? ;";
 
         try {
-            Connection connection = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection();
+            Connection connection = DriverManager.getConnection("");
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setObject(1, id);
@@ -102,7 +102,8 @@ public class RequestDAO extends AbstractDAO<Request> implements IRequestDAO {
                 + " WHERE rq." + Constants.REQUESTS_REQUEST_ID + " = ? ;";
 
         try {
-            Connection connection = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection();
+            Connection connection = DriverManager.getConnection("");
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setObject(1, entity.getUuid());
@@ -119,7 +120,8 @@ public class RequestDAO extends AbstractDAO<Request> implements IRequestDAO {
              +" VALUES (?, ?, ?, ?);";
 
         try {
-            Connection connection = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection();
+            Connection connection = DriverManager.getConnection("");
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setObject(1, entity.getUuid());
@@ -141,7 +143,8 @@ public class RequestDAO extends AbstractDAO<Request> implements IRequestDAO {
 
 
         try {
-            Connection connection = ApplicationContext.getInstance().getObject(DataBaseHandler.class).getConnection();
+            Connection connection = DriverManager.getConnection("");
+
 
             connection.setAutoCommit(false);
 
@@ -172,6 +175,11 @@ public class RequestDAO extends AbstractDAO<Request> implements IRequestDAO {
 
     @Override
     protected String getAllEntitiesQuerySQL() {
+        return null;
+    }
+
+    @Override
+    protected Class<Request> getClazz() {
         return null;
     }
 
