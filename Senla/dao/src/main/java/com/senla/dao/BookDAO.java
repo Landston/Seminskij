@@ -27,31 +27,17 @@ public class BookDAO extends AbstractDAO<Book> implements IBookDAO {
         super();
     }
 
-    public BookDAO(){
-
+    public BookDAO() {
     }
 
-    @Override
-    protected Book getEntity(ResultSet rs) throws SQLException {
-        return null;
-    }
 
-    @Override
-    protected String getAllEntitiesQuerySQL() {
-        return null;
-    }
 
     @Override
     protected Class<Book> getClazz() {
-        return null;
+        return Book.class;
     }
 
 
-    @Override
-    public List<Book> getAll() throws DAOException {
-        return null;
-    }
 }
-
 
 

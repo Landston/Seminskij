@@ -123,27 +123,17 @@ public class OrderService implements IOrderService {
         }
     }
 
-    public boolean delete(Order order) throws ServiceException {
+    public void delete(Order order) throws ServiceException {
         try {
-            LOGGER.log(Level.INFO, String.format("Delete order : "), order);
+            LOGGER.log(Level.INFO, String.format("Delete order : %s"), order);
 
             this.orderDAO.delete(order);
-            return true;
+
         } catch (Exception e) {
             throw new ServiceException("delete operation failed", e);
         }
     }
 
-    public void deleteOrder(UUID uuid) throws ServiceException {
-        try {
-            LOGGER.log(Level.INFO, String.format("Delete order uuid : %s", uuid), uuid);
-
-            this.orderDAO.delete(this.orderDAO.getEntityById(uuid));
-        } catch (DAOException e) {
-            LOGGER.log(Level.WARN, "Order deleting faild");
-            throw new ServiceException("Order deleting opeartion faild", e);
-        }
-    }
 
     public void closeOrder(UUID uuid) throws ServiceException {
         try {

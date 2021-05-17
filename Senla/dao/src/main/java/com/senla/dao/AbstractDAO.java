@@ -11,6 +11,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,57 +22,58 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.sql.DataSource;
-import javax.transaction.Transactional;
 import javax.transaction.UserTransaction;
 import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.*;
 
 
-
 public abstract class AbstractDAO<T extends AbstractEntity> implements IDAO<T> {
 
-public Logger LOGGER = LogManager.getLogger(this.getClass().getName());
+    public Logger LOGGER = LogManager.getLogger(this.getClass().getName());
 
-@Autowired
-@PersistenceContext(type = PersistenceContextType.TRANSACTION)
-public EntityManager entityManager;
-
-
-public AbstractDAO() {
-}
+    @Autowired
+    @PersistenceContext(type = PersistenceContextType.TRANSACTION)
+    protected EntityManager entityManager;
 
 
+    public AbstractDAO() {
+    }
 
-@Override
-public void update(UUID id, T item) throws DAOException {
+    @Override
+    public List<T> getAll() throws DAOException {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(getClazz());
+        Root<T> root = query.from(getClazz());
+        query.select(root);
+        return entityManager.createQuery(query).getResultList();
+    }
 
-}
-
-@Override
-public void delete(UUID id) throws DAOException {
-
-}
-
-@Override
-public void delete(T id) throws DAOException {
-
-}
-
-@Override
-public void addEntity(T entity) throws DAOException {
-    entityManager.persist(entity);
-}
-
-@Override
-public T getEntityById(UUID id) throws DAOException {
-    return null;
-}
+    @Override
+    public void update(T item) throws DAOException {
+        entityManager.merge(item);
+    }
 
 
-protected abstract T getEntity(ResultSet rs) throws SQLException;
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void delete(T entity) throws DAOException {
+        T ent = getEntityById(entity.getUuid());
+        entityManager.remove(ent);
 
-protected abstract String getAllEntitiesQuerySQL();
+    }
 
-protected abstract Class<T> getClazz();
+    @Override
+    public void addEntity(T entity) throws DAOException {
+        entityManager.persist(entity);
+
+    }
+
+    @Override
+    public T getEntityById(UUID id) throws DAOException {
+        return entityManager.find(getClazz(), id);
+    }
+
+
+    protected abstract Class<T> getClazz();
 }

@@ -15,7 +15,7 @@ public interface IClientService  {
 
     void update(UUID id, Client client) throws ServiceException;
 
-    void delete(UUID uuid) throws ServiceException;
+    void delete(Client uuid) throws ServiceException;
 
     void add(Client client) throws ServiceException;
 

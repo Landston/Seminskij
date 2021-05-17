@@ -21,9 +21,9 @@ public interface IBookService {
 
     Set<String> getSortParams();
 
-    void updateBook(UUID id, Book book) throws ServiceException;
+    void update(Book book) throws ServiceException;
 
-    void deleteBook(UUID uuid) throws ServiceException;
+    void delete(Book book) throws ServiceException;
 
     List<Book> getAll() throws ServiceException;
 

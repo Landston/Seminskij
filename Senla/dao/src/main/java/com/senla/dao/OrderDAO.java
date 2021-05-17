@@ -26,28 +26,13 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
     }
 
     @Override
-    protected Order getEntity(ResultSet rs) throws SQLException {
-        return null;
-    }
-
-    @Override
-    protected String getAllEntitiesQuerySQL() {
-        return null;
-    }
-
-    @Override
     protected Class<Order> getClazz() {
         return null;
     }
-
 
     @Override
     public List<Book> getBooksForOrder(UUID order_id) {
         return null;
     }
 
-    @Override
-    public List<Order> getAll() throws DAOException {
-        return null;
-    }
 }

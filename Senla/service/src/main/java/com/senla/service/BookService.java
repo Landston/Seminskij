@@ -16,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -68,24 +69,25 @@ public class BookService implements IBookService {
 
     }
 
-    public void updateBook(UUID id, Book book) throws ServiceException {
+    public void update(Book book) throws ServiceException {
         try {
-            LOGGER.log(Level.INFO, String.format("Book id to update : %s  new book : %s", id, book));
+            LOGGER.log(Level.INFO, String.format("Book   : %s", book));
 
-            this.bookDAO.update(id, book);
+            this.bookDAO.update(book);
         } catch (DAOException daoException) {
             LOGGER.log(Level.WARN, "UpdateBook failed", daoException);
             throw new ServiceException("Book update operation failed", daoException);
         }
     }
 
-    public void deleteBook(UUID uuid) throws ServiceException {
+    public void delete(Book book) throws ServiceException {
         try {
-            LOGGER.log(Level.INFO, String.format("Book id to delete : %s", uuid));
-            this.bookDAO.delete(uuid);
+            LOGGER.log(Level.INFO, String.format("Book to delete : %s", book));
 
+            this.bookDAO.delete(book);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "DeleteBook failed", e);
+
             throw new ServiceException("Deleting book operation failed", e);
         }
     }
@@ -134,6 +136,7 @@ public class BookService implements IBookService {
         LOGGER.log(Level.INFO ,String.format("Add book to Shop  params. Name : %s, Genre : %s, Year : %s, Cost : %s", name, genre, year, cost));
 
         if (cost < 0) throw new ServiceException("Cost is negative");
+
 
         book.setName(name);
         book.setGenre(genre);

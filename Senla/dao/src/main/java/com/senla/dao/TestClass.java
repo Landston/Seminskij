@@ -20,20 +20,6 @@ public class TestClass {
 
 
     public static void main(String[] args) throws DAOException {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext("com.senla.dao");
 
-        BookDAO dao = (BookDAO) applicationContext.getBean("bookDAO");
-
-        Book book = new Book();
-        book.setCost(150);
-        book.setStatus(BookStatus.RESERVED);
-        book.setGenre("Detective");
-        book.setName("James Bond 007");
-        book.setYear(2000);
-
-        dao.addEntity(book);
-
-        System.out.println(dao.getAllBook());
-        System.out.println();
     }
 }

@@ -18,25 +18,10 @@ import java.util.*;
 
 @Repository
 public class RequestDAO extends AbstractDAO<Request> implements IRequestDAO {
-
-    @Override
-    protected Request getEntity(ResultSet rs) throws SQLException {
-        return null;
-    }
-
-    @Override
-    protected String getAllEntitiesQuerySQL() {
-        return null;
-    }
-
     @Override
     protected Class<Request> getClazz() {
         return null;
     }
 
-    @Override
-    public List<Request> getAll() throws DAOException {
-        return null;
-    }
 }
 

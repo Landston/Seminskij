@@ -34,7 +34,7 @@ public class BookDeleteAction extends BaseAction implements IAction {
             String uuid = scanner.nextLine();
 
             try {
-                facade.deleteBook(UUID.fromString(uuid));
+                facade.deleteBook(facade.getBookByID(UUID.fromString(uuid)));
 
             } catch (IllegalArgumentException exception) {
                 System.out.println("Wrong ID");

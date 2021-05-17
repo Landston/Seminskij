@@ -40,9 +40,9 @@ public class BookShopFacade {
         }
     }
 
-    public void deleteBook(UUID uuid) throws ServiceException {
+    public void deleteBook(Book book) throws ServiceException {
         try {
-            this.bookService.deleteBook(uuid);
+            this.bookService.delete(book);
         } catch (ServiceException e) {
             throw new ServiceException(e);
         }
@@ -73,7 +73,7 @@ public class BookShopFacade {
             return;
         }
         try {
-            this.bookService.updateBook(updateBookID, new Book(name, genre, year, cost));
+            this.bookService.update(new Book(name, genre, year, cost));
 
         } catch (ServiceException serviceException) {
             System.out.println("Entered wrong id");
@@ -129,8 +129,8 @@ public class BookShopFacade {
         this.clientService.update(clienUpdateID, client);
     }
 
-    public void deleteClient(UUID uuid) throws ServiceException {
-        this.clientService.delete(uuid);
+    public void deleteClient(Client client) throws ServiceException {
+        this.clientService.delete(client);
     }
 
     public List<Client> getAllClients() throws ServiceException {
@@ -244,8 +244,8 @@ public class BookShopFacade {
         return null;
     }
 
-    public void deleteOrderById(UUID uuid) throws ServiceException {
-        this.orderService.deleteOrder(uuid);
+    public void deleteOrderById(Order order) throws ServiceException {
+        this.orderService.delete(order);
     }
 
     public void changeOrder(UUID id, String status) throws ServiceException {

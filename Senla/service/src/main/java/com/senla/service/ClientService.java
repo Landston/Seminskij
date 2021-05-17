@@ -46,7 +46,7 @@ public class ClientService implements IClientService {
         try {
             LOGGER.log(Level.INFO, String.format("Client id to update : %s  new book : %s", id, client));
 
-            this.clientDAO.update(id, client);
+            this.clientDAO.update(client);
 
         } catch (DAOException daoException) {
             LOGGER.log(Level.INFO, "Update failed", daoException);
@@ -54,10 +54,10 @@ public class ClientService implements IClientService {
         }
     }
 
-    public void delete(UUID uuid) throws ServiceException {
+    public void delete(Client client) throws ServiceException {
         try {
-            LOGGER.log(Level.INFO, String.format("Client id to delete : %s", uuid));
-            this.clientDAO.delete(uuid);
+            LOGGER.log(Level.INFO, String.format("Client id to delete : %s", client));
+            this.clientDAO.delete(client);
 
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Delete failed", e);

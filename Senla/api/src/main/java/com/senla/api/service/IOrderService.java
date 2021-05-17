@@ -37,7 +37,7 @@ public interface IOrderService {
 
     double getTotalRevenue() throws ServiceException;
 
-    void deleteOrder(UUID uuid) throws ServiceException;
+    void delete(Order uuid) throws ServiceException;
 
     void deleteBookFromOrder(UUID uuid, Book book) throws ServiceException;
 
