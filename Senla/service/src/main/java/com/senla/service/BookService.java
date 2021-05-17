@@ -23,6 +23,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class BookService implements IBookService {
 
     @Autowired
@@ -147,7 +148,6 @@ public class BookService implements IBookService {
         }
     }
 
-    @Transactional
     public void add(Book book) throws ServiceException {
         try {
             this.bookDAO.addEntity(book);

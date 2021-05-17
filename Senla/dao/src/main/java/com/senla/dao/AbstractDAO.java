@@ -42,17 +42,6 @@ public AbstractDAO() {
 
 
 
-public List<Book> getAllBook() throws DAOException {
-
-    CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-    CriteriaQuery<Book> query = criteriaBuilder.createQuery(Book.class);
-    Root<Book> root = query.from(Book.class);
-    query.select(root);
-    return entityManager.createQuery(query).getResultList();
-
-}
-
-
 @Override
 public void update(UUID id, T item) throws DAOException {
 
