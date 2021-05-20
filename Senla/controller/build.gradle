@@ -14,5 +14,6 @@ dependencies {
 
     compile project(":service")
 
+    compile project(":UI")
 
 }

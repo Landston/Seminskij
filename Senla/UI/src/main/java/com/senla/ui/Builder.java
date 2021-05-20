@@ -2,8 +2,6 @@ package com.senla.ui;
 
 import com.senla.ui.actions.request.RequestSortAction;
 
-import com.senla.di.annotation.Auttowared;
-import com.senla.di.annotation.Singleton;
 
 
 import com.senla.ui.actions.client.CreateClientAction;
@@ -14,13 +12,17 @@ import com.senla.ui.actions.exitAction;
 import com.senla.facade.BookShopFacade;
 import com.senla.ui.actions.book.*;
 import com.senla.ui.actions.order.*;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Singleton
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Builder {
 
-    @Auttowared
+    @Autowired
     private BookShopFacade facade;
     private Menu rootMenu;
     private static final Logger LOGGER = LogManager.getLogger(Builder.class);

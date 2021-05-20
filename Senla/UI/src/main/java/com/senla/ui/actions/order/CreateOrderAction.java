@@ -43,7 +43,7 @@ public class CreateOrderAction  extends BaseAction implements IAction {
 
         UUID clientID = UUID.fromString(scanner.nextLine());
 
-        this.facade.addOrder(bookID, clientID);
+        this.facade.createOrder(bookID, clientID);
 
     } catch (Exception e){
         LOGGER.log(Level.WARN, e.getLocalizedMessage(), e);

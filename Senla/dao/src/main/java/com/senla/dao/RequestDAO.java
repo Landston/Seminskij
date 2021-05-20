@@ -20,7 +20,7 @@ import java.util.*;
 public class RequestDAO extends AbstractDAO<Request> implements IRequestDAO {
     @Override
     protected Class<Request> getClazz() {
-        return null;
+        return Request.class;
     }
 
 }

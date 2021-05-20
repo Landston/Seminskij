@@ -30,7 +30,7 @@ public class DeleteOrderAction extends BaseAction implements IAction {
             Scanner scanner = new Scanner(System.in);
             String uuid = scanner.nextLine();
 
-            facade.deleteOrderById(facade.getOrderByID(UUID.fromString(uuid)));
+            facade.deleteOrderById(UUID.fromString(uuid));
         } catch (Exception e){
             LOGGER.log(Level.WARN, e.getLocalizedMessage(), e);
         }

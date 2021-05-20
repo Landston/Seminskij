@@ -1,29 +1,54 @@
 package com.senla.model;
 
 
-import jdk.jfr.Enabled;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.extern.log4j.Log4j;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 
+@Log4j
+@AllArgsConstructor
 @Entity
-public class Book extends AbstractEntity implements Serializable {
+@Table(name = "books")
+public class Book implements Serializable, AbstractEntity {
 
+
+    @Id
+    @GeneratedValue
+    @Column(name = "id_book")
+    private  UUID id;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+    @Column(name = "name")
     private String name;
+    @Column(name ="status")
     @Enumerated(value = EnumType.STRING)
     private BookStatus status;
+    @Column(name ="genre")
     private String genre;
+    @Column(name ="cost")
     private double cost;
+    @Column(name ="year")
     private int year;
+    @Column(name ="date_Of_Admission")
     private LocalDate dateOfAdmission;
+    @ManyToMany(
+            mappedBy = "booksToOrder",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<Order> orders;
 
 
     public Book(){
@@ -67,7 +92,13 @@ public class Book extends AbstractEntity implements Serializable {
 
     }
 
+    public Set<Order> getOrders() {
+        return orders;
+    }
 
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
 
     public String getName() {
         return name;
@@ -105,12 +136,20 @@ public class Book extends AbstractEntity implements Serializable {
     public void setStatus(BookStatus status) {
         this.status = status;
     }
+//    public Set<Order> getOrders() {
+//        return orders;
+//    }
+//
+//    public void setOrders(Set<Order> orders) {
+//        this.orders = orders;
+//    }
+
 
     @Override
     public String toString() {
         return "Book:" +
                 "name='" + name + '\'' +
-                ", uuid=" + this.getUuid() +
+                ", uuid=" + this.getId() +
                 ", status=" + status +
                 ", genre='" + genre + '\'' +
                 ", cost=" + cost +
@@ -125,4 +164,6 @@ public class Book extends AbstractEntity implements Serializable {
     public void setDateOfAdmission(LocalDate dateOfAdmission) {
         this.dateOfAdmission = dateOfAdmission;
     }
+
+
 }

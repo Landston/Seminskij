@@ -17,7 +17,7 @@ public interface IOrderService {
 
     void closeOrder(UUID uuid) throws ServiceException;
 
-    Order createOrder(Book book, Client client) throws ServiceException;
+    Order createOrder(UUID book, UUID client) throws ServiceException;
 
     void cancelOrder(UUID id) throws ServiceException;
 
@@ -37,11 +37,9 @@ public interface IOrderService {
 
     double getTotalRevenue() throws ServiceException;
 
-    void delete(Order uuid) throws ServiceException;
+    void delete(UUID uuid) throws ServiceException;
 
     void deleteBookFromOrder(UUID uuid, Book book) throws ServiceException;
-
-    void addOrder(Order order) throws ServiceException;
 
     void orderOpen(UUID uuid) throws ServiceException;
 

@@ -10,17 +10,22 @@ import com.senla.model.Book;
 import com.senla.model.Client;
 import com.senla.model.Request;
 import com.senla.model.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
+@Component
 public class BookShopFacade {
-
-
+    @Autowired
     private IBookService bookService;
+    @Autowired
     private IClientService clientService;
+    @Autowired
     private IOrderService orderService;
+    @Autowired
     private IRequestService requestService;
 
     public BookShopFacade() {
@@ -40,9 +45,9 @@ public class BookShopFacade {
         }
     }
 
-    public void deleteBook(Book book) throws ServiceException {
+    public void deleteBook(UUID id) throws ServiceException {
         try {
-            this.bookService.delete(book);
+            this.bookService.delete(id);
         } catch (ServiceException e) {
             throw new ServiceException(e);
         }
@@ -129,8 +134,8 @@ public class BookShopFacade {
         this.clientService.update(clienUpdateID, client);
     }
 
-    public void deleteClient(Client client) throws ServiceException {
-        this.clientService.delete(client);
+    public void deleteClient(UUID uuid) throws ServiceException {
+        this.clientService.delete(uuid);
     }
 
     public List<Client> getAllClients() throws ServiceException {
@@ -188,12 +193,11 @@ public class BookShopFacade {
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //////////// ORDER ////////////
-    public Order createOrder(UUID bookID, UUID clientID) throws ServiceException {
-        Client client = this.getClientByID(clientID);
+    public Order createOrder(UUID bookID, UUID clientID) throws Exception {
+        if (bookID == null || clientID == null || !bookID.equals(UUID.fromString("\\b[0-9a-f]{8}\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\b[0-9a-f]{12}\\b")) || !clientID.equals(UUID.fromString("\\b[0-9a-f]{8}\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\b[0-9a-f]{12}\\b"))) throw new Exception("Whrong data");
 
-        Order order = new Order(this.getBookByID(bookID), client);
+        Order order = orderService.createOrder(bookID, clientID);
 
-        if (order.getClient() == null) return null;
 
         return order;
     }
@@ -212,13 +216,7 @@ public class BookShopFacade {
         return this.orderService.amountOfClosedOrdersForThePeriod(from, to);
     }
 
-    public void addOrder(UUID bookID, UUID clientID) throws ServiceException {
-        Order order = this.createOrder(bookID, clientID);
 
-        if (order.getClient() == null || order.getBooksToOrder() == null) return;
-
-        this.orderService.addOrder(order);
-    }
 
     public void addBooktoOrder(UUID id, Book book) throws ServiceException {
         this.orderService.addBookToOrder(id, book);
@@ -244,7 +242,7 @@ public class BookShopFacade {
         return null;
     }
 
-    public void deleteOrderById(Order order) throws ServiceException {
+    public void deleteOrderById(UUID order) throws ServiceException {
         this.orderService.delete(order);
     }
 

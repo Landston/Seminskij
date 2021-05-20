@@ -27,7 +27,7 @@ public class OrderDAO extends AbstractDAO<Order> implements IOrderDAO {
 
     @Override
     protected Class<Order> getClazz() {
-        return null;
+        return Order.class;
     }
 
     @Override

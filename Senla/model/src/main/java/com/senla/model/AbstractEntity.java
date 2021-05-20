@@ -1,28 +1,20 @@
 package com.senla.model;
 
 
+import jdk.jfr.Name;
+
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.swing.*;
 import java.io.Serializable;
 import java.util.UUID;
 
 @MappedSuperclass
-public abstract class AbstractEntity implements Serializable {
+public interface AbstractEntity  {
 
-    @Id
-    @GeneratedValue
-    private  UUID uuid;
+    public  UUID getId();
 
-    public AbstractEntity(){
 
-    }
-
-    public UUID getUuid(){
-        return this.uuid;
-    }
-
-    public void setUuid(UUID id){
-        this.uuid = id;
-    }
 }

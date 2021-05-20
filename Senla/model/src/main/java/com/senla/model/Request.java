@@ -1,9 +1,17 @@
 package com.senla.model;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class Request extends AbstractEntity implements Serializable {
+public class Request implements Serializable, AbstractEntity {
+
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private  UUID id;
 
     private Book requestedBooks;
     private int count = 1;
@@ -21,7 +29,7 @@ public class Request extends AbstractEntity implements Serializable {
     }
 
     public Request(UUID id, Book requestedBooks, int count, boolean requestOpenClose) {
-        setUuid(id);
+        setId(id);
         this.requestedBooks = requestedBooks;
         this.count = count;
         this.requestOpenClose = requestOpenClose;
@@ -55,6 +63,13 @@ public class Request extends AbstractEntity implements Serializable {
         return requestedBooks;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
     public void setRequestOpenClose(boolean value){
         this.requestOpenClose = value;
     }
@@ -64,7 +79,7 @@ public class Request extends AbstractEntity implements Serializable {
         return "\nRequest{ " +
                 "requestedBooks=" + requestedBooks +
                 ", count = " + count +
-                ", uuid = " + getUuid() +
+                ", uuid = " + getId() +
     " status : " + getRequestOpenClose() +"}";
     }
 }

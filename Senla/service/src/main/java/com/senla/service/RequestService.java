@@ -14,15 +14,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 
 @Service
+@Transactional
 public class RequestService implements IRequestService {
     @Autowired
     private IRequestDAO requestDAO;
     private Map<String, Comparator<Request>> sort;
+
     private static final Logger LOGGER = LogManager.getLogger(OrderService.class.getName());
 
     public RequestService() {
@@ -44,10 +47,10 @@ public class RequestService implements IRequestService {
             LOGGER.log(Level.INFO, String.format("Create request book : %s ", book));
 
             this.requestDAO.getAll().stream()
-                    .filter(item -> item.getRequestedBook().getUuid().equals(book.getUuid()))
+                    .filter(item -> item.getRequestedBook().getId().equals(book.getId()))
                     .forEach(Request::increaseRequestCount);
 
-            if (this.getNumberOfRequestsByBook(book.getUuid()) == 0) {
+            if (this.getNumberOfRequestsByBook(book.getId()) == 0) {
                 Request request = new Request(book);
                 requestDAO.addEntity(request);
             }
@@ -82,7 +85,7 @@ public class RequestService implements IRequestService {
             List<Request> list = new ArrayList<Request>(this.requestDAO.getAll());
 
             return list.stream()
-                    .filter(x -> x.getRequestedBook().getUuid().equals(uuid))
+                    .filter(x -> x.getRequestedBook().getId().equals(uuid))
                     .count();
         } catch (DAOException e){
             LOGGER.log(Level.WARN, "Get number of Requested books is not available", e);
@@ -102,7 +105,7 @@ public class RequestService implements IRequestService {
     public Request getRequestByBook(UUID uuid) throws ServiceException {
         try {
             List<Request> requests = new ArrayList<>(this.requestDAO.getAll());
-            Optional<Request> request = requests.stream().filter(x -> x.getRequestedBook().getUuid().equals(uuid)).findFirst();
+            Optional<Request> request = requests.stream().filter(x -> x.getRequestedBook().getId().equals(uuid)).findFirst();
 
             return request.get();
         } catch (DAOException e){

@@ -14,11 +14,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 
 @Service
+@Transactional
 public class ClientService implements IClientService {
     @Autowired
     private IClientDAO clientDAO;
@@ -54,11 +56,13 @@ public class ClientService implements IClientService {
         }
     }
 
-    public void delete(Client client) throws ServiceException {
+    public void delete(UUID uuid) throws ServiceException {
         try {
-            LOGGER.log(Level.INFO, String.format("Client id to delete : %s", client));
-            this.clientDAO.delete(client);
+            LOGGER.log(Level.INFO, String.format("Client id to delete : %s", uuid));
 
+            Client client = clientDAO.getEntityById(uuid);
+
+            this.clientDAO.delete(client);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Delete failed", e);
             throw new ServiceException("Deleting operation failed", e);

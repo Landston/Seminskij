@@ -1,6 +1,8 @@
 package com.senla.service;
 
 
+import com.senla.api.dao.IBookDAO;
+import com.senla.api.dao.IClientDAO;
 import com.senla.api.dao.IOrderDAO;
 import com.senla.api.exception.service.DAOException;
 import com.senla.api.exception.service.ServiceException;
@@ -13,11 +15,13 @@ import com.senla.model.BookStatus;
 import com.senla.model.Client;
 import com.senla.model.OrderStatus;
 
+import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDate;
@@ -25,12 +29,18 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class OrderService implements IOrderService {
 
     @Autowired
     private IOrderDAO orderDAO;
     @Autowired
+    private IClientDAO clientDAO;
+    @Autowired
+    private IBookDAO bookDAO;
+    @Autowired
     private IRequestService requestService;
+
     private static final Logger LOGGER = LogManager.getLogger(OrderService.class.getName());
     private Map<String, Comparator<Order>> sort;
 
@@ -56,11 +66,7 @@ public class OrderService implements IOrderService {
             list.sort(sort.get(condition));
 
             return list;
-        } catch (IllegalArgumentException e) {
-            LOGGER.log(Level.WARN, "Order sorting condition is not available", e);
-            throw new ServiceException("Order sorting operation failed", e);
-        }
-        catch (DAOException e){
+        } catch (IllegalArgumentException | DAOException e) {
             LOGGER.log(Level.WARN, "Order sorting condition is not available", e);
             throw new ServiceException("Order sorting operation failed", e);
         }
@@ -123,17 +129,17 @@ public class OrderService implements IOrderService {
         }
     }
 
-    public void delete(Order order) throws ServiceException {
+    public void delete(UUID uuid) throws ServiceException {
         try {
-            LOGGER.log(Level.INFO, String.format("Delete order : %s"), order);
+            LOGGER.log(Level.INFO, String.format("Delete order with id : %s"), uuid);
 
+            Order order = orderDAO.getEntityById(uuid);
             this.orderDAO.delete(order);
 
         } catch (Exception e) {
             throw new ServiceException("delete operation failed", e);
         }
     }
-
 
     public void closeOrder(UUID uuid) throws ServiceException {
         try {
@@ -150,11 +156,14 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Order createOrder(Book book, Client client) throws ServiceException {
+    public Order createOrder(UUID bookId, UUID clientId) throws ServiceException {
         try {
-            LOGGER.log(Level.INFO, String.format("Create order book : %s. Client : %s", book, client));
+            LOGGER.log(Level.INFO, String.format("Create order book : %s. Client : %s", bookId, clientId));
 
-            Order order = new Order(new ArrayList<Book>(), client);
+            Book book = bookDAO.getEntityById(bookId);
+            Client client = clientDAO.getEntityById(clientId);
+
+            Order order = new Order(book, client);
 
             if(book.getStatus().equals(BookStatus.ABSENT)){
                 requestService.createRequest(book);
@@ -226,16 +235,8 @@ public class OrderService implements IOrderService {
           return order.orElseGet(() -> new Order(new Client("", "")));
       }
   */
-    public void addOrder(Order order) throws ServiceException {
-        try {
-            this.orderDAO.addEntity(order);
-        } catch (DAOException e) {
-            LOGGER.log(Level.WARN, "Adding order failed", e);
 
-            throw new ServiceException("Adding order operation failed", e);
-        }
 
-    }
 
     public void cancelOrder(UUID uuid) throws ServiceException {
         try {

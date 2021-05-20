@@ -23,7 +23,7 @@ public interface IBookService {
 
     void update(Book book) throws ServiceException;
 
-    void delete(Book book) throws ServiceException;
+    void delete(UUID book) throws ServiceException;
 
     List<Book> getAll() throws ServiceException;
 

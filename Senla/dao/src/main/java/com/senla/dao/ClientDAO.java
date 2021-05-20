@@ -18,7 +18,7 @@ public class ClientDAO extends AbstractDAO<Client> implements IClientDAO {
 
     @Override
     protected Class<Client> getClazz() {
-        return null;
+        return Client.class;
     }
 
 

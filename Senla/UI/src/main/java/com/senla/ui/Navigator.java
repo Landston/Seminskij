@@ -1,9 +1,11 @@
 package com.senla.ui;
 
-import com.senla.di.annotation.Singleton;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-@Singleton
+@Component
 public class Navigator {
+
 
     private Menu currentMenu;
 

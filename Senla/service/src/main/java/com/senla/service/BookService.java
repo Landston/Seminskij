@@ -7,16 +7,18 @@ import com.senla.api.exception.service.ServiceException;
 import com.senla.api.service.IBookService;
 import com.senla.api.service.IRequestService;
 
+import com.senla.dao.BookDAO;
 import com.senla.model.Book;
 import com.senla.model.BookStatus;
 import com.senla.model.Request;
 
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -24,6 +26,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Log4j2
 @Transactional
 public class BookService implements IBookService {
 
@@ -44,7 +47,6 @@ public class BookService implements IBookService {
     public BookService() {
         this.init();
     }
-
 
 
     public Set<String> getSortParams() {
@@ -80,13 +82,14 @@ public class BookService implements IBookService {
         }
     }
 
-    public void delete(Book book) throws ServiceException {
+    public void delete(UUID id) throws ServiceException {
         try {
-            LOGGER.log(Level.INFO, String.format("Book to delete : %s", book));
+            LOGGER.log(Level.INFO, String.format("Book to delete : %s", id));
 
+            Book book = bookDAO.getEntityById(id);
             this.bookDAO.delete(book);
         } catch (DAOException e) {
-            LOGGER.log(Level.WARN, "DeleteBook failed", e);
+            LOGGER.log(Level.WARN, "Delete Book failed", e);
 
             throw new ServiceException("Deleting book operation failed", e);
         }
@@ -95,7 +98,7 @@ public class BookService implements IBookService {
     public List<Book> getAll() throws ServiceException {
         try {
             return new ArrayList<>(this.bookDAO.getAll());
-        } catch (DAOException e){
+        } catch (DAOException e) {
             LOGGER.log(Level.WARN, e.getMessage(), e);
             throw new ServiceException("Get all operation failed", e);
         }
@@ -133,7 +136,7 @@ public class BookService implements IBookService {
     public void addBookToShop(String name, String genre, int year, double cost) throws ServiceException {
         Book book = new Book();
 
-        LOGGER.log(Level.INFO ,String.format("Add book to Shop  params. Name : %s, Genre : %s, Year : %s, Cost : %s", name, genre, year, cost));
+        LOGGER.log(Level.INFO, String.format("Add book to Shop  params. Name : %s, Genre : %s, Year : %s, Cost : %s", name, genre, year, cost));
 
         if (cost < 0) throw new ServiceException("Cost is negative");
 
@@ -169,12 +172,12 @@ public class BookService implements IBookService {
             if (book.getStatus().equals(BookStatus.ABSENT)) {
                 book.setStatus(BookStatus.RESERVED);
             }
-                if(requestService.getNumberOfRequestsByBook(book.getUuid()) != 0){
-                    Request request = requestService.getRequestByBook(book.getUuid());
+            if (requestService.getNumberOfRequestsByBook(book.getId()) != 0) {
+                Request request = requestService.getRequestByBook(book.getId());
 
-                    request.setRequestOpenClose(false);
-                    request.setCount(0);
-                }
+                request.setRequestOpenClose(false);
+                request.setCount(0);
+            }
         } catch (ServiceException e) {
             LOGGER.log(Level.WARN, "Adding book to WareHouse failed", e);
             throw new ServiceException(e);
@@ -208,7 +211,6 @@ public class BookService implements IBookService {
             /*    Optional<String> properties = PropertyHandler.getProperties("month");*/
 
 
-
             sorted = this.bookDAO.getAll().stream().filter(x -> x.getDateOfAdmission().isBefore(date.minusMonths(this.month))).collect(Collectors.toList());
 
             sorted.sort(this.sort.get(condition));
@@ -231,9 +233,10 @@ public class BookService implements IBookService {
         }
     }
 
-    public int getMonth(){
+    public int getMonth() {
         return this.month;
     }
+
     @Override
     public String toString() {
         return "BookService{" +

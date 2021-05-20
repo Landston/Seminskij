@@ -1,16 +1,16 @@
 package com.senla.ui;
 
-import com.senla.di.annotation.Auttowared;
-import com.senla.di.annotation.Singleton;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@Singleton
+@Component
 public class MenuController {
 
-    @Auttowared
+    @Autowired
     private Builder builder;
-    @Auttowared
+    @Autowired
     private Navigator navigator;
 
     public MenuController() {

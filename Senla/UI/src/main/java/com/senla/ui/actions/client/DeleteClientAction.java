@@ -31,9 +31,6 @@ public class DeleteClientAction extends BaseAction implements IAction {
         Scanner scanner = new Scanner(System.in);
         String id = scanner.nextLine();
 
-        facade.deleteClient(facade.getClientByID(UUID.fromString(id)));
-        } catch (Exception e){
-            LOGGER.log(Level.WARN, e.getLocalizedMessage(), e);
-        }
-    }
+        facade.deleteClient(UUID.fromString(id));
+        } catch (Exception e){ LOGGER.log(Level.WARN, e.getLocalizedMessage(), e); } }
 }
