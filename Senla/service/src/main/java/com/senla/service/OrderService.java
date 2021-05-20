@@ -188,6 +188,8 @@ public class OrderService implements IOrderService {
             Order order = this.orderDAO.getEntityById(uuid);
 
             order.addBook(book);
+
+            orderDAO.update(order);
         } catch (Exception e) {
             LOGGER.log(Level.WARN, "AddBook to Order failed", e);
             throw new ServiceException("AddBook to Order failed", e);

@@ -33,28 +33,28 @@ public class MainController {
         Logger log = LogManager.getLogger(MainController.class.getName());
 
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Config.class);
-        log.log(Level.INFO, "adsa;dsa;dasd");
-        IBookService bookService = applicationContext.getBean("bookService", IBookService.class);
-        IClientService clientService = applicationContext.getBean("clientService", IClientService.class);
 
-       // Client client = new Client("Zigmund freyd", "CocainLover@gmail.com");
-        //clientService.add(client);
+
+//        IBookService bookService = applicationContext.getBean("bookService", IBookService.class);
+//        IClientService clientService = applicationContext.getBean("clientService", IClientService.class);
+//
+//       // Client client = new Client("Zigmund freyd", "CocainLover@gmail.com");
+//        //clientService.add(client);
 //        IOrderService orderService = applicationContext.getBean("orderService", IOrderService.class);
-//
-//        Client orderClient = clientService.getAll().get(0);
-//
+////
+////        Client orderClient = clientService.getAll().get(0);
+////
 //        List<Book> books = bookService.getAll();
 //
 //
 //        orderService.createOrder(books.get(8).getId(), orderClient.getId());
-//
+
 //        System.out.println(orderService.getAll());
        // Book book = service.getBookById(UUID.fromString("9bd3ec21-4b2f-43ac-b2d3-93141e84695f"));
 
-
-        MenuController controller = new MenuController();
-
-
+        MenuController menuController = applicationContext.getBean("menuController", MenuController.class);
+        menuController.run();
+        
         System.out.println();
     }
 }

@@ -48,6 +48,7 @@ public class Book implements Serializable, AbstractEntity {
             mappedBy = "booksToOrder",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
+
     private Set<Order> orders;
 
 

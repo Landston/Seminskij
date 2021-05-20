@@ -24,6 +24,7 @@ public class Builder {
 
     @Autowired
     private BookShopFacade facade;
+
     private Menu rootMenu;
     private static final Logger LOGGER = LogManager.getLogger(Builder.class);
 

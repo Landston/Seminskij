@@ -3,6 +3,7 @@ package com.senla.model;
 import com.senla.model.utill.OrderUtil;
 import lombok.EqualsAndHashCode;
 import org.apache.logging.log4j.core.appender.ScriptAppenderSelector;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,12 +35,14 @@ public class Order implements Serializable, AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
+    @Column(name = "status")
     @Enumerated(value = EnumType.STRING)
     private OrderStatus status;
     @Column(name = "total_price")
     private double totalPrice;
     @Column(name = "date_of_execution")
     private LocalDate dateOfExecution;
+
 
     public Order(UUID id, Client client, OrderStatus status, double totalPrice, LocalDate dateOfExecution) {
         setId(id);

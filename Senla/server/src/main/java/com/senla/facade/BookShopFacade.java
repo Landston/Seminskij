@@ -10,7 +10,8 @@ import com.senla.model.Book;
 import com.senla.model.Client;
 import com.senla.model.Request;
 import com.senla.model.Order;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -18,18 +19,20 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Component
+@Primary
 public class BookShopFacade {
-    @Autowired
-    private IBookService bookService;
-    @Autowired
-    private IClientService clientService;
-    @Autowired
-    private IOrderService orderService;
-    @Autowired
-    private IRequestService requestService;
 
-    public BookShopFacade() {
+    private final IBookService bookService;
+    private final IClientService clientService;
+    private final IOrderService orderService;
+    private final IRequestService requestService;
 
+    public BookShopFacade(IBookService bookService, IClientService clientService, IOrderService orderService, IRequestService requestService) {
+
+        this.bookService = bookService;
+        this.clientService = clientService;
+        this.orderService = orderService;
+        this.requestService = requestService;
     }
 
 
