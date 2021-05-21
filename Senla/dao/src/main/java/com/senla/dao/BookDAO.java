@@ -30,12 +30,11 @@ public class BookDAO extends AbstractDAO<Book> implements IBookDAO {
     public BookDAO() {
     }
 
-
-
     @Override
     protected Class<Book> getClazz() {
         return Book.class;
     }
+
 
 
 }

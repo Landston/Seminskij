@@ -12,6 +12,7 @@ import com.senla.model.Client;
 import com.senla.model.Order;
 import com.senla.ui.MenuController;
 import lombok.Cleanup;
+import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -23,18 +24,24 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.util.List;
 import java.util.UUID;
 
-
+@Log4j2
 public class MainController {
 
+    public void doSomething()
+    {
 
 
+    }
     public static void main(String[] args) throws DAOException, ServiceException {
 
         Logger log = LogManager.getLogger(MainController.class.getName());
-
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Config.class);
 
+        Book book = new Book();
 
+        log.info("Message");
+        MainController mainController = new MainController();
+        mainController.doSomething();
 //        IBookService bookService = applicationContext.getBean("bookService", IBookService.class);
 //        IClientService clientService = applicationContext.getBean("clientService", IClientService.class);
 //
@@ -54,7 +61,7 @@ public class MainController {
 
         MenuController menuController = applicationContext.getBean("menuController", MenuController.class);
         menuController.run();
-        
+
         System.out.println();
     }
 }

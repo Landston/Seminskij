@@ -22,4 +22,10 @@ public class ClientDAO extends AbstractDAO<Client> implements IClientDAO {
     }
 
 
+    boolean actionDone = false;
+
+    int amount = 1;
+
+
+
 }

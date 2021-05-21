@@ -8,3 +8,9 @@
 *out/
 
 .out/production
+
+#build
+*/build
+/build
+*build/
+*.gradle
