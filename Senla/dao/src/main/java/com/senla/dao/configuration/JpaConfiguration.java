@@ -19,10 +19,8 @@ import java.io.FileOutputStream;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan("com.senla.dao")
-@PropertySource( "classpath:application.properties")
+@PropertySource( {"classpath:application.properties"})
 public class JpaConfiguration {
-
 
     @Value("${hibernate.show_sql:false}")
     private String hibernateShowSql;
