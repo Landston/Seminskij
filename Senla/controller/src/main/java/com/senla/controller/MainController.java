@@ -40,8 +40,6 @@ public class MainController {
         Book book = new Book();
 
         log.info("Message");
-        MainController mainController = new MainController();
-        mainController.doSomething();
 //        IBookService bookService = applicationContext.getBean("bookService", IBookService.class);
 //        IClientService clientService = applicationContext.getBean("clientService", IClientService.class);
 //

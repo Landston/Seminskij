@@ -12,7 +12,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
-@Log4j
 @AllArgsConstructor
 @Entity
 @Table(name = "books")

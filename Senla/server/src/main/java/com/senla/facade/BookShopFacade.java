@@ -19,7 +19,6 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Component
-@Primary
 public class BookShopFacade {
 
     private final IBookService bookService;

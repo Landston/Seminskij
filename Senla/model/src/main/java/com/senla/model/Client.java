@@ -35,10 +35,7 @@ public class Client implements Serializable, AbstractEntity {
                 "name='" + name + '\'' +
                 ", mail='" + mail + "\n" ;
     }
-
-    public Client(){
-
-    }
+    
     public Client(String name, String mail) {
         super();
         this.name = name;

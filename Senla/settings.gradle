@@ -1,13 +1,10 @@
 rootProject.name = 'senla'
 include 'server'
 include 'UI'
-include 'ZEnd'
 include 'api'
 include 'model'
 include 'dao'
 include 'service'
 include 'utill'
-include 'ZTestStarter'
 include 'controller'
-include 'MVC'
 

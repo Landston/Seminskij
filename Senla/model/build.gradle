@@ -15,4 +15,6 @@ dependencies {
 
     implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
 
+    compile project(":utill")
+
 }

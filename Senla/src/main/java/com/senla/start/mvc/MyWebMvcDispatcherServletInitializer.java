@@ -1,15 +1,14 @@
-package com.senla.mvc;
+package com.senla.start.mvc;
 
 
-import com.senla.controller.config.Config;
-import com.senla.mvc.config.WebConfig;
+import com.senla.start.mvc.config.WebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class MyWebMvcDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] {Config.class};
+        return null;
     }
 
     @Override

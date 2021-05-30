@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class Navigator {
 
-
     private Menu currentMenu;
 
     public Navigator(){
@@ -34,8 +33,6 @@ public class Navigator {
         catch (IndexOutOfBoundsException e){
             System.out.println("Неверный индекс");
         }
-
-
     }
 
     public  void setCurrentMenu(Menu currentMenu) {

@@ -20,6 +20,7 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource( {"classpath:application.properties"})
+@EnableTransactionManagement
 public class JpaConfiguration {
 
     @Value("${hibernate.show_sql:false}")
@@ -45,7 +46,9 @@ public class JpaConfiguration {
 
     @Bean
     public DataSource dataSource(){
-        return new DriverManagerDataSource(dataBaseUrl, username, password);
+        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(dataBaseUrl,username, password);
+        driverManagerDataSource.setDriverClassName(driverClass);
+        return driverManagerDataSource;
     }
 
     @Bean
@@ -60,9 +63,8 @@ public class JpaConfiguration {
        LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
 
        entityManager.setDataSource(dataSource());
-       entityManager.setPackagesToScan("com.senla.model");
-
        JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+       entityManager.setPackagesToScan("com.senla.model");
        entityManager.setJpaVendorAdapter(jpaVendorAdapter);
        entityManager.setJpaProperties(getJpaProperties());
 

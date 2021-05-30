@@ -1,9 +1,6 @@
 package com.senla.model;
 
-import com.senla.model.utill.OrderUtil;
-import lombok.EqualsAndHashCode;
-import org.apache.logging.log4j.core.appender.ScriptAppenderSelector;
-import org.springframework.stereotype.Component;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -59,7 +56,7 @@ public class Order implements Serializable, AbstractEntity {
         this.booksToOrder = books;
         this.status = OrderStatus.OPEN;
         this.dateOfExecution = LocalDate.now();
-        this.totalPrice = OrderUtil.countBooksTotalCost(books);
+        this.totalPrice = this.countTotalCost();
 
     }
 
@@ -70,7 +67,7 @@ public class Order implements Serializable, AbstractEntity {
         this.booksToOrder.add(book);
         this.status = OrderStatus.OPEN;
         this.dateOfExecution = LocalDate.now();
-        this.totalPrice = OrderUtil.countBooksTotalCost(booksToOrder);
+        this.totalPrice = this.countTotalCost();
 
     }
 
@@ -116,7 +113,16 @@ public class Order implements Serializable, AbstractEntity {
     }
 
     public double countTotalCost() {
-        return OrderUtil.countBooksTotalCost(booksToOrder);
+        if (booksToOrder == null || booksToOrder.isEmpty()) {
+            return 0;
+        }
+
+        double cost = 0;
+
+        for (Book bk : booksToOrder) {
+            cost += bk.getCost();
+        }
+        return cost;
 
     }
 
