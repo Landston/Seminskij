@@ -39,10 +39,10 @@ public class BookMapperImpl implements BookMapper {
 
     @Override
     public List<BookDTO> bookListToBookDTOList(List<Book> books) {
-        return books.stream().map(book -> toDto(book)).collect(Collectors.toList());
+        return books.stream().map(this::toDto).collect(Collectors.toList());
     }
 
     public List<Book> bookDTOListToBookList(List<BookDTO> books){
-        return books.stream().map(bookDTO -> toEntity(bookDTO)).collect(Collectors.toList());
+        return books.stream().map(this::toEntity).collect(Collectors.toList());
     }
 }

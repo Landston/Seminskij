@@ -1,6 +1,7 @@
 package com.senla.start.mvc.config;
 
 
+import com.senla.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;

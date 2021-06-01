@@ -11,6 +11,8 @@ import com.senla.model.Book;
 import com.senla.model.BookStatus;
 import com.senla.model.Request;
 
+import com.senla.model.dto.BookDTO;
+import com.senla.model.mapper.api.BookMapper;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -33,6 +35,9 @@ public class BookService implements IBookService {
 
     @Autowired
     private IRequestService requestService;
+
+    @Autowired
+    private BookMapper bookMapper;
 
     private Map<String, Comparator<Book>> sort;
 
@@ -93,9 +98,11 @@ public class BookService implements IBookService {
         }
     }
 
-    public List<Book> getAll() throws ServiceException {
+    public List<BookDTO> getAll() throws ServiceException {
         try {
-            return new ArrayList<>(this.bookDAO.getAll());
+            List<Book> books = new ArrayList<>(this.bookDAO.getAll());
+            return bookMapper.bookListToBookDTOList(books);
+
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, e.getMessage(), e);
             throw new ServiceException("Get all operation failed", e);

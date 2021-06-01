@@ -37,7 +37,7 @@ public class RequestService implements IRequestService {
         this.sort = new HashMap<>();
 
         this.sort.put("ByCount", Comparator.comparing(Request::getCount));
-        this.sort.put("ByName", (Comparator.comparing(o -> o.getRequestedBook().getName())));
+        this.sort.put("ByName", (Comparator.comparing(o -> o.getRequestedBooks().getName())));
 
     }
 
@@ -47,7 +47,7 @@ public class RequestService implements IRequestService {
             LOGGER.log(Level.INFO, String.format("Create request book : %s ", book));
 
             this.requestDAO.getAll().stream()
-                    .filter(item -> item.getRequestedBook().getId().equals(book.getId()))
+                    .filter(item -> item.getRequestedBooks().getId().equals(book.getId()))
                     .forEach(Request::increaseRequestCount);
 
             if (this.getNumberOfRequestsByBook(book.getId()) == 0) {
@@ -85,7 +85,7 @@ public class RequestService implements IRequestService {
             List<Request> list = new ArrayList<Request>(this.requestDAO.getAll());
 
             return list.stream()
-                    .filter(x -> x.getRequestedBook().getId().equals(uuid))
+                    .filter(x -> x.getRequestedBooks().getId().equals(uuid))
                     .count();
         } catch (DAOException e){
             LOGGER.log(Level.WARN, "Get number of Requested books is not available", e);
@@ -105,7 +105,7 @@ public class RequestService implements IRequestService {
     public Request getRequestByBook(UUID uuid) throws ServiceException {
         try {
             List<Request> requests = new ArrayList<>(this.requestDAO.getAll());
-            Optional<Request> request = requests.stream().filter(x -> x.getRequestedBook().getId().equals(uuid)).findFirst();
+            Optional<Request> request = requests.stream().filter(x -> x.getRequestedBooks().getId().equals(uuid)).findFirst();
 
             return request.get();
         } catch (DAOException e){

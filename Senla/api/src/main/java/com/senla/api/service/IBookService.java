@@ -3,6 +3,7 @@ package com.senla.api.service;
 
 import com.senla.api.exception.service.ServiceException;
 import com.senla.model.Book;
+import com.senla.model.dto.BookDTO;
 
 import java.util.List;
 import java.util.Set;
@@ -25,7 +26,7 @@ public interface IBookService {
 
     void delete(UUID book) throws ServiceException;
 
-    List<Book> getAll() throws ServiceException;
+    List<BookDTO> getAll() throws ServiceException;
 
     Book getBookById(UUID uuid) throws ServiceException;
 

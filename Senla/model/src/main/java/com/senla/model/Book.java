@@ -4,6 +4,10 @@ package com.senla.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.extern.log4j.Log4j;
@@ -44,6 +48,9 @@ public class Book implements Serializable, AbstractEntity {
     private double cost;
     @Column(name ="year")
     private int year;
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(name ="date_Of_Admission")
     private LocalDate dateOfAdmission;
 
@@ -54,15 +61,13 @@ public class Book implements Serializable, AbstractEntity {
             cascade = CascadeType.ALL)
     private Set<Order> orders;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "requestedBooks")
+    private Request bookRequest;
 
     public Book(){
-
         Random random = new Random();
         this.dateOfAdmission =  LocalDate.now();
         this.status = BookStatus.RESERVED;
-
-
-
     }
 
     public Book(String name, String genre, int year, double cost) {

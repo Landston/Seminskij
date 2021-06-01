@@ -23,7 +23,6 @@ public class Client implements Serializable, AbstractEntity {
     @GeneratedValue
     private  UUID id;
 
-
     @OneToMany(mappedBy = "client")
     private Set<Order> orders;
 

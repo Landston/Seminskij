@@ -20,4 +20,5 @@ public class MyWebMvcDispatcherServletInitializer extends AbstractAnnotationConf
     protected String[] getServletMappings() {
         return new String[] { "/" };
     }
+
 }
