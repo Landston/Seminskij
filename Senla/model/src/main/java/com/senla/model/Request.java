@@ -1,11 +1,16 @@
 package com.senla.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.UUID;
 
+@Data
+@AllArgsConstructor
 public class Request implements Serializable, AbstractEntity {
 
     @Id
@@ -28,29 +33,6 @@ public class Request implements Serializable, AbstractEntity {
         this.requestedBooks  = newBookToRequest;
     }
 
-    public Request(UUID id, Book requestedBooks, int count, boolean requestOpenClose) {
-        setId(id);
-        this.requestedBooks = requestedBooks;
-        this.count = count;
-        this.requestOpenClose = requestOpenClose;
-    }
-
-    public boolean getRequestOpenClose() {
-        return requestOpenClose;
-    }
-
-    public void setRequestedBooks(Book requestedBooks) {
-        this.requestedBooks = requestedBooks;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
     public void increaseRequestCount(){
         this.count +=1;
     }
@@ -59,20 +41,7 @@ public class Request implements Serializable, AbstractEntity {
         this.count -=1;
     }
 
-    public Book getRequestedBook() {
-        return requestedBooks;
-    }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-    public void setRequestOpenClose(boolean value){
-        this.requestOpenClose = value;
-    }
 
     @Override
     public String toString() {
@@ -80,6 +49,6 @@ public class Request implements Serializable, AbstractEntity {
                 "requestedBooks=" + requestedBooks +
                 ", count = " + count +
                 ", uuid = " + getId() +
-    " status : " + getRequestOpenClose() +"}";
+    " status : " + requestOpenClose +"}";
     }
 }

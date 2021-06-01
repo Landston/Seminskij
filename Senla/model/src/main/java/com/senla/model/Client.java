@@ -2,6 +2,9 @@ package com.senla.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -15,11 +18,11 @@ import java.util.UUID;
 @Table(name = "clients")
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Client implements Serializable, AbstractEntity {
     @Id
     @GeneratedValue
     private  UUID id;
+
 
     @OneToMany(mappedBy = "client")
     private Set<Order> orders;

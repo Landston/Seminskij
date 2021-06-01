@@ -7,11 +7,24 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+
+<style>
+    .book{
+        color: red;
+    }
+</style>
 <head>
-    <title>Title</title>
+    <title> Tt</title>
 </head>
 <body>
 <h1>JESUS FUCK, IT WORKS</h1>
+<div class = >
+    <div class = book>
+
+
+    </div>
+
+</div>
 
 
 </body>

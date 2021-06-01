@@ -1,15 +1,14 @@
-package com.senla.model.DTO;
+package com.senla.model.dto;
 
 import com.senla.model.BookStatus;
-import com.senla.model.Order;
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Set;
 import java.util.UUID;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookDTO {
 
     private UUID id;

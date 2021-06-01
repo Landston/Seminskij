@@ -7,12 +7,10 @@ import com.senla.api.exception.service.ServiceException;
 import com.senla.api.service.IBookService;
 import com.senla.api.service.IRequestService;
 
-import com.senla.dao.BookDAO;
 import com.senla.model.Book;
 import com.senla.model.BookStatus;
 import com.senla.model.Request;
 
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

@@ -2,6 +2,11 @@ package com.senla.model;
 
 
 
+import com.fasterxml.jackson.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,6 +17,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
+@Data
+@AllArgsConstructor
 public class Order implements Serializable, AbstractEntity {
 
     @Id
@@ -19,6 +26,7 @@ public class Order implements Serializable, AbstractEntity {
     @Column(name = "id_order")
     private  UUID id;
 
+    @JsonManagedReference
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
@@ -28,6 +36,7 @@ public class Order implements Serializable, AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "id_book")
     )
     private List<Book> booksToOrder;
+
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
@@ -124,49 +133,5 @@ public class Order implements Serializable, AbstractEntity {
         }
         return cost;
 
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public List<Book> getBooksToOrder() {
-        return booksToOrder;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setDateOfExecution(LocalDate dateOfExecution) {
-        this.dateOfExecution = dateOfExecution;
-    }
-
-    public LocalDate getDateOfExecution() {
-        return dateOfExecution;
-    }
-
-    public void setBooksToOrder(List<Book> booksToOrder) {
-        this.booksToOrder = booksToOrder;
-    }
-
-    public UUID getId() { return id; }
-
-    public void setId(UUID id) { this.id = id; }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
     }
 }

@@ -60,7 +60,12 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements IDAO<T> {
 
     @Override
     public T getEntityById(UUID id) throws DAOException {
-        return entityManager.find(getClazz(), id);
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(getClazz());
+        Root<T> root = query.from(getClazz());
+        query.select(root);
+        query.where(builder.equal(root.get("id"),id));
+        return entityManager.createQuery(query).getSingleResult();
     }
 
 

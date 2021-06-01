@@ -1,6 +1,9 @@
 package com.senla.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.extern.log4j.Log4j;
@@ -43,11 +46,12 @@ public class Book implements Serializable, AbstractEntity {
     private int year;
     @Column(name ="date_Of_Admission")
     private LocalDate dateOfAdmission;
+
+    @JsonBackReference
     @ManyToMany(
             mappedBy = "booksToOrder",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-
     private Set<Order> orders;
 
 

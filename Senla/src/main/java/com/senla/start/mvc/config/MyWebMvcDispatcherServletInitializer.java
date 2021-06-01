@@ -1,4 +1,4 @@
-package com.senla.start.mvc;
+package com.senla.start.mvc.config;
 
 
 import com.senla.start.mvc.config.WebConfig;
