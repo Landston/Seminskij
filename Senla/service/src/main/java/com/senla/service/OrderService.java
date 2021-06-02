@@ -15,6 +15,8 @@ import com.senla.model.BookStatus;
 import com.senla.model.Client;
 import com.senla.model.OrderStatus;
 
+import com.senla.model.dto.BookDTO;
+import com.senla.model.mapper.api.BookMapper;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,6 +41,9 @@ public class OrderService implements IOrderService {
     private IBookDAO bookDAO;
     @Autowired
     private IRequestService requestService;
+
+    @Autowired
+    private BookMapper bookMapper;
 
     private static final Logger LOGGER = LogManager.getLogger(OrderService.class.getName());
     private Map<String, Comparator<Order>> sort;
@@ -165,7 +170,8 @@ public class OrderService implements IOrderService {
             Order order = new Order(book, client);
 
             if(book.getStatus().equals(BookStatus.ABSENT)){
-                requestService.createRequest(book);
+                BookDTO bookDTO = bookMapper.toDto(book);
+                requestService.createRequest(bookDTO);
             }
 
             order.getBooksToOrder().add(book);

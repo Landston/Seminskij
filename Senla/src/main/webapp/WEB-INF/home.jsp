@@ -21,7 +21,6 @@
 <div class = >
     <div class = book>
 
-
     </div>
 
 </div>

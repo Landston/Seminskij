@@ -1,6 +1,7 @@
 package com.senla.service;
 
 
+import com.senla.api.dao.IBookDAO;
 import com.senla.api.dao.IRequestDAO;
 import com.senla.api.exception.service.DAOException;
 import com.senla.api.exception.service.ServiceException;
@@ -9,6 +10,9 @@ import com.senla.api.service.IRequestService;
 import com.senla.model.Book;
 import com.senla.model.Request;
 
+import com.senla.model.dto.BookDTO;
+import com.senla.model.mapper.api.BookMapper;
+import com.senla.model.mapper.api.MapperForRequest;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,16 +26,23 @@ import java.util.*;
 @Service
 @Transactional
 public class RequestService implements IRequestService {
-    @Autowired
-    private IRequestDAO requestDAO;
+
+    private final IRequestDAO requestDAO;
+    private final IBookDAO bookDAO;
+    private final BookMapper bookMapper;
+    private  final MapperForRequest requestMapper;
     private Map<String, Comparator<Request>> sort;
 
     private static final Logger LOGGER = LogManager.getLogger(OrderService.class.getName());
 
-    public RequestService() {
+    @Autowired
+    public RequestService(IRequestDAO requestDAO, IBookDAO bookDAO, BookMapper bookMapper, MapperForRequest requestMapper) {
+        this.requestDAO = requestDAO;
+        this.bookDAO = bookDAO;
+        this.bookMapper = bookMapper;
+        this.requestMapper = requestMapper;
         this.init();
     }
-
 
     public void init() {
         this.sort = new HashMap<>();
@@ -42,18 +53,15 @@ public class RequestService implements IRequestService {
     }
 
     @Override
-    public void createRequest(Book book) throws ServiceException {  // Create Request by book, or increase count of requests for book, if existed
+    public void createRequest(BookDTO book) throws ServiceException {  // Create Request by book, or increase count of requests for book, if existed
         try {
             LOGGER.log(Level.INFO, String.format("Create request book : %s ", book));
 
-            this.requestDAO.getAll().stream()
-                    .filter(item -> item.getRequestedBooks().getId().equals(book.getId()))
-                    .forEach(Request::increaseRequestCount);
+                Request existRequest = requestDAO.requestByBookId(book.getId());
 
-            if (this.getNumberOfRequestsByBook(book.getId()) == 0) {
-                Request request = new Request(book);
-                requestDAO.addEntity(request);
-            }
+
+
+
 
 
         } catch (DAOException e) {
@@ -82,11 +90,10 @@ public class RequestService implements IRequestService {
 
     public Long getNumberOfRequestsByBook(UUID uuid) throws ServiceException {
         try {
-            List<Request> list = new ArrayList<Request>(this.requestDAO.getAll());
+            Request request = requestDAO.requestByBookId(uuid);
 
-            return list.stream()
-                    .filter(x -> x.getRequestedBooks().getId().equals(uuid))
-                    .count();
+
+            return (long) request.getCount();
         } catch (DAOException e){
             LOGGER.log(Level.WARN, "Get number of Requested books is not available", e);
             throw new ServiceException("Get number of Requested  failed", e);
@@ -104,7 +111,9 @@ public class RequestService implements IRequestService {
 
     public Request getRequestByBook(UUID uuid) throws ServiceException {
         try {
+            Book book = bookDAO.getEntityById(uuid);
             List<Request> requests = new ArrayList<>(this.requestDAO.getAll());
+
             Optional<Request> request = requests.stream().filter(x -> x.getRequestedBooks().getId().equals(uuid)).findFirst();
 
             return request.get();
@@ -118,6 +127,7 @@ public class RequestService implements IRequestService {
         Request request = this.getRequestByBook(uuid);
 
         request.setRequestOpenClose(false);
+        request.setCount(0);
     }
 
 /*

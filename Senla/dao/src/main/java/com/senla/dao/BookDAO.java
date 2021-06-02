@@ -8,18 +8,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class BookDAO extends AbstractDAO<Book> implements IBookDAO {
 
-    public BookDAO(DataBaseHandler dataBaseHandler) {
-        super();
-    }
-
-    public BookDAO() {
-    }
+    public BookDAO() { }
 
     @Override
     protected Class<Book> getClazz() {
         return Book.class;
     }
-
 
 
 }

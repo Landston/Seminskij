@@ -6,10 +6,8 @@ import com.senla.api.service.IClientService;
 import com.senla.api.service.IOrderService;
 import com.senla.api.service.IRequestService;
 
-import com.senla.model.Book;
-import com.senla.model.Client;
-import com.senla.model.Request;
-import com.senla.model.Order;
+import com.senla.model.*;
+import com.senla.model.dto.BookDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -39,7 +37,7 @@ public class BookShopFacade {
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //////////// BOOK ////////////
-    public List<Book> getAllBooks() throws ServiceException {
+    public List<BookDTO> getAllBooks() throws ServiceException {
         try {
             return bookService.getAll().isEmpty() ? Collections.emptyList() : bookService.getAll();
         } catch (ServiceException e) {
@@ -65,8 +63,9 @@ public class BookShopFacade {
         this.bookService.addBookToShop(name, genre, year, cost);
     }
 
-    public Book getBookByID(UUID uuid) throws ServiceException {
+    public BookDTO getBookByID(UUID uuid) throws ServiceException {
         try {
+
             return this.bookService.getBookById(uuid);
         } catch (ServiceException e) {
             throw new ServiceException(e);
@@ -80,7 +79,8 @@ public class BookShopFacade {
             return;
         }
         try {
-            this.bookService.update(new Book(name, genre, year, cost));
+            BookDTO dto = new BookDTO(updateBookID, name, BookStatus.RESERVED, genre,cost, year, LocalDate.now());
+            this.bookService.update(dto);
 
         } catch (ServiceException serviceException) {
             System.out.println("Entered wrong id");
@@ -100,7 +100,7 @@ public class BookShopFacade {
 
     }
 
-    public List<Book> getSortedBooks(String condition) throws ServiceException {
+    public List<BookDTO> getSortedBooks(String condition) throws ServiceException {
         try {
 
             if (condition != null) return this.bookService.getSortedBooks(condition);
@@ -113,7 +113,7 @@ public class BookShopFacade {
         return Collections.emptyList();
     }
 
-    public List<Book> getStaledBooks(String condition) throws ServiceException {
+    public List<BookDTO> getStaledBooks(String condition) throws ServiceException {
         try {
             if (condition != null) return this.bookService.getSortedStaledBooks(condition);
 
@@ -220,7 +220,7 @@ public class BookShopFacade {
 
 
 
-    public void addBooktoOrder(UUID id, Book book) throws ServiceException {
+    public void addBooktoOrder(UUID id, BookDTO book) throws ServiceException {
         this.orderService.addBookToOrder(id, book);
 
 
@@ -278,7 +278,7 @@ public class BookShopFacade {
 
 
     public void createRequest(UUID bookID) throws ServiceException {
-        Book book = this.bookService.getBookById(bookID);
+        BookDTO book = this.bookService.getBookById(bookID);
 
         this.requestService.createRequest(book);
     }

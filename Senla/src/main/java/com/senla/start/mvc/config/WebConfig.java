@@ -14,7 +14,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"com.senla.dao", "com.senla.service", "com.senla.model", "com.senla.ui", "com.senla.controller", "com.senla.api", "com.senla.start.mvc"})
+@ComponentScan({"com.senla.dao", "com.senla.service",
+                "com.senla.model", "com.senla.ui",
+                "com.senla.controller", "com.senla.api",
+                "com.senla.start.mvc"})
 public class WebConfig implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;

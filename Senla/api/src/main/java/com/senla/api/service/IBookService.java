@@ -16,21 +16,21 @@ public interface IBookService {
 
     boolean writeOffBook(UUID id) throws ServiceException;
 
-    List<Book> getSortedBooks(String condition) throws ServiceException;
+    List<BookDTO> getSortedBooks(String condition) throws ServiceException;
 
-    List<Book> getSortedStaledBooks(String condition) throws ServiceException;
+    List<BookDTO> getSortedStaledBooks(String condition) throws ServiceException;
 
     Set<String> getSortParams();
 
-    void update(Book book) throws ServiceException;
+    void update(BookDTO bookDTO) throws ServiceException;
 
-    void delete(UUID book) throws ServiceException;
+    void delete(UUID uuid) throws ServiceException;
 
     List<BookDTO> getAll() throws ServiceException;
 
-    Book getBookById(UUID uuid) throws ServiceException;
+    BookDTO getBookById(UUID uuid) throws ServiceException;
 
-    void add(Book book) throws ServiceException;
+    void add(BookDTO bookDTO) throws ServiceException;
 
     void addBookToWareHouse(UUID uuid) throws ServiceException;
 }

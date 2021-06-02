@@ -3,12 +3,11 @@ package com.senla.model.mapper;
 import com.senla.model.Request;
 import com.senla.model.dto.RequestDTO;
 import com.senla.model.mapper.api.BookMapper;
-import com.senla.model.mapper.api.RequestMapper;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.senla.model.mapper.api.MapperForRequest;
+import org.springframework.stereotype.Component;
 
-
-public class RequestMapperImpl implements RequestMapper {
+@Component
+public class RequestMapperImpl implements MapperForRequest {
 
 
     private final BookMapper bookMapper;

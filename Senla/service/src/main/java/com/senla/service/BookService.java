@@ -18,6 +18,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,26 +30,31 @@ import java.util.stream.Collectors;
 @Service
 @Log4j2
 @Transactional
+@PropertySource( {"classpath:serviceproperties.properties"})
 public class BookService implements IBookService {
 
-    @Autowired
-    private IBookDAO bookDAO;
 
-    @Autowired
-    private IRequestService requestService;
+    private final IBookDAO bookDAO;
 
-    @Autowired
-    private BookMapper bookMapper;
+
+    private final IRequestService requestService;
+
+
+    private final BookMapper bookMapper;
 
     private Map<String, Comparator<Book>> sort;
 
     private static final Logger LOGGER = LogManager.getLogger(BookService.class.getName());
 
-
+    @Value("month")
     private int month;
 
 
-    public BookService() {
+    @Autowired
+    public BookService(IBookDAO bookDAO, IRequestService requestService, BookMapper bookMapper) {
+        this.bookDAO = bookDAO;
+        this.requestService = requestService;
+        this.bookMapper = bookMapper;
         this.init();
     }
 
@@ -74,11 +81,13 @@ public class BookService implements IBookService {
 
     }
 
-    public void update(Book book) throws ServiceException {
+    public void update(BookDTO bookDTO) throws ServiceException {
         try {
-            LOGGER.log(Level.INFO, String.format("Book   : %s", book));
+            LOGGER.log(Level.INFO, String.format("Book   : %s", bookDTO));
 
-            this.bookDAO.update(book);
+            Book book = bookMapper.toEntity(bookDTO);
+
+            bookDAO.update(book);
         } catch (DAOException daoException) {
             LOGGER.log(Level.WARN, "UpdateBook failed", daoException);
             throw new ServiceException("Book update operation failed", daoException);
@@ -90,6 +99,7 @@ public class BookService implements IBookService {
             LOGGER.log(Level.INFO, String.format("Book to delete : %s", id));
 
             Book book = bookDAO.getEntityById(id);
+
             this.bookDAO.delete(book);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Delete Book failed", e);
@@ -100,11 +110,14 @@ public class BookService implements IBookService {
 
     public List<BookDTO> getAll() throws ServiceException {
         try {
-            List<Book> books = new ArrayList<>(this.bookDAO.getAll());
-            return bookMapper.bookListToBookDTOList(books);
+            LOGGER.info("Request for all books");
 
+            List<Book> books = new ArrayList<>(this.bookDAO.getAll());
+
+            return bookMapper.bookListToBookDTOList(books);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, e.getMessage(), e);
+
             throw new ServiceException("Get all operation failed", e);
         }
     }
@@ -119,18 +132,20 @@ public class BookService implements IBookService {
             if (book.getStatus().equals(BookStatus.RESERVED)) {
                 book.setStatus(BookStatus.ABSENT);
             }
+            bookDAO.update(book);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "WritingOffBook failed", e);
+
             throw new ServiceException("WritingOffBook operation failed", e);
         }
-
         return false;
     }
 
-    public Book getBookById(UUID uuid) throws ServiceException {
+    public BookDTO getBookById(UUID uuid) throws ServiceException {
         try {
-            return this.bookDAO.getEntityById(uuid);
+            Book book = bookDAO.getEntityById(uuid);
 
+            return bookMapper.toDto(book);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Get book by id failed", e);
             throw new ServiceException("Get book by id operation failed", e);
@@ -143,8 +158,7 @@ public class BookService implements IBookService {
 
         LOGGER.log(Level.INFO, String.format("Add book to Shop  params. Name : %s, Genre : %s, Year : %s, Cost : %s", name, genre, year, cost));
 
-        if (cost < 0) throw new ServiceException("Cost is negative");
-
+        if (cost < 0 | year < 0) throw new ServiceException("Data is invalid");
 
         book.setName(name);
         book.setGenre(genre);
@@ -155,14 +169,16 @@ public class BookService implements IBookService {
             this.bookDAO.addEntity(book);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Adding book failed", e);
+
             throw new ServiceException("Adding book  operation failed", e);
         }
     }
 
-    public void add(Book book) throws ServiceException {
+    public void add(BookDTO bookDTO) throws ServiceException {
         try {
-            this.bookDAO.addEntity(book);
+            Book book = bookMapper.toEntity(bookDTO);
 
+            this.bookDAO.addEntity(book);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Adding book failed", e);
             throw new ServiceException("Adding book operation failed", e);
@@ -172,7 +188,7 @@ public class BookService implements IBookService {
     public void addBookToWareHouse(UUID uuid) throws ServiceException {
         try {
             LOGGER.log(Level.INFO, String.format("AddingToWareHouse Book id is:  %s", uuid));
-            Book book = this.getBookById(uuid);
+            Book book = bookDAO.getEntityById(uuid);
 
             if (book.getStatus().equals(BookStatus.ABSENT)) {
                 book.setStatus(BookStatus.RESERVED);
@@ -183,21 +199,21 @@ public class BookService implements IBookService {
                 request.setRequestOpenClose(false);
                 request.setCount(0);
             }
-        } catch (ServiceException e) {
+        } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Adding book to WareHouse failed", e);
             throw new ServiceException(e);
         }
     }
 
-    public List<Book> getSortedBooks(String condition) throws ServiceException {
+    public List<BookDTO> getSortedBooks(String condition) throws ServiceException {
         try {
             LOGGER.log(Level.INFO, String.format("Book sorting condition : %s", condition), condition);
+
             List<Book> list = new ArrayList<>(this.bookDAO.getAll());
 
             list.sort((this.sort.get(condition)));
 
-            return list;
-
+            return bookMapper.bookListToBookDTOList(list);
         } catch (IllegalArgumentException e) {
             LOGGER.log(Level.WARN, "Condition for sorting Books is not acceptable", e);
             throw new ServiceException("Get sorted book operation failed", e);
@@ -209,20 +225,19 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public List<Book> getSortedStaledBooks(String condition) throws ServiceException {
+    public List<BookDTO> getSortedStaledBooks(String condition) throws ServiceException {
         try {
-            List<Book> sorted = new ArrayList<>();
+            List<Book> sorted;
             LocalDate date = LocalDate.now();
-            /*    Optional<String> properties = PropertyHandler.getProperties("month");*/
 
-
-            sorted = this.bookDAO.getAll().stream().filter(x -> x.getDateOfAdmission().isBefore(date.minusMonths(this.month))).collect(Collectors.toList());
-
+            sorted = this.bookDAO.getAll().stream()
+                    .filter(x -> x.getDateOfAdmission().isBefore(date.minusMonths(this.month)))
+                    .collect(Collectors.toList());
             sorted.sort(this.sort.get(condition));
 
             if (sorted.isEmpty()) return Collections.emptyList();
 
-            return sorted;
+            return bookMapper.bookListToBookDTOList(sorted);
         } catch (IllegalArgumentException e) {
             LOGGER.log(Level.WARN, "Condition for sorting Books is not acceptable", e);
             throw new ServiceException("Get sorted book operation failed", e);
@@ -236,10 +251,6 @@ public class BookService implements IBookService {
             throw new ServiceException("Something went wrong in SortedBooks opetion", e);
 
         }
-    }
-
-    public int getMonth() {
-        return this.month;
     }
 
     @Override
