@@ -6,6 +6,9 @@ import com.senla.model.mapper.api.BookMapper;
 import com.senla.model.mapper.api.MapperForRequest;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class RequestMapperImpl implements MapperForRequest {
 
@@ -35,5 +38,15 @@ public class RequestMapperImpl implements MapperForRequest {
                 dto.getCount(),
                 dto.isRequestOpenClose()
         );
+    }
+
+    @Override
+    public List<RequestDTO> bunchRequestToRequestDTO(List<Request> requests) {
+        return requests.stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Request> bunchDtoRequestToRequest(List<RequestDTO> dtoRequests) {
+        return dtoRequests.stream().map(this::toEntity).collect(Collectors.toList());
     }
 }

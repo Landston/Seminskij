@@ -11,6 +11,7 @@ import com.senla.model.Book;
 import com.senla.model.Request;
 
 import com.senla.model.dto.BookDTO;
+import com.senla.model.dto.RequestDTO;
 import com.senla.model.mapper.api.BookMapper;
 import com.senla.model.mapper.api.MapperForRequest;
 import org.apache.logging.log4j.Level;
@@ -75,7 +76,7 @@ public class RequestService implements IRequestService {
         }
     }
 
-    public List<Request> getSortedRequests(String condition) throws ServiceException {
+    public List<RequestDTO> getSortedRequests(String condition) throws ServiceException {
         try {
             LOGGER.log(Level.INFO, String.format("Condition to sort is : %s", condition), condition);
 
@@ -83,7 +84,7 @@ public class RequestService implements IRequestService {
 
             list.sort(this.sort.get(condition));
 
-            return list;
+            return requestMapper.bunchRequestToRequestDTO(list);
         } catch (IllegalArgumentException e) {
             LOGGER.log(Level.WARN, "Request sorting condition is not available", e);
             throw new ServiceException("Request sorting operation failed", e);
@@ -105,34 +106,37 @@ public class RequestService implements IRequestService {
         }
     }
 
-    public List<Request> getAllRequests() throws ServiceException {
+    public List<RequestDTO> getAllRequests() throws ServiceException {
         try {
-            return this.requestDAO.getAll();
+            return requestMapper.bunchRequestToRequestDTO(requestDAO.getAll());
         }catch (DAOException e){
             LOGGER.log(Level.WARN, "Get all Request is not available", e);
             throw new ServiceException("Get all Request failed", e);
         }
     }
 
-    public Request getRequestByBook(UUID uuid) throws ServiceException {
+    public RequestDTO getRequestByBook(UUID uuid) throws ServiceException {
         try {
             Book book = bookDAO.getEntityById(uuid);
             List<Request> requests = new ArrayList<>(this.requestDAO.getAll());
 
             Optional<Request> request = requests.stream().filter(x -> x.getRequestedBooks().getId().equals(uuid)).findFirst();
 
-            return request.get();
+            return  requestMapper.toDto(request.get());
         } catch (DAOException e){
             LOGGER.log(Level.WARN, "Get  Request by Book is not available", e);
             throw new ServiceException("Get Request by Book failed", e);
         }
     }
 
-    public void closeRequestById(UUID uuid) throws ServiceException {
-        Request request = this.getRequestByBook(uuid);
+    public RequestDTO closeRequestById(UUID uuid) throws ServiceException, DAOException {
+        Request request = requestDAO.getEntityById(uuid);
 
         request.setRequestOpenClose(false);
         request.setCount(0);
+        requestDAO.update(request);
+
+        return requestMapper.toDto(request);
     }
 
 /*
