@@ -17,7 +17,9 @@ import com.senla.model.Client;
 import com.senla.model.OrderStatus;
 
 import com.senla.model.dto.BookDTO;
+import com.senla.model.dto.OrderDTO;
 import com.senla.model.mapper.api.BookMapper;
+import com.senla.model.mapper.api.OrderMapper;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,6 +49,8 @@ public class OrderService implements IOrderService {
     private IRequestDAO requestDAO;
 
     @Autowired
+    private OrderMapper orderMapper;
+    @Autowired
     private BookMapper bookMapper;
 
     private static final Logger LOGGER = LogManager.getLogger(OrderService.class.getName());
@@ -65,7 +69,7 @@ public class OrderService implements IOrderService {
         this.sort.put("ByStatus", Comparator.comparing(Order::getStatus));
     }
 
-    public List<Order> getSortedOrders(String condition) throws ServiceException {
+    public List<OrderDTO> getSortedOrders(String condition) throws ServiceException {
         try {
             LOGGER.log(Level.INFO, String.format("Condition to sort is : %s", condition), condition);
 
@@ -73,26 +77,28 @@ public class OrderService implements IOrderService {
 
             list.sort(sort.get(condition));
 
-            return list;
+            return orderMapper.orderBunchToOrderDTOBunch(list);
         } catch (IllegalArgumentException | DAOException e) {
             LOGGER.log(Level.WARN, "Order sorting condition is not available", e);
             throw new ServiceException("Order sorting operation failed", e);
         }
     }
 
-    public Order getOrderByID(UUID uuid) throws ServiceException {
+    public OrderDTO getOrderByID(UUID uuid) throws ServiceException {
         try {
             LOGGER.log(Level.INFO, String.format("Order id for search : %s", uuid), uuid);
-            return this.orderDAO.getEntityById(uuid);
+
+            Order order = this.orderDAO.getEntityById(uuid);
+
+            return orderMapper.toDto(order);
 
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Get order by id failed", e);
             throw new ServiceException("Get order by id operation failed", e);
         }
-
     }
 
-    public List<Order> getClosedOrdersByTime(LocalDate from, LocalDate to, String condition) throws ServiceException {  // Get amount of months from property
+    public List<OrderDTO> getClosedOrdersByTime(LocalDate from, LocalDate to, String condition) throws ServiceException {  // Get amount of months from property
         try {
             LOGGER.log(Level.INFO, String.format("Book sorting condition : %s", condition), condition);
 
@@ -104,12 +110,14 @@ public class OrderService implements IOrderService {
                     .collect(Collectors.toList());
             orders.sort(this.sort.get(condition));
 
-            return orders;
+            return orderMapper.orderBunchToOrderDTOBunch(orders);
         } catch (IllegalArgumentException e) {
             LOGGER.log(Level.WARN, "Get closed order by Time failed");
+
             throw new ServiceException("Get closed order by Time operation failed", e);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Get order by id failed", e);
+
             throw new ServiceException("Get order by id operation failed", e);
         }
     }
@@ -128,39 +136,43 @@ public class OrderService implements IOrderService {
         }
     }
 
-    public List<Order> getAll() throws ServiceException {
+    public List<OrderDTO> getAll() throws ServiceException {
         try {
-            return new ArrayList<>(this.orderDAO.getAll());
+            return orderMapper.orderBunchToOrderDTOBunch(this.orderDAO.getAll());
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Order Service opeation failed", e);
             throw new ServiceException("Order Service opeation failed", e);
         }
     }
 
-    public void delete(UUID uuid) throws ServiceException {
+    public OrderDTO delete(UUID uuid) throws ServiceException {
         try {
             LOGGER.log(Level.INFO, String.format("Delete order with id : %s"), uuid);
 
             Order order = orderDAO.getEntityById(uuid);
+
             this.orderDAO.delete(order);
 
+            return orderMapper.toDto(order);
         } catch (Exception e) {
             throw new ServiceException("delete operation failed", e);
         }
     }
 
-    public void closeOrder(UUID uuid) throws ServiceException {
+    public OrderDTO closeOrder(UUID uuid) throws ServiceException {
         try {
             LOGGER.log(Level.INFO, String.format("Close order uuid : %s", uuid), uuid);
 
             Order order = this.orderDAO.getEntityById(uuid);
 
-            if(order.getStatus().equals(OrderStatus.PAUSED)) {
-               throw new ServiceException("ORDER IS PAUSED");
+            if (order.getStatus().equals(OrderStatus.PAUSED)) {
+                throw new ServiceException("ORDER IS PAUSED");
 
             }
             order.setStatus(OrderStatus.CLOSED);
             order.setDateOfExecution(LocalDate.now());
+
+            return orderMapper.toDto(order);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Order close faild");
             throw new ServiceException("Order close opeartion faild", e);
@@ -168,7 +180,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Order createOrder(UUID bookId, UUID clientId) throws ServiceException {
+    public OrderDTO createOrder(UUID bookId, UUID clientId) throws ServiceException {
         try {
             LOGGER.log(Level.INFO, String.format("Create order book : %s. Client : %s", bookId, clientId));
 
@@ -177,7 +189,7 @@ public class OrderService implements IOrderService {
 
             Order order = new Order(book, client);
 
-            if(book.getStatus().equals(BookStatus.ABSENT)){
+            if (book.getStatus().equals(BookStatus.ABSENT)) {
                 BookDTO bookDTO = bookMapper.toDto(book);
 
                 requestService.createRequest(bookDTO);
@@ -190,29 +202,31 @@ public class OrderService implements IOrderService {
 
             this.orderDAO.addEntity(order);
 
-            return order;
+            return orderMapper.toDto(order);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Order Create faild");
             throw new ServiceException("Order Create opeartion faild", e);
         }
     }
 
-    public void addBookToOrder(UUID uuid, BookDTO bookDTO) throws ServiceException {
+    public BookDTO addBookToOrder(UUID uuid, BookDTO bookDTO) throws ServiceException {
         try {
             LOGGER.log(Level.INFO, String.format("AddBook to Order uuid : %s", uuid));
 
             Order order = this.orderDAO.getEntityById(uuid);
             Book book = bookMapper.toEntity(bookDTO);
-            order.addBook(book);
 
+            order.addBook(book);
             orderDAO.update(order);
+
+            return bookMapper.toDto(book);
         } catch (Exception e) {
             LOGGER.log(Level.WARN, "AddBook to Order failed", e);
             throw new ServiceException("AddBook to Order failed", e);
         }
     }
 
-    public void deleteBookFromOrder(UUID uuid, BookDTO bookDTO) throws ServiceException {
+    public BookDTO deleteBookFromOrder(UUID uuid, BookDTO bookDTO) throws ServiceException {
         try {
             LOGGER.log(Level.INFO, String.format("Order uuid : %s. Book to delete : %s", uuid, bookDTO));
 
@@ -220,6 +234,10 @@ public class OrderService implements IOrderService {
             Book book = bookMapper.toEntity(bookDTO);
 
             order.removeBook(book);
+
+            orderDAO.update(order);
+
+            return bookMapper.toDto(book);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Delete book from Order opeartion failed");
             throw new ServiceException("\"Delete book from Order opeartion failed\"", e);
@@ -240,28 +258,17 @@ public class OrderService implements IOrderService {
         }
     }
 
-    /*  public void updateOrder(UUID id, Book book, Client client) {
 
-          Order order = this.orderDAO.getEntity(id);
-
-      }
-
-      public Order getOrderByClientName(String name) {
-          Optional<Order> order = this.orderDAO.getAll().stream()
-                  .filter(x -> x.getClient().getName().equals(name))
-                  .findFirst();
-
-          return order.orElseGet(() -> new Order(new Client("", "")));
-      }
-  */
-
-
-
-    public void cancelOrder(UUID uuid) throws ServiceException {
+    public OrderDTO cancelOrder(UUID uuid) throws ServiceException {
         try {
             LOGGER.log(Level.INFO, String.format("Cancel order uuid : %s", uuid), uuid);
 
-            this.orderDAO.getEntityById(uuid).setStatus(OrderStatus.CANCELED);
+            Order order = this.orderDAO.getEntityById(uuid);
+
+            order.setStatus(OrderStatus.CANCELED);
+            orderDAO.update(order);
+
+            return orderMapper.toDto(order);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Order cancel faild");
             throw new ServiceException("Order close opeartion faild", e);
@@ -269,22 +276,25 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public void orderDone(UUID uuid) throws ServiceException {
+    public OrderDTO orderDone(UUID uuid) throws ServiceException {
         try {
             LOGGER.log(Level.INFO, String.format("Done order uuid : %s", uuid), uuid);
+            Order order = this.orderDAO.getEntityById(uuid);
+            List<Book> books = order.getBooksToOrder();
 
-            List<Book> books = new ArrayList<>(this.orderDAO.getEntityById(uuid).getBooksToOrder());
-
-           Optional<Book> book = books.stream().filter(x -> x.getStatus().equals(BookStatus.ABSENT)).findFirst();
-            if(book.isEmpty()){
+            Optional<Book> absentBook = books.stream().filter(x -> x.getStatus().equals(BookStatus.ABSENT)).findFirst();
+            if (absentBook.isEmpty()) {
                 LOGGER.log(Level.INFO, "Order has ABSENT books");
 
                 throw new ServiceException("Order has ABSENT book(s)");
             }
 
-            this.orderDAO.getEntityById(uuid).setStatus(OrderStatus.CLOSED);
-            this.orderDAO.getEntityById(uuid).setDateOfExecution(LocalDate.now());
+            order.setStatus(OrderStatus.CLOSED);
+            order.setDateOfExecution(LocalDate.now());
 
+            orderDAO.update(order);
+
+            return orderMapper.toDto(order);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Order Done faild");
             throw new ServiceException("Order Done opeartion faild", e);

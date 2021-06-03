@@ -7,6 +7,7 @@ import com.senla.model.Client;
 import com.senla.model.Order;
 import com.senla.model.Book;
 import com.senla.model.dto.BookDTO;
+import com.senla.model.dto.OrderDTO;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -16,31 +17,31 @@ import java.util.UUID;
 
 public interface IOrderService {
 
-    void closeOrder(UUID uuid) throws ServiceException;
+    OrderDTO closeOrder(UUID uuid) throws ServiceException;
 
-    Order createOrder(UUID book, UUID client) throws ServiceException;
+    OrderDTO createOrder(UUID book, UUID client) throws ServiceException;
 
-    void cancelOrder(UUID id) throws ServiceException;
+    OrderDTO cancelOrder(UUID id) throws ServiceException;
 
-    void orderDone(UUID id) throws ServiceException;
+    OrderDTO orderDone(UUID id) throws ServiceException;
 
-    List<Order> getSortedOrders(String condition) throws IOException, ServiceException;
+    List<OrderDTO> getSortedOrders(String condition) throws IOException, ServiceException;
 
-    List<Order> getClosedOrdersByTime(LocalDate from, LocalDate to, String condition) throws ServiceException;
+    List<OrderDTO> getClosedOrdersByTime(LocalDate from, LocalDate to, String condition) throws ServiceException;
 
-    List<Order> getAll() throws ServiceException;
+    List<OrderDTO> getAll() throws ServiceException;
 
-    void addBookToOrder(UUID uuid, BookDTO bookDTO) throws ServiceException;
+    BookDTO addBookToOrder(UUID uuid, BookDTO bookDTO) throws ServiceException;
 
     Long amountOfClosedOrdersForThePeriod(LocalDate from, LocalDate to ) throws ServiceException;
 
-    Order getOrderByID(UUID uuid) throws ServiceException;
+    OrderDTO getOrderByID(UUID uuid) throws ServiceException;
 
     double getTotalRevenue() throws ServiceException;
 
-    void delete(UUID uuid) throws ServiceException;
+    OrderDTO delete(UUID uuid) throws ServiceException;
 
-    void deleteBookFromOrder(UUID uuid, BookDTO bookDTO) throws ServiceException;
+    BookDTO deleteBookFromOrder(UUID uuid, BookDTO bookDTO) throws ServiceException;
 
     void orderOpen(UUID uuid) throws ServiceException;
 

@@ -10,6 +10,9 @@ import com.senla.model.mapper.api.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class OrderMapperImpl implements OrderMapper {
 
@@ -41,5 +44,13 @@ public class OrderMapperImpl implements OrderMapper {
                 dto.getTotalPrice(),
                 dto.getDateOfExecution()
         );
+    }
+
+    public List<OrderDTO> orderBunchToOrderDTOBunch(List<Order> orders){
+        return orders.stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    public List<Order> orderDtoBunchToOrder(List<OrderDTO> orders){
+        return orders.stream().map(this::toEntity).collect(Collectors.toList());
     }
 }

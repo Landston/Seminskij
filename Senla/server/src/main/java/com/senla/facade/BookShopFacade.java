@@ -8,6 +8,7 @@ import com.senla.api.service.IRequestService;
 
 import com.senla.model.*;
 import com.senla.model.dto.BookDTO;
+import com.senla.model.dto.OrderDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -195,21 +196,18 @@ public class BookShopFacade {
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //////////// ORDER ////////////
-    public Order createOrder(UUID bookID, UUID clientID) throws Exception {
+    public OrderDTO createOrder(UUID bookID, UUID clientID) throws Exception {
         if (bookID == null || clientID == null || !bookID.equals(UUID.fromString("\\b[0-9a-f]{8}\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\b[0-9a-f]{12}\\b")) || !clientID.equals(UUID.fromString("\\b[0-9a-f]{8}\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\b[0-9a-f]{12}\\b"))) throw new Exception("Whrong data");
 
-        Order order = orderService.createOrder(bookID, clientID);
-
-
-        return order;
+        return orderService.createOrder(bookID, clientID);
     }
 
-    public List<Order> getSortedOrder(String condition) throws ServiceException, IOException {
+    public List<OrderDTO> getSortedOrder(String condition) throws ServiceException, IOException {
 
         return this.orderService.getSortedOrders(condition);
     }
 
-    public List<Order> getClosedOrdersByTime(LocalDate from, LocalDate to, String condition) throws ServiceException {
+    public List<OrderDTO> getClosedOrdersByTime(LocalDate from, LocalDate to, String condition) throws ServiceException {
         return this.orderService.getClosedOrdersByTime(from, to, condition);
 
     }
@@ -231,11 +229,11 @@ public class BookShopFacade {
 
     }
 
-    public List<Order> getAllOrders() throws ServiceException {
+    public List<OrderDTO> getAllOrders() throws ServiceException {
         return this.orderService.getAll();
     }
 
-    public Order getOrderByID(UUID uuid) throws ServiceException {
+    public OrderDTO getOrderByID(UUID uuid) throws ServiceException {
         try {
             return this.orderService.getOrderByID(uuid);
         } catch (NullPointerException e) {
