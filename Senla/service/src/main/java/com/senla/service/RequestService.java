@@ -53,18 +53,23 @@ public class RequestService implements IRequestService {
     }
 
     @Override
-    public void createRequest(BookDTO book) throws ServiceException {  // Create Request by book, or increase count of requests for book, if existed
+    public void createRequest(BookDTO bookDTO) throws ServiceException {  // Create Request by book, or increase count of requests for book, if existed
         try {
-            LOGGER.log(Level.INFO, String.format("Create request book : %s ", book));
+            LOGGER.log(Level.INFO, String.format("Create request book : %s ", bookDTO));
 
-                Request existRequest = requestDAO.requestByBookId(book.getId());
+            Request existRequest = requestDAO.requestByBookId(bookDTO.getId());
 
+            if (existRequest == null){
+                Book book = bookMapper.toEntity(bookDTO);
 
-
-
-
+                existRequest = new Request(book);
+                requestDAO.addEntity(existRequest);
+                return;
+            }
+            existRequest.increaseRequestCount();
 
         } catch (DAOException e) {
+
             LOGGER.log(Level.WARN, ("Create request failed"));
             throw new ServiceException("Create request operation failed", e);
         }

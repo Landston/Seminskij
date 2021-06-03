@@ -80,17 +80,8 @@ public class Book implements Serializable, AbstractEntity {
         this.year = year;
 
     }
+
     public Book(String name, String genre, int year, double cost, BookStatus status) {
-
-        this.dateOfAdmission = LocalDate.now();
-        this.status = status;
-        this.name = name;
-        this.cost = cost;
-        this.genre = genre;
-        this.year = year;
-
-    }
-    public Book(UUID id, String name, String genre, int year, double cost, BookStatus status) {
 
         this.dateOfAdmission = LocalDate.now();
         this.status = status;

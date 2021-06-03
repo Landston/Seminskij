@@ -6,11 +6,13 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.senla.api.dao.IBookDAO;
 import com.senla.api.dao.IOrderDAO;
+import com.senla.api.dao.IRequestDAO;
 import com.senla.api.exception.service.DAOException;
 import com.senla.api.exception.service.ServiceException;
 import com.senla.controller.config.Config;
 import com.senla.dao.BookDAO;
 import com.senla.dao.OrderDAO;
+import com.senla.dao.RequestDAO;
 import com.senla.model.Book;
 import com.senla.model.Order;
 import com.senla.ui.MenuController;
@@ -35,14 +37,14 @@ public class MainController {
             Logger log = LogManager.getLogger(MainController.class.getName());
             ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Config.class);
 
-        IOrderDAO dao = applicationContext.getBean("orderDAO", OrderDAO.class);
-        Order book = dao.getEntityById(UUID.fromString("9e64219e-ae13-4856-8fd9-e8cb31754ea3"));
+
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        IRequestDAO requestDAO = applicationContext.getBean("requestDAO", RequestDAO.class);
+        System.out.println(requestDAO.findEntity(UUID.fromString("16c55c0a-510e-42d0-8518-00a59103319c")));
 
-        System.out.println(book);
     //        IBookService bookService = applicationContext.getBean("bookService", IBookService.class);
     //        IClientService clientService = applicationContext.getBean("clientService", IClientService.class);
     //
@@ -60,9 +62,9 @@ public class MainController {
     //        System.out.println(orderService.getAll());
            // Book book = service.getBookById(UUID.fromString("9bd3ec21-4b2f-43ac-b2d3-93141e84695f"));
 
-            MenuController menuController = applicationContext.getBean("menuController", MenuController.class);
-            menuController.run();
-
-            System.out.println();
+//            MenuController menuController = applicationContext.getBean("menuController", MenuController.class);
+//            menuController.run();
+//
+//            System.out.println();
     }
 }

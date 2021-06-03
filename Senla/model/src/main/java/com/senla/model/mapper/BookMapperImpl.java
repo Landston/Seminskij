@@ -28,7 +28,6 @@ public class BookMapperImpl implements BookMapper {
     @Override
     public Book toEntity(BookDTO dto) {
         return new Book(
-                dto.getId(),
                 dto.getName(),
                 dto.getGenre(),
                 dto.getYear(),

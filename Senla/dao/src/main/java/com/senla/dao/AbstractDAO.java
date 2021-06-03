@@ -54,8 +54,11 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements IDAO<T> {
 
     @Override
     public void addEntity(T entity) throws DAOException {
-        entityManager.persist(entity);
-
+       try {
+           entityManager.persist(entity);
+       } catch (Exception e){
+           throw new DAOException("DAO_EXCEPTION, ADD_ENTITY",e);
+       }
     }
 
     @Override
@@ -68,6 +71,17 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements IDAO<T> {
         return entityManager.createQuery(query).getSingleResult();
     }
 
+    @Override
+    public boolean findEntity(UUID uuid) throws DAOException {
+        try{
+           T entity =  entityManager.find(getClazz(), uuid);
 
+            return entity != null;
+        } catch (IllegalArgumentException e){
+            LOGGER.warn(e);
+
+            throw new DAOException(e);
+        }
+    }
     protected abstract Class<T> getClazz();
 }

@@ -226,7 +226,7 @@ public class BookShopFacade {
 
     }
 
-    public void deleteBookFromOrder(UUID id, Book book) throws ServiceException {
+    public void deleteBookFromOrder(UUID id, BookDTO book) throws ServiceException {
         this.orderService.deleteBookFromOrder(id, book);
 
     }

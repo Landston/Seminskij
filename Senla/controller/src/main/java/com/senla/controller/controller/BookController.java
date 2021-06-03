@@ -1,39 +1,28 @@
 package com.senla.controller.controller;
 
-import com.senla.api.exception.service.DAOException;
 import com.senla.api.exception.service.ServiceException;
 import com.senla.api.service.IBookService;
-import com.senla.model.Book;
-import com.senla.model.Order;
 import com.senla.model.dto.BookDTO;
-import com.senla.model.mapper.api.BookMapper;
-import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping(value = "/books")
 @Log4j2
 public class BookController {
 
     private final IBookService bookService;
 
-    private final BookMapper bookMapper;
-
     @Autowired
-    public BookController(IBookService bookService, BookMapper bookMapper) {
+    public BookController(IBookService bookService) {
         this.bookService = bookService;
-        this.bookMapper = bookMapper;
     }
-
 
     @GetMapping(value = "/all")
     public ResponseEntity<List<BookDTO>> allBooks() throws ServiceException {
@@ -43,11 +32,24 @@ public class BookController {
     }
 
     @GetMapping(value = "/{id}")
-    public Book getBookById(@PathVariable String id) throws ServiceException {
-        Book book =  bookService.getBookById(UUID.fromString(id));
+    public ResponseEntity<BookDTO> getBookById(@PathVariable String id) throws ServiceException {
+        BookDTO bookDto =  bookService.getBookById(UUID.fromString(id));
 
-
-
+        return ResponseEntity.ok(bookDto);
     }
+
+    @PostMapping(value = "/delete")
+    public ResponseEntity<BookDTO> deleteBookById(@RequestParam String id) throws ServiceException {
+        bookService.delete(UUID.fromString(id));
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+    @PostMapping(value = "/add")
+    public ResponseEntity<BookDTO> addBook(@RequestBody BookDTO bookDTO) throws ServiceException {
+        BookDTO newBookDto = bookService.add(bookDTO);
+
+        return ResponseEntity.ok(newBookDto);
+    }
+
 
 }

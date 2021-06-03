@@ -30,7 +30,7 @@ public interface IBookService {
 
     BookDTO getBookById(UUID uuid) throws ServiceException;
 
-    void add(BookDTO bookDTO) throws ServiceException;
+    BookDTO add(BookDTO bookDTO) throws ServiceException;
 
     void addBookToWareHouse(UUID uuid) throws ServiceException;
 }

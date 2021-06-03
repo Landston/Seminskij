@@ -6,6 +6,7 @@ import com.senla.api.exception.service.ServiceException;
 import com.senla.model.Client;
 import com.senla.model.Order;
 import com.senla.model.Book;
+import com.senla.model.dto.BookDTO;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -29,7 +30,7 @@ public interface IOrderService {
 
     List<Order> getAll() throws ServiceException;
 
-    void addBookToOrder(UUID uuid, Book book) throws ServiceException;
+    void addBookToOrder(UUID uuid, BookDTO bookDTO) throws ServiceException;
 
     Long amountOfClosedOrdersForThePeriod(LocalDate from, LocalDate to ) throws ServiceException;
 
@@ -39,7 +40,7 @@ public interface IOrderService {
 
     void delete(UUID uuid) throws ServiceException;
 
-    void deleteBookFromOrder(UUID uuid, Book book) throws ServiceException;
+    void deleteBookFromOrder(UUID uuid, BookDTO bookDTO) throws ServiceException;
 
     void orderOpen(UUID uuid) throws ServiceException;
 

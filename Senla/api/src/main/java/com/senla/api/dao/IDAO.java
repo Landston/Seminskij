@@ -19,4 +19,5 @@ public abstract interface IDAO<T> {
 
     T getEntityById(UUID id) throws DAOException;
 
+    boolean findEntity(UUID uuid) throws DAOException;
 }

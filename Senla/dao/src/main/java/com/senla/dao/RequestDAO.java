@@ -35,14 +35,18 @@ public class RequestDAO extends AbstractDAO<Request> implements IRequestDAO {
             CriteriaQuery<Request> query = builder.createQuery(getClazz());
             Root<Request> root = query.from(getClazz());
             query.select(root);
-            query.where(builder.equal(root.get("book_id"), id));
+            query.where(builder.equal(root.get("requestedBooks").get("id"), id));
             return entityManager.createQuery(query).getSingleResult();
-        } catch (PersistenceException e){
+        } catch (NoResultException e){
+            return null;
+        }
+        catch (PersistenceException e){
             LOGGER.warn(e);
 
             throw new DAOException("REQUEST_DAO_EXCEPTION REQUEST BY BOOK ID METHOD", e);
         }
     }
+
 
 
 }

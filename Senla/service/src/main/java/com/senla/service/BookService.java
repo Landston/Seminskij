@@ -46,7 +46,7 @@ public class BookService implements IBookService {
 
     private static final Logger LOGGER = LogManager.getLogger(BookService.class.getName());
 
-    @Value("month")
+    @Value("${month}")
     private int month;
 
 
@@ -174,11 +174,13 @@ public class BookService implements IBookService {
         }
     }
 
-    public void add(BookDTO bookDTO) throws ServiceException {
+    public BookDTO add(BookDTO bookDTO) throws ServiceException {
         try {
             Book book = bookMapper.toEntity(bookDTO);
 
             this.bookDAO.addEntity(book);
+
+            return bookMapper.toDto(book);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Adding book failed", e);
             throw new ServiceException("Adding book operation failed", e);
@@ -258,7 +260,6 @@ public class BookService implements IBookService {
         return "BookService{" +
                 "bookDAO=" + bookDAO +
                 ", sort=" + sort +
-                ", month=" + month +
                 '}';
     }
 

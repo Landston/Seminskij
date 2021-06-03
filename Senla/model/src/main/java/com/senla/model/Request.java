@@ -25,12 +25,12 @@ public class Request implements Serializable, AbstractEntity {
     private boolean requestOpenClose;
 
     public Request(){
-        super();
+
         this.requestOpenClose = true;
     }
 
     public Request(Book newBookToRequest){
-        super();
+
         this.requestOpenClose = true;
         this.requestedBooks  = newBookToRequest;
     }

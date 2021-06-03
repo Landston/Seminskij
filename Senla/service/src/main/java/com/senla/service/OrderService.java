@@ -4,6 +4,7 @@ package com.senla.service;
 import com.senla.api.dao.IBookDAO;
 import com.senla.api.dao.IClientDAO;
 import com.senla.api.dao.IOrderDAO;
+import com.senla.api.dao.IRequestDAO;
 import com.senla.api.exception.service.DAOException;
 import com.senla.api.exception.service.ServiceException;
 import com.senla.api.service.IOrderService;
@@ -41,6 +42,9 @@ public class OrderService implements IOrderService {
     private IBookDAO bookDAO;
     @Autowired
     private IRequestService requestService;
+
+    @Autowired
+    private IRequestDAO requestDAO;
 
     @Autowired
     private BookMapper bookMapper;
@@ -151,6 +155,10 @@ public class OrderService implements IOrderService {
 
             Order order = this.orderDAO.getEntityById(uuid);
 
+            if(order.getStatus().equals(OrderStatus.PAUSED)) {
+               throw new ServiceException("ORDER IS PAUSED");
+
+            }
             order.setStatus(OrderStatus.CLOSED);
             order.setDateOfExecution(LocalDate.now());
         } catch (DAOException e) {
@@ -171,7 +179,10 @@ public class OrderService implements IOrderService {
 
             if(book.getStatus().equals(BookStatus.ABSENT)){
                 BookDTO bookDTO = bookMapper.toDto(book);
+
                 requestService.createRequest(bookDTO);
+
+                order.setStatus(OrderStatus.PAUSED);
             }
 
             order.getBooksToOrder().add(book);
@@ -186,12 +197,12 @@ public class OrderService implements IOrderService {
         }
     }
 
-    public void addBookToOrder(UUID uuid, Book book) throws ServiceException {
+    public void addBookToOrder(UUID uuid, BookDTO bookDTO) throws ServiceException {
         try {
             LOGGER.log(Level.INFO, String.format("AddBook to Order uuid : %s", uuid));
 
             Order order = this.orderDAO.getEntityById(uuid);
-
+            Book book = bookMapper.toEntity(bookDTO);
             order.addBook(book);
 
             orderDAO.update(order);
@@ -201,11 +212,12 @@ public class OrderService implements IOrderService {
         }
     }
 
-    public void deleteBookFromOrder(UUID uuid, Book book) throws ServiceException {
+    public void deleteBookFromOrder(UUID uuid, BookDTO bookDTO) throws ServiceException {
         try {
-            LOGGER.log(Level.INFO, String.format("Order uuid : %s. Book to delete : %s", uuid, book));
+            LOGGER.log(Level.INFO, String.format("Order uuid : %s. Book to delete : %s", uuid, bookDTO));
 
             Order order = this.orderDAO.getEntityById(uuid);
+            Book book = bookMapper.toEntity(bookDTO);
 
             order.removeBook(book);
         } catch (DAOException e) {
