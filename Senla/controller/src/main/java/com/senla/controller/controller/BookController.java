@@ -3,6 +3,7 @@ package com.senla.controller.controller;
 import com.senla.api.exception.service.ServiceException;
 import com.senla.api.service.IBookService;
 import com.senla.model.dto.BookDTO;
+import com.senla.ui.actions.request.RequestSortAction;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,6 +50,13 @@ public class BookController {
         BookDTO newBookDto = bookService.add(bookDTO);
 
         return ResponseEntity.ok(newBookDto);
+    }
+
+    @PutMapping(value = "/update")
+    public ResponseEntity<BookDTO> updateBook(@RequestBody BookDTO bookDTO) throws ServiceException {
+        bookService.update(bookDTO);
+
+        return ResponseEntity.ok().build();
     }
 
 

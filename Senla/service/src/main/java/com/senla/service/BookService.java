@@ -12,6 +12,7 @@ import com.senla.model.BookStatus;
 import com.senla.model.Request;
 
 import com.senla.model.dto.BookDTO;
+import com.senla.model.dto.RequestDTO;
 import com.senla.model.mapper.api.BookMapper;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Level;
@@ -84,8 +85,13 @@ public class BookService implements IBookService {
     public void update(BookDTO bookDTO) throws ServiceException {
         try {
             LOGGER.log(Level.INFO, String.format("Book   : %s", bookDTO));
-
-            Book book = bookMapper.toEntity(bookDTO);
+            Book book = bookDAO.getEntityById(bookDTO.getId());
+            book.setName(bookDTO.getName());
+            book.setYear(bookDTO.getYear());
+            book.setGenre(bookDTO.getGenre());
+            book.setStatus(bookDTO.getStatus());
+            book.setCost(bookDTO.getCost());
+            book.setDateOfAdmission(bookDTO.getDateOfAdmission());
 
             bookDAO.update(book);
         } catch (DAOException daoException) {
@@ -196,10 +202,12 @@ public class BookService implements IBookService {
                 book.setStatus(BookStatus.RESERVED);
             }
             if (requestService.getNumberOfRequestsByBook(book.getId()) != 0) {
-                Request request = requestService.getRequestByBook(book.getId());
+                RequestDTO request = requestService.getRequestByBook(book.getId());
 
                 request.setRequestOpenClose(false);
                 request.setCount(0);
+
+                requestService.update(request);
             }
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Adding book to WareHouse failed", e);
@@ -254,6 +262,7 @@ public class BookService implements IBookService {
 
         }
     }
+
 
     @Override
     public String toString() {

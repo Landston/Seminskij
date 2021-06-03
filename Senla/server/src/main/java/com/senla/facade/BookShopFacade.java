@@ -8,9 +8,9 @@ import com.senla.api.service.IRequestService;
 
 import com.senla.model.*;
 import com.senla.model.dto.BookDTO;
+import com.senla.model.dto.ClientDTO;
 import com.senla.model.dto.OrderDTO;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
+import com.senla.model.dto.RequestDTO;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -133,31 +133,31 @@ public class BookShopFacade {
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //////////// CLIENT ////////////
 
-    public void updateClient(UUID clienUpdateID, Client client) throws ServiceException {
-        this.clientService.update(clienUpdateID, client);
+    public void updateClient(UUID clienUpdateID, ClientDTO client) throws ServiceException {
+        this.clientService.updateEntity(clienUpdateID, client);
     }
 
     public void deleteClient(UUID uuid) throws ServiceException {
-        this.clientService.delete(uuid);
+        this.clientService.deleteEntity(uuid);
     }
 
-    public List<Client> getAllClients() throws ServiceException {
+    public List<ClientDTO> getAllClients() throws ServiceException {
 
-        return this.clientService.getAll();
+        return this.clientService.getAllClients();
 
     }
 
-    public Client createClient(String name, String mail) {
-        return this.clientService.create(name, mail);
+    public ClientDTO createClient(String name, String mail) {
+        return this.clientService.createEntity(name, mail);
     }
 
     public void addClient(String name, String mail) throws ServiceException {
-        this.clientService.add(this.createClient(name, mail));
+        this.clientService.addEntity(this.createClient(name, mail));
     }
 
-    public Client getClientByID(UUID uuid) throws ServiceException {
+    public ClientDTO getClientByID(UUID uuid) throws ServiceException {
         try {
-            Client client = this.clientService.get(uuid);
+            ClientDTO client = this.clientService.getEntity(uuid);
 
             if (client.getName() != "none") return client;
 
@@ -189,7 +189,7 @@ public class BookShopFacade {
 
 
         }
-        return new Client("", "");
+        return new ClientDTO();
     }
 
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -281,12 +281,12 @@ public class BookShopFacade {
         this.requestService.createRequest(book);
     }
 
-    public List<Request> getAllRequests() throws ServiceException {
+    public List<RequestDTO> getAllRequests() throws ServiceException {
         return this.requestService.getAllRequests();
 
     }
 
-    public List<Request> getSortedRequests(String condition) throws ServiceException {
+    public List<RequestDTO> getSortedRequests(String condition) throws ServiceException {
         return this.requestService.getSortedRequests(condition);
     }
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

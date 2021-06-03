@@ -7,6 +7,7 @@ import com.senla.model.Request;
 import com.senla.model.dto.BookDTO;
 import com.senla.model.dto.RequestDTO;
 
+import java.security.Provider;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,4 +25,6 @@ public interface IRequestService {
     List<RequestDTO> getAllRequests() throws ServiceException;
 
     RequestDTO closeRequestById(UUID uuid) throws ServiceException, DAOException;
+
+    RequestDTO update(RequestDTO DTO) throws ServiceException;
 }

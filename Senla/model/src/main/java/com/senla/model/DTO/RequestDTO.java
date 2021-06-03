@@ -14,4 +14,8 @@ public class RequestDTO {
     private int count = 1;
     private boolean requestOpenClose;
 
+    public RequestDTO(BookDTO toDto) {
+        requestedBooks  = toDto;
+        requestOpenClose = true;
+    }
 }

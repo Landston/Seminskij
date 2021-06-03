@@ -118,11 +118,12 @@ public class RequestService implements IRequestService {
     public RequestDTO getRequestByBook(UUID uuid) throws ServiceException {
         try {
             Book book = bookDAO.getEntityById(uuid);
-            List<Request> requests = new ArrayList<>(this.requestDAO.getAll());
+            Request existRequest = requestDAO.requestByBookId(uuid);
 
-            Optional<Request> request = requests.stream().filter(x -> x.getRequestedBooks().getId().equals(uuid)).findFirst();
-
-            return  requestMapper.toDto(request.get());
+            if(existRequest == null){
+                return   new RequestDTO(bookMapper.toDto(book));
+            }
+            return  requestMapper.toDto(existRequest);
         } catch (DAOException e){
             LOGGER.log(Level.WARN, "Get  Request by Book is not available", e);
             throw new ServiceException("Get Request by Book failed", e);
@@ -137,6 +138,19 @@ public class RequestService implements IRequestService {
         requestDAO.update(request);
 
         return requestMapper.toDto(request);
+    }
+
+    @Override
+    public RequestDTO update(RequestDTO DTO) throws ServiceException {
+        try {
+            Request request = requestMapper.toEntity(DTO);
+
+            requestDAO.update(request);
+
+            return DTO;
+        } catch (DAOException  e){
+            throw new ServiceException(e);
+        }
     }
 
 /*
