@@ -45,21 +45,29 @@ public class ClientService implements IClientService {
 
     }
 
-    public ClientDTO createEntity(String name, String mail) {
-        Client client = new Client(name, mail);
+    public ClientDTO createEntity(ClientDTO dto) throws ServiceException {
+        try {
+            Client client = clientMapper.toEntity(dto);
 
-        return clientMapper.toDto(client);
+            clientDAO.addEntity(client);
+
+            return clientMapper.toDto(client);
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
     }
 
-    public ClientDTO updateEntity(UUID id, ClientDTO client) throws ServiceException {
+    public ClientDTO updateEntity(ClientDTO clientDTO) throws ServiceException {
         try {
-            LOGGER.log(Level.INFO, String.format("Client id to update : %s  new book : %s", id, client));
-            Client client1;
+            LOGGER.log(Level.INFO, String.format("Client id to update : %s  new client : %s", clientDTO.getId(), clientDTO));
+            Client client = clientDAO.getEntityById(clientDTO.getId());
 
-            client1 = clientMapper.toEntity(client);
-            this.clientDAO.update(client1);
+            client.setMail(clientDTO.getMail());
+            client.setName(clientDTO.getName());
 
-            return client;
+            this.clientDAO.update(client);
+
+            return clientMapper.toDto(client);
         } catch (DAOException daoException) {
             LOGGER.log(Level.INFO, "Update failed", daoException);
             throw new ServiceException("Update operation failed", daoException);
@@ -81,11 +89,13 @@ public class ClientService implements IClientService {
         }
     }
 
-    public ClientDTO addEntity(ClientDTO client) throws ServiceException {
+    public ClientDTO addEntity(ClientDTO clientDTO) throws ServiceException {
         try {
-            clientDAO.addEntity(clientMapper.toEntity(client));
+            Client client = clientMapper.toEntity(clientDTO);
 
-            return client;
+            clientDAO.addEntity(client);
+
+            return clientMapper.toDto(client);
         } catch (DAOException e) {
             LOGGER.log(Level.WARN, "Adding client failed", e);
             throw new ServiceException("Adding client operation failed", e);

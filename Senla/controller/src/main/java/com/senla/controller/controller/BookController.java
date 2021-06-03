@@ -39,7 +39,7 @@ public class BookController {
         return ResponseEntity.ok(bookDto);
     }
 
-    @PostMapping(value = "/delete")
+    @DeleteMapping(value = "/delete")
     public ResponseEntity<BookDTO> deleteBookById(@RequestParam String id) throws ServiceException {
         bookService.delete(UUID.fromString(id));
 

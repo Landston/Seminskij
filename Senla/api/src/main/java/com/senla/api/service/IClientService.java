@@ -12,13 +12,13 @@ public interface IClientService  {
 
     ClientDTO getEntity(UUID uuid) throws ServiceException;
 
-    ClientDTO createEntity(String name, String mail);
+    ClientDTO createEntity(ClientDTO dto) throws ServiceException;
 
-    ClientDTO updateEntity(UUID id, ClientDTO client) throws ServiceException;
+    ClientDTO updateEntity(ClientDTO clientDTO) throws ServiceException;
 
     ClientDTO deleteEntity(UUID uuid) throws ServiceException;
 
-    ClientDTO addEntity(ClientDTO client) throws ServiceException;
+    ClientDTO addEntity(ClientDTO clientDTO) throws ServiceException;
 
     List<ClientDTO> getAllClients() throws ServiceException;
 }

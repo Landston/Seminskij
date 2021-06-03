@@ -127,14 +127,13 @@ public class BookShopFacade {
         return Collections.emptyList();
     }
 
-
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //////////// CLIENT ////////////
 
     public void updateClient(UUID clienUpdateID, ClientDTO client) throws ServiceException {
-        this.clientService.updateEntity(clienUpdateID, client);
+        this.clientService.updateEntity(client);
     }
 
     public void deleteClient(UUID uuid) throws ServiceException {
@@ -147,8 +146,8 @@ public class BookShopFacade {
 
     }
 
-    public ClientDTO createClient(String name, String mail) {
-        return this.clientService.createEntity(name, mail);
+    public ClientDTO createClient(String name, String mail) throws ServiceException {
+        return this.clientService.createEntity(new ClientDTO(UUID.randomUUID(),name, mail));
     }
 
     public void addClient(String name, String mail) throws ServiceException {
