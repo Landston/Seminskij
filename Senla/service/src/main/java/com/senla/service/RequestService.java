@@ -10,7 +10,6 @@ import com.senla.api.service.IRequestService;
 import com.senla.model.Book;
 import com.senla.model.Request;
 
-import com.senla.model.dto.BookDTO;
 import com.senla.model.dto.RequestDTO;
 import com.senla.model.mapper.api.BookMapper;
 import com.senla.model.mapper.api.MapperForRequest;
@@ -54,21 +53,25 @@ public class RequestService implements IRequestService {
     }
 
     @Override
-    public void createRequest(BookDTO bookDTO) throws ServiceException {  // Create Request by book, or increase count of requests for book, if existed
+    public RequestDTO createRequest(UUID id) throws ServiceException {  // Create Request by book, or increase count of requests for book, if existed
         try {
-            LOGGER.log(Level.INFO, String.format("Create request book : %s ", bookDTO));
+            LOGGER.log(Level.INFO, String.format("Create request book : %s ", id));
 
-            Request existRequest = requestDAO.requestByBookId(bookDTO.getId());
+            Request existRequest = requestDAO.requestByBookId(id);
 
             if (existRequest == null){
-                Book book = bookMapper.toEntity(bookDTO);
+                Book book = bookDAO.getEntityById(id);
 
                 existRequest = new Request(book);
                 requestDAO.addEntity(existRequest);
-                return;
+
+                return requestMapper.toDto(existRequest);
             }
             existRequest.increaseRequestCount();
 
+            requestDAO.update(existRequest);
+
+            return requestMapper.toDto(existRequest);
         } catch (DAOException e) {
 
             LOGGER.log(Level.WARN, ("Create request failed"));
@@ -85,13 +88,10 @@ public class RequestService implements IRequestService {
             list.sort(this.sort.get(condition));
 
             return requestMapper.bunchRequestToRequestDTO(list);
-        } catch (IllegalArgumentException e) {
-            LOGGER.log(Level.WARN, "Request sorting condition is not available", e);
-            throw new ServiceException("Request sorting operation failed", e);
-        } catch (DAOException e){
-            LOGGER.log(Level.WARN, "Request sorting condition is not available", e);
-            throw new ServiceException("Request sorting operation failed", e);
-        }
+        } catch (IllegalArgumentException | DAOException e) {
+                LOGGER.log(Level.WARN, "Request sorting condition is not available", e);
+                throw new ServiceException("Request sorting operation failed", e);
+            }
     }
 
     public Long getNumberOfRequestsByBook(UUID uuid) throws ServiceException {
@@ -130,14 +130,19 @@ public class RequestService implements IRequestService {
         }
     }
 
-    public RequestDTO closeRequestById(UUID uuid) throws ServiceException, DAOException {
-        Request request = requestDAO.getEntityById(uuid);
+    public RequestDTO closeRequestById(UUID uuid) throws ServiceException {
+        try {
+            Request request = requestDAO.getEntityById(uuid);
 
-        request.setRequestOpenClose(false);
-        request.setCount(0);
-        requestDAO.update(request);
+            request.setRequestOpenClose(false);
+            request.setCount(0);
+            requestDAO.update(request);
 
-        return requestMapper.toDto(request);
+            return requestMapper.toDto(request);
+        } catch (DAOException e){
+            LOGGER.warn(e);
+            throw new ServiceException(e);
+        }
     }
 
     @Override

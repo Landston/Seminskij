@@ -190,9 +190,7 @@ public class OrderService implements IOrderService {
             Order order = new Order(book, client);
 
             if (book.getStatus().equals(BookStatus.ABSENT)) {
-                BookDTO bookDTO = bookMapper.toDto(book);
-
-                requestService.createRequest(bookDTO);
+                requestService.createRequest(bookId);
 
                 order.setStatus(OrderStatus.PAUSED);
             }
@@ -312,6 +310,23 @@ public class OrderService implements IOrderService {
             throw new ServiceException("Order Open opeartion faild", e);
         }
     }
+
+    @Override
+    public OrderDTO update(OrderDTO orderDTOForUpdate) throws ServiceException {
+        try {
+            Order order = orderDAO.getEntityById(orderDTOForUpdate.getId());
+
+            order = orderMapper.orderDtoToOrder(order, orderDTOForUpdate);
+            orderDAO.update(order);
+
+            return orderMapper.toDto(order);
+        } catch (DAOException e){
+            LOGGER.log(Level.WARN, e);
+            throw new ServiceException(e);
+        }
+    }
+
+
 
 
 }

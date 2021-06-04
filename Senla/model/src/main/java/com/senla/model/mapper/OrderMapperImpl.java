@@ -53,4 +53,14 @@ public class OrderMapperImpl implements OrderMapper {
     public List<Order> orderDtoBunchToOrder(List<OrderDTO> orders){
         return orders.stream().map(this::toEntity).collect(Collectors.toList());
     }
+
+    public Order orderDtoToOrder(Order order, OrderDTO dto){
+        order.setClient(clientMapper.toEntity(dto.getClient()));
+        order.setBooksToOrder(bookMapper.bookDTOListToBookList(dto.getBooksToOrder()));
+        order.setDateOfExecution(dto.getDateOfExecution());
+        order.setStatus(dto.getStatus());
+        order.setTotalPrice(dto.getTotalPrice());
+
+        return order;
+    }
 }

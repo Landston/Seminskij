@@ -275,9 +275,8 @@ public class BookShopFacade {
 
 
     public void createRequest(UUID bookID) throws ServiceException {
-        BookDTO book = this.bookService.getBookById(bookID);
 
-        this.requestService.createRequest(book);
+        this.requestService.createRequest(bookID);
     }
 
     public List<RequestDTO> getAllRequests() throws ServiceException {

@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public interface IRequestService {
 
-    void createRequest(BookDTO book) throws ServiceException;
+    RequestDTO createRequest(UUID id) throws ServiceException;
 
     RequestDTO getRequestByBook(UUID book) throws ServiceException;
 

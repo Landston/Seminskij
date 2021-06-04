@@ -21,7 +21,7 @@ import java.util.UUID;
 public class MainController {
 
     @GetMapping("/")
-    public String startPage(Model model) {
+    public String startPage() {
         return "startPage";
     }
 

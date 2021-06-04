@@ -45,4 +45,6 @@ public interface IOrderService {
 
     void orderOpen(UUID uuid) throws ServiceException;
 
+    OrderDTO update(OrderDTO orderDTOForUpdate) throws ServiceException;
+
 }
