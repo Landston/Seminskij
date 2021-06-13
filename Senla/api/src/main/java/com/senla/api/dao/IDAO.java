@@ -8,7 +8,6 @@ import java.util.UUID;
 
 public abstract interface IDAO<T> {
 
-
     List<T> getAll() throws DAOException;
 
     void update(T item) throws DAOException;
@@ -20,4 +19,5 @@ public abstract interface IDAO<T> {
     T getEntityById(UUID id) throws DAOException;
 
     boolean findEntity(UUID uuid) throws DAOException;
+
 }

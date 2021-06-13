@@ -158,7 +158,7 @@ public class BookShopFacade {
         try {
             ClientDTO client = this.clientService.getEntity(uuid);
 
-            if (client.getName() != "none") return client;
+            if (!client.getName().equals("none")) return client;
 
             else {
                 System.out.println("Нет клиентов с таким ID, создать нового?");
@@ -171,7 +171,6 @@ public class BookShopFacade {
                         System.out.println("Введите имя Клиента");
 
                         String name = scanner.nextLine();
-
                         System.out.println("Введите mail Клиента");
 
                         return this.createClient(name, scanner.nextLine());

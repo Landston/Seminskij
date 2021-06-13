@@ -36,29 +36,27 @@ import java.util.stream.Collectors;
 @Transactional
 public class OrderService implements IOrderService {
 
-    @Autowired
-    private IOrderDAO orderDAO;
-    @Autowired
-    private IClientDAO clientDAO;
-    @Autowired
-    private IBookDAO bookDAO;
-    @Autowired
-    private IRequestService requestService;
+    private final IOrderDAO orderDAO;
+    private final IClientDAO clientDAO;
+    private final IBookDAO bookDAO;
+    private final IRequestService requestService;
 
-    @Autowired
-    private IRequestDAO requestDAO;
 
-    @Autowired
-    private OrderMapper orderMapper;
-    @Autowired
-    private BookMapper bookMapper;
+    private final OrderMapper orderMapper;
+    private final BookMapper bookMapper;
 
     private static final Logger LOGGER = LogManager.getLogger(OrderService.class.getName());
     private Map<String, Comparator<Order>> sort;
 
 
-    public OrderService() {
+    public OrderService(BookMapper bookMapper, IOrderDAO orderDAO, IClientDAO clientDAO, IBookDAO bookDAO, IRequestService requestService, OrderMapper orderMapper) {
         this.init();
+        this.bookMapper = bookMapper;
+        this.orderDAO = orderDAO;
+        this.clientDAO = clientDAO;
+        this.bookDAO = bookDAO;
+        this.requestService = requestService;
+        this.orderMapper = orderMapper;
     }
 
     private void init() {
