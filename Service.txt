@@ -1,0 +1,22 @@
+public with sharing class CaseService {
+    public CaseService() {
+
+    }
+    @AuraEnabled
+    public static List<ID> duplicateCases(String caseId){
+        List<Case> mainCase = [SELECT ID, CaseNumber, Subject, SuppliedEmail, Reason 
+                                        FROM Case 
+                                            WHERE ID =: caseId 
+                                                AND Status != 'Closed' ] ;  
+    Map<Id, Case> duplicates = new Map<Id, Case>([SELECT ID, Subject
+                                                        FROM Case 
+                                                            WHERE Subject = : mainCase[0].Subject 
+                                                                AND SuppliedEmail =: mainCase[0].SuppliedEmail
+                                                                AND Reason =: mainCase[0].Reason  
+                                                                AND Status !=  'Closed']);
+    System.debug(LoggingLevel.INFO, duplicates.keySet());
+        
+        return new List<Id>(duplicates.keySet());
+
+    }
+}

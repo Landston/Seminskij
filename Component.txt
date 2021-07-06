@@ -1,0 +1,36 @@
+<aura:component>
+    <aura:attribute name = "caseId" type="Id" default=""/>
+
+    <lightning:recordViewForm recordId="{!v.caseId}" objectApiName="Case">
+                      
+        <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid" aria-label="Example table in a Card">
+            <tbody>
+                <tr class="slds-hint-parent">
+                    <th data-label="Opportunity Name" scope="row">
+                    <div class="slds-truncate" title="CaseNumber">
+                    
+                    </div>
+                    </th>
+                    <td data-label="Origin">
+                        <lightning:outputField fieldName="Origin" />
+                    </td>
+                    <td data-label="Subject">
+                        <lightning:outputField fieldName="Subject" />
+                    </td>
+                    <td data-label="SuppliedEmail">
+                        <lightning:outputField fieldName="SuppliedEmail" />
+                    </td>
+                    <td data-label="Status">
+                        <lightning:outputField fieldName="Status" />
+                    </td>
+                    <td data-label="OwnerId">
+                        <lightning:outputField fieldName="OwnerId" />
+                    </td>
+                    <td>
+                        <lightning:button onclick="{!c.myAction}" class="slds-button slds-button_brand" >Merge</lightning:button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </lightning:recordViewForm>
+</aura:component>	
