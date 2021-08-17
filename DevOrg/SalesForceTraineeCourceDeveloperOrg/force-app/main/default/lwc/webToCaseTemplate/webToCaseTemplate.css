@@ -1,0 +1,37 @@
+.three-col-grid .grid-item {
+
+    width: 200px;
+    height:300px;
+    box-sizing: content-box;
+    float: right;
+    padding: 10px 10px 10px 10px;
+    
+}
+
+.grid-item{
+      margin : 20px 20px 20px 20px;
+}
+
+.sec-col-grid-item{
+      padding: 40px 40px 40px 40px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto 
+}
+
+.p-40{
+    padding: 40px 40px 40px 40px;
+    display: block;
+    float: right;
+}
+
+.h5{
+    padding: 40px 40px 40px 40px;
+    font-weight: bolder;
+    font-style: italic;
+}
+
+.search{
+    float: right;
+    padding: 30px;
+}

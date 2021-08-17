@@ -1,0 +1,43 @@
+<template>
+  <div class="slds-grid">
+        <div class="slds-col slds-size_2-of-3">
+          <div style="display: inline-block"> 
+              <div> 
+                  <lightning-slider  label="Price" max="1000000" min="0" value={val} onchange={handleSliderChange}></lightning-slider>
+              </div>
+            
+                <lightning-input  type="search" label="Search" onchange={handleSearchChange}>
+                </lightning-input>
+                <div class="grid-item">
+                <lightning-button label="Reset" onclick={handleFilterReset}>
+                    Reset filter
+                </lightning-button>
+              </div>
+              <br>
+          </div>
+          <div class="three-col-grid">
+            <template if:true={products}>
+              <template for:each={products} for:item="item"> 
+                  <div class="grid-item" key={item}>
+                    <c-product-card  first-product-id ={item} onopen={handleOpen}></c-product-card>
+                  </div>
+              </template>
+            </template>
+          </div>
+        </div>
+
+   
+    <div class="slds-col slds-size_1-of-3">
+      <c-web-to-case-template>
+
+      </c-web-to-case-template>
+    </div>
+  </div>
+ 
+  <template if:true={isModalOpen}>
+    <c-car-modal-page-component 
+      car-id={modalPageCarId}
+      onclose={handleClose}
+    ></c-car-modal-page-component>
+  </template>
+</template>
