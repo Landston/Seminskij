@@ -33,7 +33,7 @@ public class BookController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<BookDTO> getBookById(@PathVariable String id) throws ServiceException {
-        BookDTO bookDto =  bookService.getBookById(UUID.fromString(id));
+        BookDTO bookDto = bookService.getBookById(UUID.fromString(id));
 
         return ResponseEntity.ok(bookDto);
     }
@@ -41,9 +41,10 @@ public class BookController {
     @DeleteMapping(value = "/delete")
     public ResponseEntity<BookDTO> deleteBookById(@RequestParam String id) throws ServiceException {
         bookService.delete(UUID.fromString(id));
-
+        
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
     @PostMapping(value = "/add")
     public ResponseEntity<BookDTO> addBook(@RequestBody BookDTO bookDTO) throws ServiceException {
         BookDTO newBookDto = bookService.add(bookDTO);

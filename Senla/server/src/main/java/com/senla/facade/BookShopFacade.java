@@ -200,7 +200,7 @@ public class BookShopFacade {
         return orderService.createOrder(bookID, clientID);
     }
 
-    public List<OrderDTO> getSortedOrder(String condition) throws ServiceException, IOException {
+    public List<OrderDTO> getSortedOrder(String condition   ) throws ServiceException, IOException {
 
         return this.orderService.getSortedOrders(condition);
     }
