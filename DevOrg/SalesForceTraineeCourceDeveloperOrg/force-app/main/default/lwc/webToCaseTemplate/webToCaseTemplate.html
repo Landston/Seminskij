@@ -1,0 +1,40 @@
+<template>
+    <h5> Связатсья с нами</h5>
+    <form action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="POST">
+
+         
+          <input type=hidden name="orgid" value="00D5g000005HlPz">
+          <input type=hidden name="retURL" value="https://cardreamm-developer-edition.ap24.force.com/CarDream/s/">
+      <div class="three-col-grid"></div>
+        <div class="grid-item">
+          <label  for="email">Email</label>
+        </div>
+        <div class="grid-item">
+          <input required id="email" maxlength="80" name="email" size="30" type="text" /><br>
+        </div> 
+        <div class="grid-item">
+          <label   for="reason">Категория</label>
+        </div>
+        <div class="grid-item">
+            <select required  id="reason" name="reason">
+              <option value="">--None--</option>
+              <option value="Financial Claim">Financial Claim</option>
+              <option value="General Question">General Question</option>
+              <option value="Insurance">Insurance</option>
+            </select><br>
+          </div>
+        <div class="grid-item">
+          <label  for="description">Описание сообщения</label>
+        </div>
+        <div class="grid-item">
+          <textarea required name="description"></textarea><br>
+        </div>
+        <div class="grid-item">
+          <input type="hidden"  id="external" name="external" value="1" /><br>
+          
+          <input type="submit" name="submit">
+        </div>
+        
+    </form>
+      
+</template>

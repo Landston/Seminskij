@@ -1,0 +1,22 @@
+<template>
+    <lightning-card class="slds-card__body" onclick={handleCardClick}>
+        <template if:true={firstProductId}>   
+            <c-file-display-component s-object-id={firstProductId}>
+            </c-file-display-component>
+            <lightning-record-view-form record-id={firstProductId} object-api-name="Product2" >
+
+                <lightning-output-field field-name="Name">
+                </lightning-output-field>
+
+                <lightning-output-field field-name="Price__c">
+                </lightning-output-field>
+                
+                <lightning-output-field field-name="Year__c">
+                </lightning-output-field>
+
+            </lightning-record-view-form>
+        
+        </template>
+
+    </lightning-card>
+</template>
