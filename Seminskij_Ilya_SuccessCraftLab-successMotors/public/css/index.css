@@ -1,0 +1,115 @@
+* {
+   box-sizing: border-box;
+   
+ }
+body{
+   background: #B0E0E6;
+}
+ 
+.ui-form{
+   background: white;
+   max-width: 400px;
+   padding: 30px 30px 30px;
+   margin: 25px auto 25px;
+}
+
+h3{
+   text-align: center;
+   font-size: 40px;
+   font-weight: 60px;
+   color:#167
+
+ }
+.form-row{
+   background-color: white;
+   margin-bottom: 40px;
+   position: relative;
+
+}
+
+.form-row input{
+   display: block;
+   width: 100%;
+   line-height: 30px;
+   border-top: 0;
+   font-size: 15px;
+   border-width: 0;
+   border-bottom: 2px solid;
+   border-color: #948bff;
+   transition: all 0.2s ease;
+}
+
+.form-row select, .form-row select+a{
+   display: block;
+   width: 100%;
+   background-color: white;
+   line-height: 30px;
+   border-top: 0;
+   font-size: 15px;
+   border-width: 0;
+   border-bottom: 2px solid;
+   border-color: #948bff;
+   transition: all 0.2s ease;
+}
+
+.form-row label{
+   position: absolute;
+   left: 14px;
+   color: #9d959d;
+   font-size: 20px;
+   font-weight: 60px;
+   transform: translateY(-35px);
+   transition: all 0.2s ease;
+ }
+
+.form-row input:focus {
+   outline: 0;
+   border-color: #696664;
+}
+
+.form-row input:focus+label, .form-row input:valid+label, .form-row select:focus+label, .form-row select:valid +label{
+   transform: translateY(-60px);
+   margin-left: -14px;
+   outline: 0;
+   border-color: #F77A52;
+   color: #F77A52
+ }
+
+.ui-form input[type="submit"] {
+   width: 100%;
+   padding: 0;
+   line-height: 42px;
+   background: #4a90e2;
+   border-width: 0;
+   color: white;
+   font-size: 20px;
+}
+
+.form-button{
+   width: 100%;
+   padding: 0;
+   line-height: 42px;
+   background: #4a90e2;
+   border-width: 0;
+   color: white;
+   font-size: 20px;
+   box-shadow:3px 3px 10px;
+   text-decoration: none;
+   font-family: "Nunito Sans", sans-serif;
+    
+ }
+
+.form-button:hover{
+   background-color: #2196f3;
+
+ }
+
+option {
+   border: 0;
+   border-bottom: 10px solid dark;
+   padding: 10px;
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   font-size: 15px;
+ }
+ 

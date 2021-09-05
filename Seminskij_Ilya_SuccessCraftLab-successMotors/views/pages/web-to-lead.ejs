@@ -1,0 +1,53 @@
+<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+     function timestamp() { var response = document.getElementById("g-recaptcha-response"); if (response == null || response.value.trim() == "") {var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);elems["ts"] = JSON.stringify(new Date().getTime());document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems); } } setInterval(timestamp, 500); 
+    </script>
+
+    <link rel="stylesheet"  href="/css/index.css" type="text/css">
+    
+<form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" class="ui-form">
+    
+    <h3>Become our Customer!</h3>
+    
+    <input type=hidden name='captcha_settings' value='{"keyname":"herokuReCaptcha","fallback":"true","orgId":"00D5g00000A57V8","ts":""}'>
+    <input type=hidden name="oid" value="00D5g00000A57V8">
+    <input type=hidden name="retURL" value="http://localhost:5000/">
+    
+
+    <div class="form-row">     
+        <input  id="first_name" maxlength="40" name="first_name" size="20" type="text" required/>
+        <label for="first_name">First Name</label>
+    </div>
+    <div class="form-row">
+        <input  id="last_name" maxlength="80" name="last_name" size="20" type="text" required/>
+        <label for="last_name">Last Name</label>
+    </div>
+    <div class="form-row">
+        <input  id="email" maxlength="80" name="email" size="20" type="text"required />
+        <label for="email">Email</label>
+    </div>
+    <div class="form-row">
+        <input  id="company" maxlength="40" name="company" size="20" type="text"required />
+        <label for="company">Company</label>
+    </div>
+    <div class="form-row">
+        <select id="Product__c" name="Product__c" required >
+            <option selected id="normal" value=" "> </option>
+
+            <% for( var i = 0; i < cars.length ; i ++) { %>
+                <option value="<%= cars[i].code %>" > <%= cars[i].name %></option>
+            <% }; %>
+            
+        </select> <label>Product</label>
+    </div>
+
+    <div class="form-row">
+        <input  id="phone" maxlength="40" name="phone" size="20" type="text" required />
+        <label for="phone">Phone</label>
+    </div>
+
+    <div class="g-recaptcha" data-sitekey="6Lem_zccAAAAAOl0l_9oHxZhzDhJqP_CRsX_-1Bq"></div><br>
+    <input type="submit" name="submit" class="form-button">
+</form>
+    
